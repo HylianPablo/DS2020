@@ -1,3 +1,4 @@
 *.png
 *.jpg
 *.lock
+/vinotecag02/nbproject/private/

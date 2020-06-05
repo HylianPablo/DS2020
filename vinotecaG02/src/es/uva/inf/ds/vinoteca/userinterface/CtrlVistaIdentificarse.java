@@ -5,8 +5,8 @@
  */
 package es.uva.inf.ds.vinoteca.userinterface;
 
-import es.uva.inf.ds.vinoteca.domain.controllers.Empleado;
-import es.uva.inf.ds.vinoteca.domain.models.ControladorCUIdentificarse;
+import es.uva.inf.ds.vinoteca.domain.models.Empleado;
+import es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUIdentificarse;
 
 /**
  *
@@ -25,6 +25,6 @@ public class CtrlVistaIdentificarse {
         Empleado empleado = cuController.identificarEmpleado(user, password);
         int rolEmp = empleado.getRol();
         GestorDeInterfazDeUsuario giu = new GestorDeInterfazDeUsuario();
-        giu.elegirVista(rolEmp);
+        giu.elegirVista(rolEmp,view);
     }
 }

@@ -5,7 +5,7 @@
  */
 package es.uva.inf.ds.vinoteca.persistence.daos;
 
-import es.uva.inf.ds.vinoteca.domain.controllers.Empleado;
+import es.uva.inf.ds.vinoteca.domain.models.Empleado;
 import es.uva.inf.ds.vinoteca.persistence.dbaccess.DBConnection;
 import java.io.StringWriter;
 import java.math.BigDecimal;

@@ -11,14 +11,21 @@ package es.uva.inf.ds.vinoteca.userinterface;
  */
 public class GestorDeInterfazDeUsuario {
     
+    private static VistaContabilidad contabilidadView;
+    
     public GestorDeInterfazDeUsuario(){
         
     }
     
-    public void elegirVista(int rol){
+    public void elegirVista(int rol, VistaIdentificarse loginView){
         switch (rol){
             case 1:
-                //lanzar caso 1
+                loginView.setVisible(false);
+                loginView.dispose();
+                java.awt.EventQueue.invokeLater(() -> {
+                    contabilidadView = new VistaContabilidad();
+                    contabilidadView.setVisible(true);
+        });
                 break;
             case 2:
                 //lanzar caso 2

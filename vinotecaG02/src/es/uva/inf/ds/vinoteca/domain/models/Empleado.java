@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.uva.inf.ds.vinoteca.domain.controllers;
+package es.uva.inf.ds.vinoteca.domain.models;
 
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
 import java.io.File;

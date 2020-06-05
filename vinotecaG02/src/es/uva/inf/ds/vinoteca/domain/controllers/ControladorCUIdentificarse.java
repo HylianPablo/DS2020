@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.uva.inf.ds.vinoteca.domain.models;
+package es.uva.inf.ds.vinoteca.domain.controllers;
 
-import es.uva.inf.ds.vinoteca.domain.controllers.Empleado;
+import es.uva.inf.ds.vinoteca.domain.models.Empleado;
 
 /**
  *

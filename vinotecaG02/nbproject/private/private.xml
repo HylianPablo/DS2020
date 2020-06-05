@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/pablo/NetBeansProjects/vinotecaG02/src/es/uva/inf/ds/vinoteca/userinterface/VistaContabilidad.java</file>
+            <file>file:/home/pablo/NetBeansProjects/vinotecaG02/src/es/uva/inf/ds/vinoteca/domain/controllers/ControladorCUConsultarImpagos.java</file>
+            <file>file:/home/pablo/NetBeansProjects/vinotecaG02/src/es/uva/inf/ds/vinoteca/userinterface/ControladorVistaContabilidad.java</file>
             <file>file:/home/pablo/NetBeansProjects/vinotecaG02/src/es/uva/inf/ds/vinoteca/userinterface/CtrlVistaIdentificarse.java</file>
-            <file>file:/home/pablo/NetBeansProjects/vinotecaG02/src/es/uva/inf/ds/vinoteca/userinterface/GestorDeInterfazDeUsuario.java</file>
-            <file>file:/home/pablo/NetBeansProjects/vinotecaG02/src/es/uva/inf/ds/vinoteca/domain/models/ControladorCUIdentificarse.java</file>
         </group>
     </open-files>
 </project-private>

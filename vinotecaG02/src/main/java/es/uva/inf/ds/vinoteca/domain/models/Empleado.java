@@ -12,6 +12,7 @@ import java.io.StringReader;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -101,7 +102,7 @@ public class Empleado {
         }catch(Exception ex){
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
         LocalDateTime fechaInicioLDT = LocalDateTime.parse(fechaInicioJson,formatter);
         Empleado empleadoLogin = new Empleado(loginJson,nifJson,passJson,fechaInicioLDT,tipoEmpleadoJson);
         return empleadoLogin;

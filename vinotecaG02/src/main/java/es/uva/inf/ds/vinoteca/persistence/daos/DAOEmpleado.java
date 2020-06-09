@@ -50,10 +50,7 @@ public class DAOEmpleado {
             ResultSet result = ps.executeQuery();
             if(result.next()){
                 fechaInicio=result.getTimestamp("fechainicioenempresa").toLocalDateTime();
-                if (fechaInicio==null){
-                    System.err.println("MAL");
-                }
-                System.out.println("PASA");
+                System.out.println(fechaInicio);
                 ArrayList<String> rolesEmpresa = getRolesEmpresa(nif);
                 ArrayList<String> vinculaciones = getVinculaciones(nif);
                 ArrayList<String> disponibilidades = getDisponibilidades(nif);
@@ -178,7 +175,7 @@ public class DAOEmpleado {
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
         try(
-            PreparedStatement ps = connection.getStatement("SELECT * FROM DISPONIBILIDADEMPLEADO d WHERE d.nif= ? ORDER BY d.comienzo DESC");
+            PreparedStatement ps = connection.getStatement("SELECT * FROM DISPONIBILIDADEMPLEADO d WHERE d.empleado= ? ORDER BY d.comienzo DESC");
             
         ){
             ps.setString(1, nif);
@@ -199,7 +196,7 @@ public class DAOEmpleado {
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
         try(
-            PreparedStatement ps = connection.getStatement("SELECT * FROM ROLESENEMPRESA r WHERE r.nif= ? ORDER BY r.ComienzoEnRol DESC");          
+            PreparedStatement ps = connection.getStatement("SELECT * FROM ROLESENEMPRESA r WHERE r.empleado= ? ORDER BY r.ComienzoEnRol DESC");          
         ){
             ps.setString(1, nif);
             ResultSet result = ps.executeQuery();

@@ -1,32 +1,34 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package Diseño.Arquitectura.vinotecaG02.interfaz;
 
-package es.uva.inf.ds.vinoteca.userinterface;
+import Diseño.Arquitectura.vinotecaG02.negocio.controladoresCasoUso.personalAlmacen.controladorCURegistrarRecepcionCompra;
+import Diseño.Arquitectura.vinotecaG02.negocio.controladoresCasoUso.personalAtencionCliente.controladorCUCrearPedidoAbonado;
 
-import es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUCrearPedidoAbonado;
+public class controladorVistaAtencionCliente extends InterfazControladorVista {
 
-/**
- *
- * @author Ivan
- */
-public class ControladorVistaAtencionCliente {
+	private VistaAtencionCliente vista;
 
-    private final VistaAtencionCliente view;
-    private final ControladorCUCrearPedidoAbonado cuController;
+	public void procesaIntroducirNumeroAbonado() {
 
-    public ControladorVistaAtencionCliente(VistaAtencionCliente view) {
-        this.view = view;
-        cuController = ControladorCUCrearPedidoAbonado.getController();
-    }
+	}
 
-    public void procesaIntroducirNumeroAbonado(int numAbonado) {
-        if (numAbonado < 0) {
-            // TODO: Lanzar excepcion
-        } else {
-            cuController.crearPedidoAbonado(numAbonado);
-        }
-    }
+	public void procesaConfirmacion() {
+
+	}
+
+	public String generarTexto() {
+		return null;
+	}
+
+	public void procesaMensajeError(Exception e) {
+
+	}
+
+	public void procesaIntroducirReferencia() {
+
+	}
+
+	public void registrarPedido() {
+
+	}
+
 }

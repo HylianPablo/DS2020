@@ -43,28 +43,22 @@ public class DAOEmpleado {
             PreparedStatement ps = connection.getStatement("SELECT * FROM EMPLEADO e WHERE e.NIF= ? AND e.PASSWORD= ?");
             
         ){
-            System.out.println(nif);
-            System.out.println(password);
             ps.setString(1, nif);
             ps.setString(2,password);
             ResultSet result = ps.executeQuery();
             if(result.next()){
                 fechaInicio=result.getTimestamp("fechainicioenempresa").toLocalDateTime();
-                System.out.println(fechaInicio);
                 ArrayList<String> rolesEmpresa = getRolesEmpresa(nif);
                 ArrayList<String> vinculaciones = getVinculaciones(nif);
                 ArrayList<String> disponibilidades = getDisponibilidades(nif);
                 empleadoJSONString = obtainEmpleadoJSONString(nif,password,fechaInicio,
                 rolesEmpresa,vinculaciones,disponibilidades);
-                //tipoEmpleado=result.getString("tipoEmpleado");
             }
             result.close();
         }catch(SQLException ex){
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }
         connection.closeConnection();
-        
-        System.out.println("RETURN: "+empleadoJSONString);
         return empleadoJSONString;
     }
     
@@ -163,9 +157,8 @@ public class DAOEmpleado {
            
             writer.writeObject(empleadoJson);
             empleadoJSONString = stringWriter.toString();
-            System.out.println(empleadoJSONString);
         }catch(Exception ex){
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE,null,ex);
+            Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }
         return empleadoJSONString;
     }

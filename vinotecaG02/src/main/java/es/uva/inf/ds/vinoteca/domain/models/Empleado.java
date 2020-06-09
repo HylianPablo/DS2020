@@ -26,23 +26,14 @@ import javax.json.JsonReaderFactory;
  * @author pablo
  */
 public class Empleado {
-    private String login, nif, password, tipoEmpleado;
+    private String nif, password, tipoEmpleado;
     private LocalDateTime fechaInicio;
     
-    public Empleado(String l, String n, String p, LocalDateTime ldt, String t){
-        login=l;
+    public Empleado(String n, String p, LocalDateTime ldt, String t){
         nif=n;
         password=p;
         fechaInicio=ldt;
         tipoEmpleado=t;
-    }
-    
-    public void setLogin(String login){
-        this.login=login;
-    }
-    
-    public String getLogin(){
-        return login;
     }
     
     public void setNif(String nif){
@@ -86,8 +77,7 @@ public class Empleado {
     }
     
     public static Empleado getEmpleadoPorLoginYPassword(String user, String password) {
-        String empleadoJSONString = DAOEmpleado.consultaEmpleadoPorLoginYPassword(user,password);
-        String loginJson =null; 
+        String empleadoJSONString = DAOEmpleado.consultaEmpleadoPorLoginYPassword(user,password); 
         String nifJson=null; 
         String passJson =null; 
         String fechaInicioJson=null;
@@ -104,7 +94,7 @@ public class Empleado {
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
         LocalDateTime fechaInicioLDT = LocalDateTime.parse(fechaInicioJson,formatter);
-        Empleado empleadoLogin = new Empleado(loginJson,nifJson,passJson,fechaInicioLDT,tipoEmpleadoJson);
+        Empleado empleadoLogin = new Empleado(nifJson,passJson,fechaInicioLDT,tipoEmpleadoJson);
         return empleadoLogin;
     }
     

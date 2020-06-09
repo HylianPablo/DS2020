@@ -14,10 +14,13 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
 
     //TODO: Input Text para bindear la propiedad.
     private int numID;
+    private ControladorVistaAtencionCliente controller;
 
     /** Creates new form VistaAtencionCliente */
     public VistaAtencionCliente() {
         initComponents();
+        setResizable(false);
+        controller = new ControladorVistaAtencionCliente(this);
     }
 
     public int getNumeroAbonado(){

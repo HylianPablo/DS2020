@@ -43,6 +43,74 @@ public class Pedido {
         return numero;
     }
     
+    public void setNumeroPedido(int n){
+        numero=n;
+    }
+    
+    public int getEstado(){
+        return estado;
+    }
+    
+    public void setEstado(int e){
+        estado=e;
+    }
+    
+    public LocalDateTime getFechaRealizacion(){
+        return fechaRealizacion;
+    }
+    
+    public void setFechaRealiazacion(LocalDateTime ldt){
+        fechaRealizacion=ldt;
+    }
+    
+    public String getNotaEntrega(){
+        return notaEntrega;
+    }
+    
+    public void setNotaEntrega(String n){
+        notaEntrega = n;
+    }
+    
+    public double getImporte(){
+        return importe;
+    }
+    
+    public void setImporte(double d){
+        importe=d;
+    }
+    
+    public LocalDateTime getFechaRecepcion(){
+        return fechaRecepcion;
+    }
+    
+    public void setFechaRecepcion(LocalDateTime ldt){
+        fechaRecepcion = ldt;
+    }
+    
+    public LocalDateTime getFechaEntrega(){
+        return fechaEntrega;
+    }
+    
+    public void setFechaEntrega(LocalDateTime ldt){
+        fechaEntrega = ldt;
+    }
+    
+    public int getNumeroFactura(){
+        return numeroFactura;
+    }
+    
+    public void setNumeroFactura(int n){
+        numeroFactura=n;
+    }
+    
+    public int getNumeroAbonado(){
+        return numeroAbonado;
+    }
+    
+    public void setNumeroAbonado(int n){
+        numeroAbonado = n;
+    }
+    
     public Abonado getAbonado(){
         Abonado ab = null;
         String abonadoJSONString = DAOAbonado.consultaAbonado(numeroAbonado);

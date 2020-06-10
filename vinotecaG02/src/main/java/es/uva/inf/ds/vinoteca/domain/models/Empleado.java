@@ -26,14 +26,13 @@ import javax.json.JsonReaderFactory;
  * @author pablo
  */
 public class Empleado {
-    private String nif, password, tipoEmpleado;
+    private String nif, password;
     private LocalDateTime fechaInicio;
     
-    public Empleado(String n, String p, LocalDateTime ldt, String t){
+    public Empleado(String n, String p, LocalDateTime ldt){
         nif=n;
         password=p;
         fechaInicio=ldt;
-        tipoEmpleado=t;
     }
     
     public void setNif(String nif){
@@ -58,14 +57,6 @@ public class Empleado {
     
     public LocalDateTime getFecha(){
         return fechaInicio;
-    }
-    
-    public void setTipoEmpleado(String tipoEmpleado){
-        this.tipoEmpleado=tipoEmpleado;
-    }
-    
-    public String getTipoEmpleado(){
-        return tipoEmpleado;
     }
     
     public boolean isActivo(){
@@ -96,7 +87,7 @@ public class Empleado {
             }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
             LocalDateTime fechaInicioLDT = LocalDateTime.parse(fechaInicioJson,formatter);
-            empleadoLogin = new Empleado(nifJson,passJson,fechaInicioLDT,tipoEmpleadoJson);
+            empleadoLogin = new Empleado(nifJson,passJson,fechaInicioLDT);
         }
         return empleadoLogin;
     }

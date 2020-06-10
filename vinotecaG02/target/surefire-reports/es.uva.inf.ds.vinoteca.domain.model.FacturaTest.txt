@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: es.uva.inf.ds.vinoteca.domain.model.FacturaTest
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.561 s <<< FAILURE! - in es.uva.inf.ds.vinoteca.domain.model.FacturaTest
+getPedidosAsociados  Time elapsed: 0.524 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: array contents differ at index [0], expected: <es.uva.inf.ds.vinoteca.domain.models.Pedido@1ee807c6> but was: <es.uva.inf.ds.vinoteca.domain.models.Pedido@76a4d6c>
+	at es.uva.inf.ds.vinoteca.domain.model.FacturaTest.getPedidosAsociados(FacturaTest.java:106)
+

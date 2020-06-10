@@ -40,10 +40,52 @@ public class Factura {
         this.idExtractoBancario=idExtractoBancario;
     }
     
-    //Hacer setters y getters
-    
     public int getNumeroFactura(){
         return numeroFactura;
+    }
+    
+    public void setNumeroFactura(int n){
+        numeroFactura=n;
+    }
+    
+    public LocalDateTime getFechaEmision(){
+        return fechaEmision;
+    }
+    
+    public void setFechaEmision(LocalDateTime ldt){
+        fechaEmision=ldt;
+    }
+    
+    public double getImporte(){
+        return importe;
+    }
+    
+    public void setImporte(double d){
+        importe=d;
+    }
+    
+    public int getEstado(){
+        return estado;
+    }
+    
+    public void setEstado(int e){
+        estado=e;
+    }
+    
+    public LocalDateTime getFechaPago(){
+        return fechaPago;
+    }
+    
+    public void setFechaPago(LocalDateTime ldt){
+        fechaPago=ldt;
+    }
+    
+    public String getIdExtractoBancario(){
+        return idExtractoBancario;
+    }
+    
+    public void setIdExtractoBancario(String s){
+        idExtractoBancario=s;
     }
     
     public ArrayList<Pedido> getPedidosAsociados(){

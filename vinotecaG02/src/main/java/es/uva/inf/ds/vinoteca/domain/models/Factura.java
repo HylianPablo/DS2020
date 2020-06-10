@@ -40,6 +40,12 @@ public class Factura {
         this.idExtractoBancario=idExtractoBancario;
     }
     
+    //Hacer setters y getters
+    
+    public int getNumeroFactura(){
+        return numeroFactura;
+    }
+    
     public ArrayList<Pedido> getPedidosAsociados(){
         String pedidosJSONString = "";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
@@ -56,7 +62,8 @@ public class Factura {
         pedidosJSONString = DAOFactura.selectPedidosAsociados(this.numeroFactura);
         JsonReaderFactory factory = Json.createReaderFactory(null);
         try(JsonReader reader = factory.createReader(new StringReader(pedidosJSONString));){
-            JsonArray array = reader.readArray();
+            JsonObject mainObj = reader.readObject();
+            JsonArray array = mainObj.getJsonArray("pedidos");
             for(int i =0; i<array.size();i++){
                 JsonObject obj = (JsonObject) array.getJsonObject(i);
                 numeroJ = Integer.parseInt(obj.getString("numero"));
@@ -66,7 +73,7 @@ public class Factura {
                 importeJ = Double.parseDouble(obj.getString("importe"));
                 fechaRecepcionJ = LocalDateTime.parse(obj.getString("fechaRecepcion"),formatter);
                 fechaEntregaJ = LocalDateTime.parse(obj.getString("fechaEntrega"),formatter);
-                numeroAbonadoJ = Integer.parseInt("numeroAbonado");
+                numeroAbonadoJ = Integer.parseInt(obj.getString("numeroAbonado"));
                 Pedido p = new Pedido(numeroJ,estadoJ,fechaRealizacionJ,notaEntregaJ,importeJ,fechaRecepcionJ,fechaEntregaJ,this.numeroFactura,numeroAbonadoJ);
                 pedidos.add(p);
             }
@@ -76,7 +83,7 @@ public class Factura {
         return pedidos;
     }
     
-    //Hacer setters y getters
+    
     
     public static ArrayList<Factura> consultaFacturasAntesDeFecha(String fecha){
         ArrayList<Factura> facturas = new ArrayList<>();
@@ -89,9 +96,11 @@ public class Factura {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
         
         String facturasJSONString = DAOFactura.consultaFacturasAntesDeFecha(fecha);
+        System.out.println(facturasJSONString);
         JsonReaderFactory factory = Json.createReaderFactory(null);
         try(JsonReader reader = factory.createReader(new StringReader(facturasJSONString));){
-            JsonArray array = reader.readArray();
+            JsonObject mainObj = reader.readObject();
+            JsonArray array = mainObj.getJsonArray("facturas");
             for(int i=0;i<array.size();i++){
                 JsonObject obj = (JsonObject) array.get(i);
                 numeroFactura = Integer.parseInt(obj.getString("numeroFactura"));

@@ -77,24 +77,27 @@ public class Empleado {
     }
     
     public static Empleado getEmpleadoPorLoginYPassword(String user, String password) {
+        Empleado empleadoLogin = null;
         String empleadoJSONString = DAOEmpleado.consultaEmpleadoPorLoginYPassword(user,password); 
-        String nifJson=null; 
-        String passJson =null; 
-        String fechaInicioJson=null;
-        String tipoEmpleadoJson = null;
-        JsonReaderFactory factory = Json.createReaderFactory(null);
-        try(JsonReader reader = factory.createReader(new StringReader(empleadoJSONString));){
-            JsonObject jsonobject = reader.readObject();
-            nifJson = jsonobject.getString("nif");
-            passJson = jsonobject.getString("password");
-            fechaInicioJson = jsonobject.getString("fechaInicio");
+        if(!empleadoJSONString.equals("")){
+            String nifJson=null; 
+            String passJson =null; 
+            String fechaInicioJson=null;
+            String tipoEmpleadoJson = null;
+            JsonReaderFactory factory = Json.createReaderFactory(null);
+            try(JsonReader reader = factory.createReader(new StringReader(empleadoJSONString));){
+                JsonObject jsonobject = reader.readObject();
+                nifJson = jsonobject.getString("nif");
+                passJson = jsonobject.getString("password");
+                fechaInicioJson = jsonobject.getString("fechaInicio");
             //tipoEmpleadoJson = jsonobject.getString("tipoEmpleado");
-        }catch(Exception ex){
-            Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+            }catch(Exception ex){
+                Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+            }
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
+            LocalDateTime fechaInicioLDT = LocalDateTime.parse(fechaInicioJson,formatter);
+            empleadoLogin = new Empleado(nifJson,passJson,fechaInicioLDT,tipoEmpleadoJson);
         }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
-        LocalDateTime fechaInicioLDT = LocalDateTime.parse(fechaInicioJson,formatter);
-        Empleado empleadoLogin = new Empleado(nifJson,passJson,fechaInicioLDT,tipoEmpleadoJson);
         return empleadoLogin;
     }
     

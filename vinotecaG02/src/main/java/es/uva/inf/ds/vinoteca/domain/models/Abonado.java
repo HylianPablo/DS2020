@@ -19,6 +19,9 @@ public class Abonado {
         this.nif = nif;
     }
     
+    public int getNumeroAbonado(){
+        return numeroAbonado;
+    }
     //Hacer setters y getters
     
     

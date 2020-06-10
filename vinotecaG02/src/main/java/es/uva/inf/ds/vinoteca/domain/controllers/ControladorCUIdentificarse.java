@@ -20,10 +20,10 @@ public class ControladorCUIdentificarse {
     public Empleado identificarEmpleado(String user, String password){
         Empleado empleado = Empleado.getEmpleadoPorLoginYPassword(user, password);
         if(empleado==null){
-            //Lanzar excepcion
+            return empleado;
         }
         if(!empleado.isActivo()){
-            //Lanzar excepcion
+            empleado.setNif("NotActivo");
         }
         
         return empleado;

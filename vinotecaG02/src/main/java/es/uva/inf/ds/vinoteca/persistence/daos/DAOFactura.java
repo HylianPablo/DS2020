@@ -9,11 +9,16 @@ import es.uva.inf.ds.vinoteca.domain.models.Empleado;
 import es.uva.inf.ds.vinoteca.persistence.dbaccess.DBConnection;
 import java.io.StringWriter;
 import java.math.BigDecimal;
+//import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -36,6 +41,7 @@ public class DAOFactura {
         int estado = -1;
         LocalDateTime fechaPago = null;
         String idExtractoBancario = null;
+        int counter =0;
         
         ArrayList<Integer> numerosFactura = new ArrayList<>();
         ArrayList<LocalDateTime> fechasEmision = new ArrayList<>();
@@ -43,13 +49,25 @@ public class DAOFactura {
         ArrayList<Integer> estados = new ArrayList<>();
         ArrayList<LocalDateTime> fechasPago = new ArrayList<>();
         ArrayList<String> idExtractosBancarios = new ArrayList<>();
+        Timestamp timestamp = null;
+        
+        try {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date parsedDate = dateFormat.parse(fecha);
+            timestamp = new java.sql.Timestamp(parsedDate.getTime());
+        } catch(Exception e) { //this generic but you can control another types of exception
+    // look the origin of excption 
+        }
+                
+                
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
-        try(PreparedStatement ps = connection.getStatement("SELECT * FROM FACTURA f WHERE f.FECHAEMISION <= ?");)
+        try(PreparedStatement ps = connection.getStatement("SELECT * FROM FACTURA f WHERE f.FECHAEMISION < ?");)
         {
-            ps.setString(1,fecha);
+            ps.setTimestamp(1,timestamp);
             ResultSet result = ps.executeQuery();
             while(result.next()){
+                counter++;
                 numeroFactura = result.getInt("NUMEROFACTURA");
                 numerosFactura.add(numeroFactura);
                 fechaEmision = result.getTimestamp("FECHAEMISION").toLocalDateTime();
@@ -66,6 +84,7 @@ public class DAOFactura {
         }catch(SQLException ex){
             Logger.getLogger(DAOFactura.class.getName()).log(Level.SEVERE,null,ex);
         }
+        System.out.println("Counter: "+counter);
         connection.closeConnection();
         facturasJSONString = facturasToJSONString(numerosFactura,fechasEmision,importes,estados,fechasPago,idExtractosBancarios);
         return facturasJSONString;
@@ -75,6 +94,7 @@ public class DAOFactura {
             ArrayList<Double>importes, ArrayList<Integer> estados, ArrayList<LocalDateTime> fechasPago, ArrayList<String> idExtractosBancarios){
         String facturasJSONString = "";
         JsonArrayBuilder array = Json.createArrayBuilder();
+        System.out.println("Numeros factura size: "+numerosFactura.size());
         for(int i=0;i<numerosFactura.size();i++){
             array.add(Json.createObjectBuilder().add("numeroFactura",Integer.toString(numerosFactura.get(i)))
             .add("fechaEmision",fechasEmision.get(i).toString())

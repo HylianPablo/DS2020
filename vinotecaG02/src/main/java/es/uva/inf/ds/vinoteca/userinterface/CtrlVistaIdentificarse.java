@@ -23,8 +23,16 @@ public class CtrlVistaIdentificarse {
     
     public void checkLogin(String user, String password){
         Empleado empleado = cuController.identificarEmpleado(user, password);
-        int rolEmp = empleado.getRol();
-        GestorDeInterfazDeUsuario giu = new GestorDeInterfazDeUsuario();
-        giu.elegirVista(rolEmp,view);
+        if(empleado == null){
+            view.setMensajeError("El empleado no existe en la BD.");
+        }else{
+            if(empleado.getNif().equals("NotActivo")){
+                view.setMensajeError("El empleado no está activo");
+            }else{
+                int rolEmp = empleado.getRol();
+                GestorDeInterfazDeUsuario giu = new GestorDeInterfazDeUsuario();
+                giu.elegirVista(rolEmp,view);
+            }
+        }
     }
 }

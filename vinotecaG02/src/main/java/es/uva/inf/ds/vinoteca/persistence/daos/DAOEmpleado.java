@@ -5,12 +5,8 @@
  */
 package es.uva.inf.ds.vinoteca.persistence.daos;
 
-import es.uva.inf.ds.vinoteca.domain.models.Empleado;
 import es.uva.inf.ds.vinoteca.persistence.dbaccess.DBConnection;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.StringWriter;
-import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,10 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
-import javax.json.JsonReaderFactory;
 import javax.json.JsonWriter;
 
 /**
@@ -35,7 +28,6 @@ public class DAOEmpleado {
     public static String consultaEmpleadoPorLoginYPassword(String nif, String password) {
         String empleadoJSONString = "";
         LocalDateTime fechaInicio = null;
-        String tipoEmpleado=null;
         
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
@@ -48,17 +40,19 @@ public class DAOEmpleado {
             ResultSet result = ps.executeQuery();
             if(result.next()){
                 fechaInicio=result.getTimestamp("fechainicioenempresa").toLocalDateTime();
-                ArrayList<String> rolesEmpresa = getRolesEmpresa(nif);
-                ArrayList<String> vinculaciones = getVinculaciones(nif);
-                ArrayList<String> disponibilidades = getDisponibilidades(nif);
-                empleadoJSONString = obtainEmpleadoJSONString(nif,password,fechaInicio,
-                rolesEmpresa,vinculaciones,disponibilidades);
+                
             }
             result.close();
         }catch(SQLException ex){
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }
         connection.closeConnection();
+        ArrayList<String> rolesEmpresa = getRolesEmpresa(nif);
+        ArrayList<String> vinculaciones = getVinculaciones(nif);
+        ArrayList<String> disponibilidades = getDisponibilidades(nif);
+        if(fechaInicio!=null){
+            empleadoJSONString = obtainEmpleadoJSONString(nif,password,fechaInicio, rolesEmpresa,vinculaciones,disponibilidades);
+        }
         return empleadoJSONString;
     }
     

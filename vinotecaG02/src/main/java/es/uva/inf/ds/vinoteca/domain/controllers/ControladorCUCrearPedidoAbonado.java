@@ -5,6 +5,8 @@
  */
 
 package es.uva.inf.ds.vinoteca.domain.controllers;
+
+import es.uva.inf.ds.vinoteca.domain.models.Abonado;
 /**
  *
  * @author Ivan
@@ -20,7 +22,8 @@ public class ControladorCUCrearPedidoAbonado {
         return instance;
     }
     
-    public void crearPedidoAbonado(int numID){
+    public Abonado crearPedidoAbonado(int numID){
+        
         
     }
 

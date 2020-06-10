@@ -1,28 +1,33 @@
 package es.uva.inf.ds.vinoteca.userinterface;
 
-import es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUConsultarImpagos;
 import es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUCrearPedidoAbonado;
+import es.uva.inf.ds.vinoteca.domain.models.Abonado;
 
 /**
  * @author Ivan
  */
-public class ControladorVistaAtencionCliente{
+public class ControladorVistaAtencionCliente {
 
 	private final VistaAtencionCliente view;
 	private final ControladorCUCrearPedidoAbonado cuController;
 
-	public ControladorVistaAtencionCliente(VistaAtencionCliente view){
+	public ControladorVistaAtencionCliente(VistaAtencionCliente view) {
 		this.view = view;
 		cuController = ControladorCUCrearPedidoAbonado.getInstance();
 	}
 
-	public void procesaIntroducirNumeroAbonado() {
-		int numAbonado = view.getNumeroAbonado();
-		cuController.crearPedidoAbonado(numAbonado);
+	public void procesaIntroducirNumeroAbonado(int numAbonado) {
+		// int numAbonado = view.getNumeroAbonado();
+		if (numAbonado < 0) {
+			view.setMensajeError("El número del abonado debe ser positivo");
+		} else {
+			Abonado a = cuController.crearPedidoAbonado(numAbonado);
+		}
+
 	}
 
 	public void procesaConfirmacion() {
-
+		cuController.comprobarPlazosVencidos();
 	}
 
 	public String generarTexto() {

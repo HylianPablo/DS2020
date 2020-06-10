@@ -1,56 +1,41 @@
-package Diseño.Arquitectura.vinotecaG02.negocio.modelos;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package es.uva.inf.ds.vinoteca.domain.models;
 
-import Diseño.Arquitectura.vinotecaG02.persistencia.DAOPedido;
-import Análisis.Modelo del dominio.Entidades del dominio.EstadoPedido;
-import java.util.Date;
-import java.util.Currency;
+import java.time.LocalDateTime;
 
+/**
+ *
+ * @author Ivan
+ */
 public class Pedido {
-
-	private int numero;
-
-	private EstadoPedido estado;
-
-	private Date fechaRealizacion;
-
+	private int numero, estado, numeroFactura, numeroAbonado;
+	private LocalDateTime fechaRealizacion, fechaRecepcion, fechaEntrega;
 	private String notaEntrega;
+	private double importe;
 
-	private Currency importe;
+	public Pedido(int numero, int estado, LocalDateTime fechaRealizacion, String notaEntrega, double importe,
+			LocalDateTime fechaRecepcion, LocalDateTime fechaEntrega, int numeroFactura, int numeroAbonado) {
+		this.numero = numero;
+		this.estado = estado;
+		this.fechaRealizacion = fechaRealizacion;
+		this.notaEntrega = notaEntrega;
+		this.importe = importe;
+		this.fechaRecepcion = fechaRecepcion;
+		this.fechaEntrega = fechaEntrega;
+		this.numeroFactura = numeroFactura;
+		this.numeroAbonado = numeroAbonado;
+	}
 
-	private Date[] fechaRecepcion;
-
-	private Date[] fechaEntrega;
-
-	private Abonado abonado;
-
-	private Factura factura;
-
-	public Abonado getAbonado() {
+	public static ArrayList<Pedido> getPedidosAbonado(int numeroAbonado){
 		return null;
 	}
 
-	public static Pedido getPedido() {
-		return null;
-	}
-
-	public void pedido(String pedidoStr) {
-
-	}
-
-	public void cambiarEstadoPedidoPendiente() {
-
-	}
-
-	public boolean comprobarNoVencido() {
-		return false;
-	}
-
-	public String getJSON() {
-		return null;
-	}
-
-	public void actualizarEstadoACompletado() {
-
+	public int getNumeroPedido() {
+		return numero;
 	}
 
 }

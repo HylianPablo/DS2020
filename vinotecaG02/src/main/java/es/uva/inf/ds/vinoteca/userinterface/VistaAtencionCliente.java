@@ -11,6 +11,10 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
 		controller = new ControladorVistaAtencionCliente(this);
 	}
 
+	public void setMensajeError(String message){
+		//TODO: Mostrar error
+	}
+
 	public void buscarAbonado() {
 
 	}

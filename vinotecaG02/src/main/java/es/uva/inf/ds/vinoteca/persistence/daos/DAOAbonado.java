@@ -2,42 +2,51 @@ package es.uva.inf.ds.vinoteca.persistence.daos;
 
 import es.uva.inf.ds.vinoteca.persistence.dbaccess.DBConnection;
 import java.io.StringWriter;
-import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonWriter;
 
-
 public class DAOAbonado {
 
-	 
-	public String consultaAbonado(int numID) {
+	public static String consultaAbonado(int numeroAbonado) {
 		String abonadoJSONString = "";
-		DBConnection dbConnection = DBConnection.getInstance();
-		dbConnection.openConnection();
-		try(PreparedStatement ps = dbConnection.getStatement("SELECT * FROM ABONADO a WHERE f.NUMEROABONADO = ?");)
-        {
-            ps.setInt(1,numID);
-            ResultSet result = ps.executeQuery();
-            
-        }catch(SQLException ex){
-            Logger.getLogger(DAOAbonado.class.getName()).log(Level.SEVERE,null,ex);
-        }
+		String openidref = null;
+		String nif = null;
+		DBConnection connection = DBConnection.getInstance();
+		connection.openConnection();
+		try (PreparedStatement ps = connection.getStatement("SELECT * FROM ABONADO a WHERE a.NUMEROABONADO = ?");) {
+			ps.setString(1, Integer.toString(numeroAbonado));
+			ResultSet result = ps.executeQuery();
+			if (result.next()) {
+				openidref = result.getString("OPENIDREF");
+				nif = result.getString("NIF");
+			}
 
-		return null;
+		} catch (SQLException ex) {
+			Logger.getLogger(DAOAbonado.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		connection.closeConnection();
+		abonadoJSONString = abonadoToJSONString(numeroAbonado, openidref, nif);
+		return abonadoJSONString;
 	}
 
-	private String abonadoToJSONString(){
-		return null;
+	private static String abonadoToJSONString(int numeroAbonado, String openidref, String nif) {
+		String abonadoJSONString = "";
+		JsonObject abonadoJSON = Json.createObjectBuilder().add("numeroAbonado", Integer.toString(numeroAbonado))
+				.add("openIdRef", openidref).add("nif", nif).build();
+		try (StringWriter stringWriter = new StringWriter(); JsonWriter writer = Json.createWriter(stringWriter);) {
+
+			writer.writeObject(abonadoJSON);
+			abonadoJSONString = stringWriter.toString();
+		} catch (Exception ex) {
+			Logger.getLogger(DAOAbonado.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return abonadoJSONString;
 	}
 
 }

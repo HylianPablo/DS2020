@@ -1,8 +1,15 @@
-package Diseño.Arquitectura.vinotecaG02.interfaz;
+package es.uva.inf.ds.vinoteca.userinterface;
 
-public class VistaAtencionCliente extends InterfazVista {
+/**
+ * @author Ivan
+ */
+public class VistaAtencionCliente extends javax.swing.JFrame {
 
-	private controladorVistaAtencionCliente controlador;
+	private ControladorVistaAtencionCliente controller;
+
+	public VistaAtencionCliente(){
+		controller = new ControladorVistaAtencionCliente(this);
+	}
 
 	public void buscarAbonado() {
 

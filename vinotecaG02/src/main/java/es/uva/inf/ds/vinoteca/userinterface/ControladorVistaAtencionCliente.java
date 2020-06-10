@@ -1,14 +1,24 @@
-package Diseño.Arquitectura.vinotecaG02.interfaz;
+package es.uva.inf.ds.vinoteca.userinterface;
 
-import Diseño.Arquitectura.vinotecaG02.negocio.controladoresCasoUso.personalAlmacen.controladorCURegistrarRecepcionCompra;
-import Diseño.Arquitectura.vinotecaG02.negocio.controladoresCasoUso.personalAtencionCliente.controladorCUCrearPedidoAbonado;
+import es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUConsultarImpagos;
+import es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUCrearPedidoAbonado;
 
-public class controladorVistaAtencionCliente extends InterfazControladorVista {
+/**
+ * @author Ivan
+ */
+public class ControladorVistaAtencionCliente{
 
-	private VistaAtencionCliente vista;
+	private final VistaAtencionCliente view;
+	private final ControladorCUCrearPedidoAbonado cuController;
+
+	public ControladorVistaAtencionCliente(VistaAtencionCliente view){
+		this.view = view;
+		cuController = ControladorCUCrearPedidoAbonado.getInstance();
+	}
 
 	public void procesaIntroducirNumeroAbonado() {
-
+		int numAbonado = view.getNumeroAbonado();
+		cuController.crearPedidoAbonado(numAbonado);
 	}
 
 	public void procesaConfirmacion() {

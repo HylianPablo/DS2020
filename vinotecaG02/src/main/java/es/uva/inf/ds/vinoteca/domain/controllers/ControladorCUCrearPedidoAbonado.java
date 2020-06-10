@@ -11,8 +11,13 @@ package es.uva.inf.ds.vinoteca.domain.controllers;
  */
 public class ControladorCUCrearPedidoAbonado {
 
-    public static ControladorCUCrearPedidoAbonado getController(){
-        return new ControladorCUCrearPedidoAbonado();
+    private static ControladorCUCrearPedidoAbonado instance;
+
+    private ControladorCUCrearPedidoAbonado(){}
+
+    public static ControladorCUCrearPedidoAbonado getInstance(){
+        if(instance == null) instance = new ControladorCUCrearPedidoAbonado();
+        return instance;
     }
     
     public void crearPedidoAbonado(int numID){

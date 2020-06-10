@@ -30,16 +30,41 @@ public class Compra {
     private Bodega bodega;
     private ArrayList<LineaCompra> lineasCompra;
     private boolean recibidaCompleta;
-    private LocalDate fechaCompraCompleta, fechaPago;
+    private LocalDateTime fechaCompraCompleta, fechaPago;
     private int idCompra;
+    private double importe;
     
-    public Compra(ArrayList<LineaCompra> lc, Bodega b, int id){
-        lineasCompra = lc;
-        bodega = b;
+    public Compra(int id, double i, LocalDateTime fp){
+        lineasCompra = null;
+        importe = i;
+        bodega = null;
         recibidaCompleta = false;
         fechaCompraCompleta = null;
-        fechaPago = null;  
         idCompra = id;
+        fechaPago = fp;
+    }
+    
+        //COMPLETAR
+    public static Compra getCompra(int id) {
+        String compraJSONString = DAOCompra.consultaCompra(id);
+        //lo que tenga el json
+        String importeJson=null; 
+        String fechaJson=null; 
+        JsonReaderFactory factory = Json.createReaderFactory(null);
+        try(JsonReader reader = factory.createReader(new StringReader(compraJSONString));){
+            JsonObject jsonobject = reader.readObject();
+            importeJson = jsonobject.getString("importe");
+            fechaJson = jsonobject.getString("fechaPago");
+            //coger del json
+        }catch(Exception ex){
+            Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+        }
+        //crear objeto compra
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
+        LocalDateTime fechaPago = LocalDateTime.parse(fechaJson,formatter);
+        int importe = Integer.parseInt(importeJson);
+        Compra compra = new Compra(id, importe, fechaPago);
+        return compra;
     }
     
     public Bodega getBodega(){
@@ -48,6 +73,7 @@ public class Compra {
         return Bodega.getBodega(idCompra);
     }
     
+    /*
     public boolean comprobarRecibidas(){
         for(int i = 0; i < LineaCompra.getNumeroLineas(); i++){
             if (!LineaCompra.comprobarRecibida()){
@@ -55,12 +81,12 @@ public class Compra {
             }
         }
         return true;        
-    }
+    }*/
     
     
     public void marcarRecibidaCompleta(){
         recibidaCompleta = true;
-        fechaCompraCompleta = LocalDate.now();
+        fechaCompraCompleta = LocalDateTime.now();
     }
     
     //SERIA MEJOR PASAR DIRECTAMENTE IDCOMPRA Y QUE LA FUNCION NO TUVIERA PARAMETROS
@@ -76,20 +102,4 @@ public class Compra {
     public ArrayList<LineaCompra> getLineasCompra(int idCompra){
         return Compra;
     }*/
-
-    //COMPLETAR
-    public Compra getCompra(int id) {
-        String compraJSONString = DAOCompra.consultaCompra(id);
-        //lo que tenga el json
-        JsonReaderFactory factory = Json.createReaderFactory(null);
-        try(JsonReader reader = factory.createReader(new StringReader(compraJSONString));){
-            JsonObject jsonobject = reader.readObject();
-            //coger del json
-        }catch(Exception ex){
-            Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
-        }
-        //crear objeto compra
-        Compra compra = new Compra(loginJson,nifJson,passJson,fechaInicioLDT,tipoEmpleadoJson);
-        return compra;
-    }
 }

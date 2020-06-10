@@ -14,9 +14,11 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonReaderFactory;
+import javax.json.JsonValue;
 
 /**
  *
@@ -30,9 +32,8 @@ public class LineaCompra {
     private LocalDate fechaRecepcion;
     private ArrayList<LineaCompra> listaLineas;
     
-    public LineaCompra(int u, String r){
+    public LineaCompra(int u){
         unidades = u;
-        referencia = r;
         recibida = false;
         fechaRecepcion = null;
         listaLineas = null;
@@ -70,12 +71,20 @@ public class LineaCompra {
     public static ArrayList<LineaCompra> getLineaCompra(int idCompra) {
         String lineasCompraJSONString = DAOLineaCompra.consultaLineaCompra(idCompra);
         //lo que tenga el json
+        ArrayList<LineaCompra> lcompras = new ArrayList<>();
+        JsonArray arr = null;
         JsonReaderFactory factory = Json.createReaderFactory(null);
         try(JsonReader reader = factory.createReader(new StringReader(lineasCompraJSONString));){
             JsonObject jsonobject = reader.readObject();
+            arr = jsonobject.getJsonArray("array");
             //coger del json
         }catch(Exception ex){
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+        }
+        for (int i = 0; i< arr.size(); i++){
+            JsonValue uni = arr.get(i);
+            String unidades = uni.getValueT();
+            LineaCompra lc = new LineaCompra(uni.toString());
         }
         //crear objeto lineaCompra
         //añadirlo a array retornar array

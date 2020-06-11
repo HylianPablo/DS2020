@@ -58,6 +58,13 @@ public class EmpleadoTest {
     }
     
     @org.junit.jupiter.api.Test
+    public void setterNIFErroneo(){
+        assertThrows(IllegalArgumentException.class, ()->{
+            e.setNif("1234567890");
+        });
+    }
+    
+    @org.junit.jupiter.api.Test
     public void setterPassword(){
         e.setPassword("dummy");
         assertEquals("dummy",e.getPassword());

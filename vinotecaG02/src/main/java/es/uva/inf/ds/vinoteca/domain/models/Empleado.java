@@ -36,6 +36,8 @@ public class Empleado {
     }
     
     public void setNif(String nif){
+        if(nif.length()>9)
+            throw new IllegalArgumentException("La longitud del NIF debe ser como mucho de 9 caracteres");
         this.nif=nif;
     }
             

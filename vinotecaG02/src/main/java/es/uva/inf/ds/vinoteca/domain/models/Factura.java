@@ -7,6 +7,7 @@ package es.uva.inf.ds.vinoteca.domain.models;
 
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOFactura;
+import es.uva.inf.ds.vinoteca.persistence.daos.DAOPedido;
 import java.io.StringReader;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -101,7 +102,7 @@ public class Factura {
         int numeroAbonadoJ;
         ArrayList<Pedido> pedidos = new ArrayList<>();
         
-        pedidosJSONString = DAOFactura.selectPedidosAsociados(this.numeroFactura);
+        pedidosJSONString = DAOPedido.selectPedidosAsociados(this.numeroFactura);
         JsonReaderFactory factory = Json.createReaderFactory(null);
         try(JsonReader reader = factory.createReader(new StringReader(pedidosJSONString));){
             JsonObject mainObj = reader.readObject();

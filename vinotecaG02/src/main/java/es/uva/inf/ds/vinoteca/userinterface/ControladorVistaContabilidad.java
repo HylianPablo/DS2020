@@ -31,7 +31,11 @@ public class ControladorVistaContabilidad {
    
         }else{
             ArrayList<String> detalles = cuController.consultarImpagos(fecha);
-            view.actualizarTabla(detalles);
+            if(!detalles.isEmpty()){
+                view.actualizarTabla(detalles);
+            }else{
+                view.setMensajeError("No hay facturas antes de la fecha seleccionada");
+            }
         }
     }
     

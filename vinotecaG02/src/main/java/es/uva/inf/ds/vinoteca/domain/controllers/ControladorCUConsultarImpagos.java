@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *
  * @author pablo
  */
-public class ControladorCUConsultarImpagos {
+public class ControladorCUConsultarImpagos { //REVISAR
     
     public static ControladorCUConsultarImpagos getController(){
         return new ControladorCUConsultarImpagos();
@@ -22,7 +22,6 @@ public class ControladorCUConsultarImpagos {
     
     public ArrayList<String> consultarImpagos(String fecha){
         ArrayList <Factura> facturas = Factura.consultaFacturasAntesDeFecha(fecha);
-        System.out.println(facturas.size());
         ArrayList<ArrayList<Pedido>> matrizPedidos = new ArrayList<>();
         ArrayList<Abonado> abonados = new ArrayList<>();
         for(int i=0;i<facturas.size();i++){
@@ -47,7 +46,6 @@ public class ControladorCUConsultarImpagos {
                 }
             }
             detalle = detalle + pedidosDetalle;
-            System.out.println(detalle);
             detalles.add(detalle);
         }
         return detalles;

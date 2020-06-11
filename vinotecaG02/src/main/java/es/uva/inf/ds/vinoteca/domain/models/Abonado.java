@@ -22,7 +22,28 @@ public class Abonado {
     public int getNumeroAbonado(){
         return numeroAbonado;
     }
-    //Hacer setters y getters
+    
+    public void setNumeroAbonado(int n){
+        numeroAbonado=n;
+    }
+    
+    public String getOpenIdRef(){
+        return openidref;
+    }
+    
+    public void setOpenIdRef(String s){
+        openidref=s;
+    }
+    
+    public String getNIF(){
+        return nif;
+    }
+    
+    public void setNIF(String s){
+        if(s.length()>9)
+            throw new IllegalArgumentException("La longitud del NIF debe ser como mucho de 9 caracteres");
+        nif=s;
+    }
     
     
 }

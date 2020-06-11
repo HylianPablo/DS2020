@@ -10,6 +10,7 @@ public class ControladorVistaAtencionCliente {
 
 	private final VistaAtencionCliente view;
 	private final ControladorCUCrearPedidoAbonado cuController;
+	private Abonado abonado;
 
 	public ControladorVistaAtencionCliente(VistaAtencionCliente view) {
 		this.view = view;
@@ -21,13 +22,13 @@ public class ControladorVistaAtencionCliente {
 		if (numAbonado < 0) {
 			view.setMensajeError("El número del abonado debe ser positivo");
 		} else {
-			Abonado a = cuController.crearPedidoAbonado(numAbonado);
+			abonado = cuController.crearPedidoAbonado(numAbonado);
 		}
 
 	}
 
 	public void procesaConfirmacion() {
-		cuController.comprobarPlazosVencidos();
+		cuController.comprobarPlazosVencidos(abonado);
 	}
 
 	public String generarTexto() {

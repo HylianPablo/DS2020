@@ -7,6 +7,8 @@
 package es.uva.inf.ds.vinoteca.domain.controllers;
 
 import es.uva.inf.ds.vinoteca.domain.models.Abonado;
+import java.util.ArrayList;
+
 /**
  *
  * @author Ivan
@@ -15,23 +17,24 @@ public class ControladorCUCrearPedidoAbonado {
 
     private static ControladorCUCrearPedidoAbonado instance;
 
-    private ControladorCUCrearPedidoAbonado(){}
+    private ControladorCUCrearPedidoAbonado() {
+    }
 
-    public static ControladorCUCrearPedidoAbonado getInstance(){
-        if(instance == null) instance = new ControladorCUCrearPedidoAbonado();
+    public static ControladorCUCrearPedidoAbonado getInstance() {
+        if (instance == null)
+            instance = new ControladorCUCrearPedidoAbonado();
         return instance;
     }
-    
-    public Abonado crearPedidoAbonado(int numID){
-        
-        
+
+    public Abonado crearPedidoAbonado(int numID) {
+        return Abonado.getAbonado(numID);
     }
 
-    public void comprobarPlazosVencidos(){
-
+    public void comprobarPlazosVencidos(Abonado abonado) {
+        abonado.getPedidos();
     }
 
-    public void comprobarReferencia(String ref, int cantidad){
+    public void comprobarReferencia(String ref, int cantidad) {
 
     }
 

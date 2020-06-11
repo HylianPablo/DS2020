@@ -76,4 +76,9 @@ public class DAOCompra {
         }
         return compraJSONString;
     }
+
+    public static void actualizarCompra(String compra) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

@@ -47,6 +47,10 @@ public class LineaCompra {
         listaLineas.add(linea);
     }
     
+    public ArrayList<LineaPedido> actualizaLineasPedido(){
+        return LineaPedido.getLineasPedido(codigo);
+    }
+    
     public int getNumeroLineas(){
         return listaLineas.size();
     }
@@ -64,9 +68,6 @@ public class LineaCompra {
         fechaRecepcion = LocalDateTime.now();
     }
     
-    public void actualizaLineasPedido(){
-    }
-    
     public Referencia getReferencia(){
         return Referencia.getReferencia(codigo);
     }
@@ -74,7 +75,6 @@ public class LineaCompra {
     //COMPLETAR
     public static ArrayList<LineaCompra> getLineaCompra(int idCompra) {
         String lineasCompraJSONString = DAOLineaCompra.consultaLineaCompra(idCompra);
-        //lo que tenga el json
         int unidades = 0;
         int codigo = 0;
         LocalDateTime fechaRecepcion;
@@ -99,12 +99,5 @@ public class LineaCompra {
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }
         return lcompras;
-        //crear objeto lineaCompra
-        //añadirlo a array retornar array
     }
-    
-    /*
-    public boolean comprobarAllRecibidas(){
-        
-    }*/
 }

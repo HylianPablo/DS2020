@@ -91,7 +91,8 @@ public class Compra {
     
     //SERIA MEJOR PASAR DIRECTAMENTE IDCOMPRA Y QUE LA FUNCION NO TUVIERA PARAMETROS
     public ArrayList<LineaCompra> getLineasCompra(){
-        return LineaCompra.getLineaCompra(idCompra);
+        lineasCompra = LineaCompra.getLineaCompra(idCompra);
+        return lineasCompra;
     }
     
     public boolean compruebaCompletado(){
@@ -102,4 +103,18 @@ public class Compra {
     public ArrayList<LineaCompra> getLineasCompra(int idCompra){
         return Compra;
     }*/
+
+    public boolean comprobarRecibidas() {
+        boolean recibida = true;
+        for (int i = 0; i < lineasCompra.size(); i++){
+            recibida = lineasCompra.get(i).comprobarRecibida();
+            if (recibida != true){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public String getJSON() {
+    }
 }

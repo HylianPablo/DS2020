@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package es.uva.inf.ds.vinoteca.domain.models;
 
-import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOFactura;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOPedido;
 import java.io.StringReader;
@@ -22,8 +17,10 @@ import javax.json.JsonReader;
 import javax.json.JsonReaderFactory;
 
 /**
- *
- * @author pablo
+ * Modelo de las facturas utilizadas en el sistema.
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class Factura {
     private int numeroFactura,estado;
@@ -31,6 +28,15 @@ public class Factura {
     private double importe;
     private String idExtractoBancario;
     
+    /**
+     * Constructor de la clase Factura.
+     * @param numeroFactura
+     * @param fechaEmision
+     * @param importe
+     * @param estado
+     * @param fechaPago
+     * @param idExtractoBancario 
+     */
     public Factura(int numeroFactura, LocalDateTime fechaEmision, double importe, int estado, LocalDateTime fechaPago,
                     String idExtractoBancario){
         this.numeroFactura=numeroFactura;

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package es.uva.inf.ds.vinoteca.domain.controllers;
 
 import es.uva.inf.ds.vinoteca.domain.models.Abonado;
@@ -11,15 +7,28 @@ import es.uva.inf.ds.vinoteca.domain.models.Pedido;
 import java.util.ArrayList;
 
 /**
- *
- * @author pablo
+ * Controlador del caso de uso "Consultar impagos".
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class ControladorCUConsultarImpagos { //REVISAR
     
+    /**
+     * Factoría de controladores del caso de uso.
+     * @return Nueva instancia del controlador del caso de uso "Consultar impagos".
+     */
     public static ControladorCUConsultarImpagos getController(){
         return new ControladorCUConsultarImpagos();
     }
     
+    /**
+     * Obtiene las facturas con sus correspondientes pedidos y abonados que han sido completadas treinta días antes de la fecha introducida.
+     * @param fecha Cadena de caracteres que representa la fecha límite a partir de la cual obtener las facturas.
+     * @return {@code ArrayList} de cadenas de caracteres que representa los datos de las facturas completadas antes de 
+     * la fecha introducida, junto con sus pedidos y sus abonados correspondientes.
+     * El {@code ArrayList} podrá estar vacío en caso de no existir ninguna factura que cumpla con los requisitos.
+     */
     public ArrayList<String> consultarImpagos(String fecha){
         ArrayList <Factura> facturas = Factura.consultaFacturasAntesDeFecha(fecha);
         ArrayList<ArrayList<Pedido>> matrizPedidos = new ArrayList<>();

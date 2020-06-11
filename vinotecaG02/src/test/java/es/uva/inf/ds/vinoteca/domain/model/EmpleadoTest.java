@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class EmpleadoTest {
     private Empleado e;
-    private LocalDateTime ldt = LocalDateTime.of(2020,Month.JUNE,6,00,00);
+    private final LocalDateTime ldt = LocalDateTime.of(2020,Month.JUNE,6,00,00);
     
 
     @org.junit.jupiter.api.BeforeAll
@@ -49,6 +49,13 @@ public class EmpleadoTest {
         assertEquals("123456789",e.getNif());
         assertEquals("password",e.getPassword());
         assertEquals(ldt,e.getFecha());
+    }
+    
+    @org.junit.jupiter.api.Test
+    public void constructorNIFErroneo(){
+        assertThrows(IllegalArgumentException.class, ()->{
+            Empleado e2 = new Empleado("1234567890","password",ldt);
+        });
     }
     
     @org.junit.jupiter.api.Test

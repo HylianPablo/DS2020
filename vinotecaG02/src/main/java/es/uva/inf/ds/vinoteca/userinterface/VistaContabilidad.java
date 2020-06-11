@@ -1,21 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.uva.inf.ds.vinoteca.userinterface;
 
 import java.util.ArrayList;
 
 /**
- *
- * @author pablo
+ * Interfaz utilizada para consultar los impagos de los clientes.
+ * @author pamarti
+ * @author alerome
+ * @auhtor ivagonz
  */
 public class VistaContabilidad extends javax.swing.JFrame {
 
     private final ControladorVistaContabilidad controller;
+    
     /**
-     * Creates new form VistaContabilidad
+     * Constructor de la interfaz del caso de uso.
      */
     public VistaContabilidad() {
         initComponents();
@@ -25,10 +23,18 @@ public class VistaContabilidad extends javax.swing.JFrame {
         
     }
     
-    public void actualizarTabla(ArrayList<String> detalles){
+    /**
+     * Muestra los valores de las facturas anteriores a 30 días en la tabla de la interfaz.
+     * @param detalles {@code ArrayList} de cadenas de caracteres que representa las facturas y sus correspondientes pedidos y abonados.
+     */
+    public void actualizarTabla(ArrayList<String> detalles){ //CAMBIAR!!!!!
         table.setValueAt(detalles.get(0), 0, 0);
     }
     
+    /**
+     * Muestra el mensaje de error correspondiente a una acción errónea en la interfaz.
+     * @param message Mensaje de error a mostrar en la interfaz.
+     */
     public void setMensajeError(String message){
         errorMsg.setText(message);
     }
@@ -100,16 +106,16 @@ public class VistaContabilidad extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(144, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
                 .addComponent(errorMsg)
-                .addGap(107, 107, 107)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(searchBar)
@@ -154,6 +160,7 @@ public class VistaContabilidad extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        errorMsg.setText("");
         String fecha = searchBar.getText();
         controller.procesarIntroduceFecha(fecha);
     }//GEN-LAST:event_searchButtonActionPerformed

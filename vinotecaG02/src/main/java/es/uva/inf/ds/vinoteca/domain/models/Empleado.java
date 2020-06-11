@@ -26,26 +26,18 @@ import javax.json.JsonReaderFactory;
  * @author pablo
  */
 public class Empleado {
-    private String login, nif, password, tipoEmpleado;
+    private String nif, password;
     private LocalDateTime fechaInicio;
     
-    public Empleado(String l, String n, String p, LocalDateTime ldt, String t){
-        login=l;
+    public Empleado(String n, String p, LocalDateTime ldt){
         nif=n;
         password=p;
         fechaInicio=ldt;
-        tipoEmpleado=t;
-    }
-    
-    public void setLogin(String login){
-        this.login=login;
-    }
-    
-    public String getLogin(){
-        return login;
     }
     
     public void setNif(String nif){
+        if(nif.length()>9)
+            throw new IllegalArgumentException("La longitud del NIF debe ser como mucho de 9 caracteres");
         this.nif=nif;
     }
             
@@ -69,14 +61,6 @@ public class Empleado {
         return fechaInicio;
     }
     
-    public void setTipoEmpleado(String tipoEmpleado){
-        this.tipoEmpleado=tipoEmpleado;
-    }
-    
-    public String getTipoEmpleado(){
-        return tipoEmpleado;
-    }
-    
     public boolean isActivo(){
         return DAOEmpleado.empleadoActivo(nif);
     }
@@ -86,25 +70,27 @@ public class Empleado {
     }
     
     public static Empleado getEmpleadoPorLoginYPassword(String user, String password) {
-        String empleadoJSONString = DAOEmpleado.consultaEmpleadoPorLoginYPassword(user,password);
-        String loginJson =null; 
-        String nifJson=null; 
-        String passJson =null; 
-        String fechaInicioJson=null;
-        String tipoEmpleadoJson = null;
-        JsonReaderFactory factory = Json.createReaderFactory(null);
-        try(JsonReader reader = factory.createReader(new StringReader(empleadoJSONString));){
-            JsonObject jsonobject = reader.readObject();
-            nifJson = jsonobject.getString("nif");
-            passJson = jsonobject.getString("password");
-            fechaInicioJson = jsonobject.getString("fechaInicio");
+        Empleado empleadoLogin = null;
+        String empleadoJSONString = DAOEmpleado.consultaEmpleadoPorLoginYPassword(user,password); 
+        if(!empleadoJSONString.equals("")){
+            String nifJson=null; 
+            String passJson =null; 
+            String fechaInicioJson=null;
+            String tipoEmpleadoJson = null;
+            JsonReaderFactory factory = Json.createReaderFactory(null);
+            try(JsonReader reader = factory.createReader(new StringReader(empleadoJSONString));){
+                JsonObject jsonobject = reader.readObject();
+                nifJson = jsonobject.getString("nif");
+                passJson = jsonobject.getString("password");
+                fechaInicioJson = jsonobject.getString("fechaInicio");
             //tipoEmpleadoJson = jsonobject.getString("tipoEmpleado");
-        }catch(Exception ex){
-            Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+            }catch(Exception ex){
+                Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+            }
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
+            LocalDateTime fechaInicioLDT = LocalDateTime.parse(fechaInicioJson,formatter);
+            empleadoLogin = new Empleado(nifJson,passJson,fechaInicioLDT);
         }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
-        LocalDateTime fechaInicioLDT = LocalDateTime.parse(fechaInicioJson,formatter);
-        Empleado empleadoLogin = new Empleado(loginJson,nifJson,passJson,fechaInicioLDT,tipoEmpleadoJson);
         return empleadoLogin;
     }
     

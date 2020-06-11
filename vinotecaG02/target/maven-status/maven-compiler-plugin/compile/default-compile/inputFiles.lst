@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /home/alejandro/UNI/DIS/RepoDis/dise-o2020/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/domain/models/Empleado.java
 /home/alejandro/UNI/DIS/RepoDis/dise-o2020/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/app/Main.java
 /home/alejandro/UNI/DIS/RepoDis/dise-o2020/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/userinterface/CtrlVistaIdentificarse.java
@@ -9,3 +10,21 @@
 /home/alejandro/UNI/DIS/RepoDis/dise-o2020/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/persistence/dbaccess/DBConnection.java
 /home/alejandro/UNI/DIS/RepoDis/dise-o2020/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/userinterface/VistaIdentificarse.java
 /home/alejandro/UNI/DIS/RepoDis/dise-o2020/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/persistence/daos/DAOEmpleado.java
+=======
+/home/pablo/NetBeansProjects/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/userinterface/VistaIdentificarse.java
+/home/pablo/NetBeansProjects/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/app/Main.java
+/home/pablo/NetBeansProjects/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/domain/models/Pedido.java
+/home/pablo/NetBeansProjects/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/persistence/daos/DAOAbonado.java
+/home/pablo/NetBeansProjects/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/persistence/daos/DAOEmpleado.java
+/home/pablo/NetBeansProjects/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/domain/models/Abonado.java
+/home/pablo/NetBeansProjects/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/domain/models/Factura.java
+/home/pablo/NetBeansProjects/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/domain/models/Empleado.java
+/home/pablo/NetBeansProjects/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/persistence/daos/DAOFactura.java
+/home/pablo/NetBeansProjects/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/userinterface/ControladorVistaContabilidad.java
+/home/pablo/NetBeansProjects/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/userinterface/GestorDeInterfazDeUsuario.java
+/home/pablo/NetBeansProjects/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/domain/controllers/ControladorCUConsultarImpagos.java
+/home/pablo/NetBeansProjects/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/persistence/dbaccess/DBConnection.java
+/home/pablo/NetBeansProjects/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/userinterface/VistaContabilidad.java
+/home/pablo/NetBeansProjects/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/domain/controllers/ControladorCUIdentificarse.java
+/home/pablo/NetBeansProjects/vinotecaG02/src/main/java/es/uva/inf/ds/vinoteca/userinterface/CtrlVistaIdentificarse.java
+>>>>>>> 830adee830dffe5557849faf82394a23803b8672

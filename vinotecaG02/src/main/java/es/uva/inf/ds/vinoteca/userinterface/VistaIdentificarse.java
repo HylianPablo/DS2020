@@ -11,7 +11,7 @@ package es.uva.inf.ds.vinoteca.userinterface;
  */
 public class VistaIdentificarse extends javax.swing.JFrame {
     
-    private CtrlVistaIdentificarse controller;
+    private final CtrlVistaIdentificarse controller;
     /**
      * Creates new form VistaIdentificarse
      */
@@ -21,6 +21,12 @@ public class VistaIdentificarse extends javax.swing.JFrame {
         setResizable(false);
         errorMsg.setText("");
         controller = new CtrlVistaIdentificarse(this);
+    }
+    
+    public void setMensajeError(String message){
+       userInput.setText("");
+       passwordInput.setText("");
+       errorMsg.setText(message);
     }
 
     /**
@@ -34,11 +40,11 @@ public class VistaIdentificarse extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         userInput = new javax.swing.JTextField();
-        passwordInput = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         errorMsg = new javax.swing.JLabel();
         loginButton = new javax.swing.JButton();
+        passwordInput = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,13 +69,12 @@ public class VistaIdentificarse extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(errorMsg)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(passwordInput)
-                        .addComponent(userInput)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)))
+                    .addComponent(userInput, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+                    .addComponent(passwordInput, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(43, 43, 43))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(151, 151, 151)
@@ -87,9 +92,9 @@ public class VistaIdentificarse extends javax.swing.JFrame {
                 .addComponent(userInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(24, 24, 24)
                 .addComponent(passwordInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(loginButton)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
@@ -116,6 +121,7 @@ public class VistaIdentificarse extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        errorMsg.setText("");
         String user = userInput.getText();
         String password = passwordInput.getText();
         controller.checkLogin(user,password);
@@ -128,7 +134,7 @@ public class VistaIdentificarse extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton loginButton;
-    private javax.swing.JTextField passwordInput;
+    private javax.swing.JPasswordField passwordInput;
     private javax.swing.JTextField userInput;
     // End of variables declaration//GEN-END:variables
 }

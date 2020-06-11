@@ -40,6 +40,10 @@ public class Factura {
         this.fechaPago=fechaPago;
         this.idExtractoBancario=idExtractoBancario;
     }
+
+    Factura(int unidades, LocalDateTime fechaRecepcion) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public int getNumeroFactura(){
         return numeroFactura;

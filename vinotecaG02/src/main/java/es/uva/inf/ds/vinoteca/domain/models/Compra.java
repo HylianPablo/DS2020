@@ -62,7 +62,7 @@ public class Compra {
         //crear objeto compra
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
         LocalDateTime fechaPago = LocalDateTime.parse(fechaJson,formatter);
-        int importe = Integer.parseInt(importeJson);
+        double importe = Double.parseDouble(importeJson);
         Compra compra = new Compra(id, importe, fechaPago);
         return compra;
     }

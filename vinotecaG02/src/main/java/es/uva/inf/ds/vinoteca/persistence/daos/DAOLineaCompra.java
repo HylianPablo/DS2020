@@ -32,7 +32,16 @@ public class DAOLineaCompra {
     
     public static String consultaLineaCompra(int id){
         String lineaCompraJSONString = "";
-        ArrayList<String> unidades = new ArrayList<>();
+        LocalDateTime fechaRecepcion = null;
+        int numeroUnidades = 0;
+        int counter = 0;
+        String recibida = null;
+        boolean rec = false;
+        int codigo = 0;
+        ArrayList<Integer> unidades = new ArrayList<>();
+        ArrayList<Integer> codigos = new ArrayList<>();
+        ArrayList<Boolean> recibidas = new ArrayList<>();
+        ArrayList<LocalDateTime> fechasRecepcion = new ArrayList<>();
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
         try(
@@ -42,34 +51,55 @@ public class DAOLineaCompra {
             ps.setInt(1, id);
             ResultSet result = ps.executeQuery();
             while(result.next()){
-                int numeroUnidades = result.getInt("unidades");
-                String numero = Integer.toString(numeroUnidades);
-                unidades.add(numero);
+                counter ++;
+                numeroUnidades = result.getInt("unidades");
+                recibida = result.getString("recibida");
+                if(recibida.equals("1")){
+                    rec = true;
+                }
+                codigo = result.getInt("codigoreferencia");
+                fechaRecepcion = result.getTimestamp("fecharecepcion").toLocalDateTime();
+                //boolean recibida = result.getBoolean
+                unidades.add(numeroUnidades);
+                codigos.add(codigo);
+                recibidas.add(rec);
+                fechasRecepcion.add(fechaRecepcion);
             }
             result.close();
         }catch(SQLException ex){
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }
-        lineaCompraJSONString = obtainLineaCompraJSONString(unidades);
         connection.closeConnection();
+        if(counter!=0){
+            lineaCompraJSONString = obtainLineaCompraJSONString(unidades, fechasRecepcion, codigos, recibidas);
+        }
         return lineaCompraJSONString;
     }
    
-    private static String obtainLineaCompraJSONString(ArrayList<String> unidades) {
-        JsonObjectBuilder group = Json.createObjectBuilder();
+    private static String obtainLineaCompraJSONString(ArrayList<Integer> unidades, ArrayList<LocalDateTime> fechasRecepcion
+            , ArrayList<Integer> codigos, ArrayList<Boolean> recibidas) {
+        String lineaCompraJSONString = "";
         //JsonReaderFactory factory = Json.createReaderFactory(null);
         JsonArrayBuilder array = Json.createArrayBuilder();
-        JsonObject lineaCompraJson = null;
-        for(int i = 0; i < unidades.size(); i++){
-            array.add(unidades.get(i));
+        for(int i=0;i<unidades.size();i++){
+            array.add(Json.createObjectBuilder().add("unidades",Integer.toString(unidades.get(i)))
+            .add("fechaRecepcion",fechasRecepcion.get(i).toString())
+            .add("codigos",Integer.toString(codigos.get(i)))
+            .add("recibidas", Boolean.toString(recibidas.get(i)))
+            .build());
         }
-        JsonArray arr = array.build();
-        try{   
-            group.add("array", arr);
+        try(
+                StringWriter stringWriter = new StringWriter();
+                JsonWriter writer = Json.createWriter(stringWriter);
+                ){   
+            
+            JsonObject jsonObj = Json.createObjectBuilder().add("lineasCompra",array).build();
+            writer.writeObject(jsonObj);
+            lineaCompraJSONString = stringWriter.toString();
         }catch(Exception ex){
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE,null,ex);
         }
-        return group.build().toString();
+        return lineaCompraJSONString;
     }
     
 }

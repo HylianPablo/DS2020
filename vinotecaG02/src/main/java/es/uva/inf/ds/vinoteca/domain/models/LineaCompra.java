@@ -10,7 +10,10 @@ import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOLineaCompra;
 import java.io.StringReader;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -26,17 +29,18 @@ import javax.json.JsonValue;
  */
 public class LineaCompra {
     
-    private int unidades;
+    private int unidades, codigo;
     private String referencia;
     private boolean recibida;
-    private LocalDate fechaRecepcion;
+    private LocalDateTime fechaRecepcion;
     private ArrayList<LineaCompra> listaLineas;
     
-    public LineaCompra(int u){
+    public LineaCompra(int u, LocalDateTime fr, int c, boolean r){
         unidades = u;
-        recibida = false;
-        fechaRecepcion = null;
+        recibida = r;
+        fechaRecepcion = fr;
         listaLineas = null;
+        codigo = c;
     }
     
     public void add(LineaCompra linea){
@@ -54,38 +58,47 @@ public class LineaCompra {
     public int getUnidades(){
         return unidades;
     }
-    
-    public String getReferencia(){
-        return referencia;
-    }
-    
+        
     public void marcarRecibido(){
         recibida = true;
-        fechaRecepcion = LocalDate.now();
+        fechaRecepcion = LocalDateTime.now();
     }
     
     public void actualizaLineasPedido(){
+    }
+    
+    public Referencia getReferencia(){
+        return Referencia.getReferencia(codigo);
     }
     
     //COMPLETAR
     public static ArrayList<LineaCompra> getLineaCompra(int idCompra) {
         String lineasCompraJSONString = DAOLineaCompra.consultaLineaCompra(idCompra);
         //lo que tenga el json
+        int unidades = 0;
+        int codigo = 0;
+        LocalDateTime fechaRecepcion;
+        boolean rec = false;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
         ArrayList<LineaCompra> lcompras = new ArrayList<>();
-        JsonArray arr = null;
         JsonReaderFactory factory = Json.createReaderFactory(null);
         try(JsonReader reader = factory.createReader(new StringReader(lineasCompraJSONString));){
-            JsonObject jsonobject = reader.readObject();
-            arr = jsonobject.getJsonArray("array");
+            JsonObject mainObj = reader.readObject();
+            JsonArray array = mainObj.getJsonArray("lineasCompra");
             //coger del json
+            for(int i=0;i<array.size();i++){
+                JsonObject obj = (JsonObject) array.get(i);
+                unidades = Integer.parseInt(obj.getString("unidades"));
+                rec = Boolean.parseBoolean("recibidas");
+                fechaRecepcion = LocalDateTime.parse(obj.getString("fechaRecepcion"),formatter);
+                codigo = Integer.parseInt(obj.getString("codigo"));
+                LineaCompra lc = new LineaCompra(unidades, fechaRecepcion, codigo, rec);
+                lcompras.add(lc);
+            }
         }catch(Exception ex){
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }
-        for (int i = 0; i< arr.size(); i++){
-            JsonValue uni = arr.get(i);
-            String unidades = uni.getValueT();
-            LineaCompra lc = new LineaCompra(uni.toString());
-        }
+        return lcompras;
         //crear objeto lineaCompra
         //añadirlo a array retornar array
     }

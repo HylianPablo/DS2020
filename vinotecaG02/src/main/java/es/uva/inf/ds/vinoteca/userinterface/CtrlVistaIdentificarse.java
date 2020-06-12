@@ -9,18 +9,29 @@ import es.uva.inf.ds.vinoteca.domain.models.Empleado;
 import es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUIdentificarse;
 
 /**
- *
- * @author pablo
+ * Controlador de la interfaz del caso de uso "Identificar empleado". Gestionará el inicio de sesión de los empleados y los correspondientes posibles errores.
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class CtrlVistaIdentificarse {
     private final VistaIdentificarse view;
     private final ControladorCUIdentificarse cuController;
     
+    /**
+     * Constructor del controlador de la interfaz del caso de uso "Identificar empleado".
+     * @param view Interfaz asociada al controlador.
+     */
     public CtrlVistaIdentificarse(VistaIdentificarse view){
         this.view=view;
         cuController = ControladorCUIdentificarse.getController();
     }
     
+    /**
+     * Comprueba que el empleado existe en el sistema y está activo. En caso contrario indicará a la vista que muestre el correspondiente mensaje de error.
+     * @param user Nombre de usuario del empleado que quiere identificarse en el sistema.
+     * @param password Contraseña del empleado que quiere identificarse en el sistema.
+     */
     public void checkLogin(String user, String password){
         Empleado empleado = cuController.identificarEmpleado(user, password);
         if(empleado == null){

@@ -20,11 +20,19 @@ import javax.json.JsonObject;
 import javax.json.JsonWriter;
 
 /**
- *
- * @author pablo
+ * Clase de acceso a la tabla representativa de los empleados del sistema.
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class DAOEmpleado {
 
+    /**
+     * Consulta si un empleado se encuentra en el sistema.
+     * @param nif Cadena de caracteres que representa el NIF del empleado, que hace a su vez de nombre de usuario, del usuario a buscar en el sistema.
+     * @param password Cadena de caracteres que representa la contraseña del usuario a buscar en el sistema.
+     * @return Cadena de caracteres que contiene el JSON que representa al empleado en caso de que exista. En caso contrario, la cadena será vacía.
+     */
     public static String consultaEmpleadoPorLoginYPassword(String nif, String password) {
         String empleadoJSONString = "";
         LocalDateTime fechaInicio = null;
@@ -157,6 +165,11 @@ public class DAOEmpleado {
         return empleadoJSONString;
     }
     
+    /**
+     * Comprueba si un empleado se encuentra activo actualmente.
+     * @param nif Cadena de caracteres que representa el NIF del empleado a comprobar.
+     * @return {@code True} en caso de que el empleado se encuentre activo y {@code false} en caso contrario.
+     */
     public static boolean empleadoActivo(String nif){
         int d=0;
         DBConnection connection = DBConnection.getInstance();
@@ -178,6 +191,11 @@ public class DAOEmpleado {
         return(d==3);
     }
     
+    /**
+     * Obtiene el rol de un determinado empleado.
+     * @param nif Cadena de caracteres que representa el NIF del empleado a obtener el rol.
+     * @return Número entero que representa el rol del empleado. {1 : Almacén, 2 : AtenciónCliente, 3 : Contabilidad}.
+     */
     public static int selectRol(String nif){
         int r=0;
         DBConnection connection = DBConnection.getInstance();

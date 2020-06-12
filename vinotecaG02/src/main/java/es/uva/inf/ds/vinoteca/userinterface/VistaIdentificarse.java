@@ -1,19 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package es.uva.inf.ds.vinoteca.userinterface;
 
 /**
- *
- * @author pablo
+ * Vista del caso de uso "Identificar empleado". Interfaz que permite introducir los datos de inicio de sesión de un empleado en el sistema. Se proporcionará un mensaje de error en el caso de que no exista el empleado o este no esté activo en el momento.
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class VistaIdentificarse extends javax.swing.JFrame {
     
     private final CtrlVistaIdentificarse controller;
+    
     /**
-     * Creates new form VistaIdentificarse
+     * Lanzador de la vista del caso de uso "Identificar empleado".
      */
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public VistaIdentificarse() {
@@ -23,6 +22,10 @@ public class VistaIdentificarse extends javax.swing.JFrame {
         controller = new CtrlVistaIdentificarse(this);
     }
     
+    /**
+     * Actualiza el mensaje de error de la interfaz.
+     * @param message Mensaje a mostrar en la interfaz.
+     */
     public void setMensajeError(String message){
        userInput.setText("");
        passwordInput.setText("");

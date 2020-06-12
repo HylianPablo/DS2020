@@ -30,12 +30,12 @@ public class Factura {
     
     /**
      * Constructor de la clase Factura.
-     * @param numeroFactura
-     * @param fechaEmision
-     * @param importe
-     * @param estado
-     * @param fechaPago
-     * @param idExtractoBancario 
+     * @param numeroFactura Numero entero que representa el número de la factura.
+     * @param fechaEmision Fecha en que se emitió la factura.
+     * @param importe Número real que representa el importe de la factura.
+     * @param estado Número entero que representa el estado de la factura.
+     * @param fechaPago Fecha en que se pagó la factura.
+     * @param idExtractoBancario Cadena de caracteres que representa el extracto bancario de la factura.
      */
     public Factura(int numeroFactura, LocalDateTime fechaEmision, double importe, int estado, LocalDateTime fechaPago,
                     String idExtractoBancario){
@@ -51,54 +51,106 @@ public class Factura {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    /**
+     * Obtiene el número de la factura.
+     * @return Número entero que identifica la factura.
+     */
     public int getNumeroFactura(){
         return numeroFactura;
     }
     
+    /**
+     * Modifica el número de la factura.
+     * @param n Número entero que representa el nuevo número de la factura.
+     */
     public void setNumeroFactura(int n){
         numeroFactura=n;
     }
     
+    /**
+     * Obtiene la fecha en que se emitió la factura.
+     * @return Fecha en que se emitió la factura.
+     */
     public LocalDateTime getFechaEmision(){
         return fechaEmision;
     }
     
+    /**
+     * Modifica la fecha en que se emitió la factura.
+     * @param ldt Nueva fecha que indica cuando se emitió la factura.
+     */
     public void setFechaEmision(LocalDateTime ldt){
         fechaEmision=ldt;
     }
     
+    /**
+     * Obtiene el importe de la factura.
+     * @return número real que representa el importe de la factura.
+     */
     public double getImporte(){
         return importe;
     }
     
+    /**
+     * Modifica el importe de la factura.
+     * @param d Número real que representa el nuevo importe de la factura.
+     */
     public void setImporte(double d){
         importe=d;
     }
     
+    /**
+     * Obtiene el estado de la factura.
+     * @return Número entero que representa el estado de la factura.
+     */
     public int getEstado(){
         return estado;
     }
     
+    /**
+     * Modifica el estado de la factura.
+     * @param e Número entero que representa el nuevo estado de la factura.
+     */
     public void setEstado(int e){
         estado=e;
     }
     
+    /**
+     * Obtiene la fecha en que se realizó el pago de la factura.
+     * @return Fecha en que se realizó el pago de la factura.
+     */
     public LocalDateTime getFechaPago(){
         return fechaPago;
     }
     
+    /**
+     * Modifica la fecha en que se realizó el pago de la factura.
+     * @param ldt Fecha actualizada en que se realizó el pago de la factura.
+     */
     public void setFechaPago(LocalDateTime ldt){
         fechaPago=ldt;
     }
     
+    /**
+     * Obtiene el extracto bancario de la factura.
+     * @return Cadena de caracteres que representa el extracto bancario de la factura.
+     */
     public String getIdExtractoBancario(){
         return idExtractoBancario;
     }
     
+    /**
+     * Modifica el extracto bancario de la factura.
+     * @param s Cadena de caracteres que representa el nuevo extracto bancario de la factura.
+     */
     public void setIdExtractoBancario(String s){
         idExtractoBancario=s;
     }
     
+    /**
+     * Obtiene los pedidos de una factura.
+     * @return {@code ArrayList} que contiene los pedidos de una factura. No se contemplan facturas sin pedidos.
+     */
     public ArrayList<Pedido> getPedidosAsociados(){
         String pedidosJSONString = "";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
@@ -149,7 +201,6 @@ public class Factura {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
         
         String facturasJSONString = DAOFactura.consultaFacturasAntesDeFecha(fecha);
-        System.out.println(facturasJSONString);
         JsonReaderFactory factory = Json.createReaderFactory(null);
         try(JsonReader reader = factory.createReader(new StringReader(facturasJSONString));){
             JsonObject mainObj = reader.readObject();

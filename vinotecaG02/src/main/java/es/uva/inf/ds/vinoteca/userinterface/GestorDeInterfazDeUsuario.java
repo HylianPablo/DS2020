@@ -14,6 +14,7 @@ package es.uva.inf.ds.vinoteca.userinterface;
 public class GestorDeInterfazDeUsuario {
     
     private static VistaContabilidad contabilidadView;
+    private static VistaAtencionCliente atencionClienteView;
     
     /**
      * Constructor de la clase.
@@ -41,10 +42,15 @@ public class GestorDeInterfazDeUsuario {
                 //lanzar caso 2
                 break;
             case 3:
-                //lanzar caso 3
+                loginView.setVisible(false);
+                loginView.dispose();
+                java.awt.EventQueue.invokeLater(() -> {
+                    atencionClienteView = new VistaAtencionCliente();
+                    contabilidadView.setVisible(true);
+                });
                 break;
             default:
-                //lanzar excepcion
+                break; //No se contemplan inserciones erróneas en la base de datos.
         }
     }
     

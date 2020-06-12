@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.uva.inf.ds.vinoteca.persistence.daos;
 
 import es.uva.inf.ds.vinoteca.persistence.dbaccess.DBConnection;
@@ -21,12 +16,19 @@ import javax.json.JsonObject;
 import javax.json.JsonWriter;
 
 /**
- *
- * @author pablo
+ * Clase que representa el acceso a la tabla de la base de datos que contiene los datos de los pedidos del sistema.
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class DAOPedido {
     
-    public static String selectPedidosAsociados(int numeroFactura){ //REVISAR: POSIBLEMENTE VAYA EN DAOPEDIDO
+    /**
+     * Devuelve los pedidos asociados a una factura determinada.
+     * @param numeroFactura Número entero que representa la factura de la que se quiere obtener los pedidos.
+     * @return JSON en forma de cadena de caracteres que representa los pedidos asociados a la factura. No se contempla la posibilidad de facturas sin pedidos.
+     */
+    public static String selectPedidosAsociados(int numeroFactura){
         String pedidosJSONString = "";
         int numero = -1;
         int estado = -1;

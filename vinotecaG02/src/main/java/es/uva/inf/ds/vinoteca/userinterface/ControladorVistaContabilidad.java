@@ -1,12 +1,13 @@
-
 package es.uva.inf.ds.vinoteca.userinterface;
 
+import es.uva.inf.ds.vinoteca.common.IllegalDateException;
 import es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUConsultarImpagos;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Controlador de la interfaz del caso de uso "Consultar impagos".
@@ -32,23 +33,26 @@ public class ControladorVistaContabilidad {
      * @param fecha Fecha que representa el periodo a partir del cual buscar las facturas.
      */
     public void procesarIntroduceFecha(String fecha){
-        if(!comprobarFechaCorrecta(fecha)){
-            view.setMensajeError("Introduzca una fecha válida, por favor.");
-   
-        }else{
-            ArrayList<String> detalles = cuController.consultarImpagos(fecha);
-            if(!detalles.isEmpty()){
-                view.actualizarTabla(detalles);
+        try{
+            if(!comprobarFechaCorrecta(fecha)){
+                view.setMensajeError("Introduzca una fecha válida, por favor.");
             }else{
-                view.setMensajeError("No hay facturas antes de la fecha seleccionada");
+                ArrayList<String> detalles = cuController.consultarImpagos(fecha);
+                if(!detalles.isEmpty()){
+                    view.actualizarTabla(detalles);
+                }else{
+                    view.setMensajeError("No hay facturas antes de la fecha seleccionada");
+                }
             }
+        }catch(IllegalDateException ex){
+            Logger.getLogger(ControladorVistaContabilidad.class.getName()).log(Level.SEVERE,null,ex);
         }
     }
     
-    private boolean comprobarFechaCorrecta(String fecha){
+    private boolean comprobarFechaCorrecta(String fecha) throws IllegalDateException{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd",Locale.US);
         if(fecha==null ||!coincideFormato(fecha) ){
-            return false;
+            throw new IllegalDateException("La fecha introducida es errónea.");
         }
         LocalDate fechaLDT = LocalDate.parse(fecha,formatter);
         LocalDate now = LocalDate.now();

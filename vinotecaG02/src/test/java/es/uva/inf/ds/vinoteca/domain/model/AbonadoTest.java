@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package es.uva.inf.ds.vinoteca.domain.model;
 
 import es.uva.inf.ds.vinoteca.domain.models.Abonado;
@@ -15,7 +11,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
- * @author pablo
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class AbonadoTest {
     
@@ -43,6 +41,13 @@ public class AbonadoTest {
         assertSame(1,ab.getNumeroAbonado());
         assertEquals("referencia0",ab.getOpenIdRef());
         assertEquals("123456789",ab.getNIF());
+    }
+    
+    @Test
+    public void constructorErroneo(){
+        assertThrows(IllegalArgumentException.class, ()->{
+            Abonado ab1 = new Abonado(2,"referencia1","1234567890");
+        });
     }
     
     @Test

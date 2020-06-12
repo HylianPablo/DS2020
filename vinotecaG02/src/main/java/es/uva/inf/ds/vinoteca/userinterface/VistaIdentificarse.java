@@ -18,6 +18,7 @@ public class VistaIdentificarse extends javax.swing.JFrame {
     public VistaIdentificarse() {
         initComponents();
         setResizable(false);
+        setLocationRelativeTo(null);
         errorMsg.setText("");
         controller = new CtrlVistaIdentificarse(this);
     }

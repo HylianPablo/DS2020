@@ -5,6 +5,7 @@
  */
 package es.uva.inf.ds.vinoteca.app;
 
+import es.uva.inf.ds.vinoteca.userinterface.VistaAlmacen;
 import es.uva.inf.ds.vinoteca.userinterface.VistaIdentificarse;
 
 /**
@@ -19,10 +20,10 @@ public class Main {
     /**
      * Lanzador de la vista inicial de la aplicación.
      */
-    public static void main(){
+    public static void main(String args[]){
         java.awt.EventQueue.invokeLater(new Runnable(){
         public void run(){
-            loginView = new VistaIdentificarse();
+            VistaAlmacen loginView = new VistaAlmacen();
             loginView.setVisible(true);
         }
     });

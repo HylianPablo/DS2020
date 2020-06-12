@@ -38,8 +38,10 @@ public class DAOLineaCompra {
         String recibida = null;
         boolean rec = false;
         int codigo = 0;
+        int idL = 0;
         ArrayList<Integer> unidades = new ArrayList<>();
         ArrayList<Integer> codigos = new ArrayList<>();
+        ArrayList<Integer> ids = new ArrayList<>();
         ArrayList<Boolean> recibidas = new ArrayList<>();
         ArrayList<LocalDateTime> fechasRecepcion = new ArrayList<>();
         DBConnection connection = DBConnection.getInstance();
@@ -53,6 +55,7 @@ public class DAOLineaCompra {
             while(result.next()){
                 counter ++;
                 numeroUnidades = result.getInt("unidades");
+                idL = result.getInt("id");
                 recibida = result.getString("recibida");
                 if(recibida.equals("1")){
                     rec = true;
@@ -62,6 +65,7 @@ public class DAOLineaCompra {
                 //boolean recibida = result.getBoolean
                 unidades.add(numeroUnidades);
                 codigos.add(codigo);
+                ids.add(idL);
                 recibidas.add(rec);
                 fechasRecepcion.add(fechaRecepcion);
             }
@@ -71,13 +75,13 @@ public class DAOLineaCompra {
         }
         connection.closeConnection();
         if(counter!=0){
-            lineaCompraJSONString = obtainLineaCompraJSONString(unidades, fechasRecepcion, codigos, recibidas);
+            lineaCompraJSONString = obtainLineaCompraJSONString(unidades, fechasRecepcion, codigos, recibidas, ids);
         }
         return lineaCompraJSONString;
     }
    
     private static String obtainLineaCompraJSONString(ArrayList<Integer> unidades, ArrayList<LocalDateTime> fechasRecepcion
-            , ArrayList<Integer> codigos, ArrayList<Boolean> recibidas) {
+            , ArrayList<Integer> codigos, ArrayList<Boolean> recibidas, ArrayList<Integer> ids) {
         String lineaCompraJSONString = "";
         //JsonReaderFactory factory = Json.createReaderFactory(null);
         JsonArrayBuilder array = Json.createArrayBuilder();
@@ -86,6 +90,7 @@ public class DAOLineaCompra {
             .add("fechaRecepcion",fechasRecepcion.get(i).toString())
             .add("codigos",Integer.toString(codigos.get(i)))
             .add("recibidas", Boolean.toString(recibidas.get(i)))
+            .add("ids", Integer.toString(ids.get(i)))
             .build());
         }
         try(

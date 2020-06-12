@@ -32,7 +32,6 @@ import javax.json.JsonReaderFactory;
 public class Pedido {
 
     private int numero, numeroFactura, numeroAbonado, estado, codigo;
-    //private EstadoPedido estado;
     private LocalDateTime fechaRealizacion, fechaRecepcion, fechaEntrega;
     private String notaEntrega;
     private double importe;
@@ -92,7 +91,7 @@ public class Pedido {
             importeJ = Double.parseDouble(obj.getString("importe"));
             fechaRecepcionJ = LocalDateTime.parse(obj.getString("fechaRecepcion"),formatter);
             fechaEntregaJ = LocalDateTime.parse(obj.getString("fechaEntrega"),formatter);
-            numeroFactura = Integer.parseInt("numeroFactura");
+            numeroFactura = Integer.parseInt(obj.getString("numeroFactura"));
             numeroAbonadoJ = Integer.parseInt(obj.getString("numeroAbonado"));
             p = new Pedido(numeroJ,estadoJ,fechaRealizacionJ,notaEntregaJ,importeJ,fechaRecepcionJ,fechaEntregaJ,numeroFactura,numeroAbonadoJ,codPedido); 
         }catch(Exception ex){
@@ -188,8 +187,5 @@ public class Pedido {
 
     public void actualizarEstadoACompletado() {
         estado = 2;
-    }
-
-    public String getJSON() {
     }
 }

@@ -32,8 +32,7 @@ public class DAOBodega {
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
         try(
-            PreparedStatement ps = connection.getStatement("SELECT * FROM BODEGA b, COMPRA c, WHERE c.IdCompra= ? "
-                    + "AND c.IdProveedor= b.IdProveedor");   
+            PreparedStatement ps = connection.getStatement("SELECT * FROM BODEGA b WHERE b.ID= ?");   
         ){
             ps.setInt(1, id);
             ResultSet result = ps.executeQuery();

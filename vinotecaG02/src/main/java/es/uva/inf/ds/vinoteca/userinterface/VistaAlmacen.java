@@ -5,7 +5,14 @@
  */
 package es.uva.inf.ds.vinoteca.userinterface;
 
+import es.uva.inf.ds.vinoteca.domain.models.Bodega;
+import es.uva.inf.ds.vinoteca.domain.models.LineaCompra;
+import es.uva.inf.ds.vinoteca.domain.models.Referencia;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,6 +21,8 @@ import java.util.ArrayList;
 public class VistaAlmacen extends javax.swing.JFrame {
 
     private final ControladorVistaAlmacen controller;
+    private ArrayList<LineaCompra> lcs; 
+    private DefaultTableModel model;
     /**
      * Creates new form VistaContabilidad
      */
@@ -22,7 +31,17 @@ public class VistaAlmacen extends javax.swing.JFrame {
         setResizable(false);
         errorMsg.setText("");
         controller = new ControladorVistaAlmacen(this);
+        lcs =  new ArrayList<>();
         
+    }
+    
+    public void seleccionaLineaCompra(){
+        
+    }
+    
+    public void inotrudeIdentificadorCompra(){
+        int idCompra = Integer.parseInt(searchBar.getText());
+        controller.procesaDatosIntroducirIdCompra(idCompra);
     }
     
     public void actualizarTabla(ArrayList<String> detalles){
@@ -31,6 +50,35 @@ public class VistaAlmacen extends javax.swing.JFrame {
     
     public void setMensajeError(String message){
         errorMsg.setText(message);
+    }
+
+
+
+
+    public void actualizarVista(Bodega b, ArrayList<LineaCompra> lc, ArrayList<Referencia> refs) {
+        //String [] col = {"selected", "nombreBodega", "idLineaCompra", "idReferencia", "unidades"};
+        String [][] data = new String [lc.size()][4];
+        String nombre = b.getNombre();
+        System.out.println(lc.size() + "tamño" );
+        lcs = lc;
+        model = (DefaultTableModel) table.getModel();
+        model.setRowCount(lc.size());
+        for(int i = 0; i<lc.size(); i++){
+            int j = 1;
+            String unidades = Integer.toString(lc.get(i).getUnidades());
+            String codigoLinea = Integer.toString(lc.get(i).getCodigoLinea());
+            String codigoRef = Integer.toString(refs.get(i).getCodigo());
+            //System.out.println("nombre" + nombre);
+            //data[i][j] = nombre;
+            model.setValueAt(nombre, i, j);
+            //System.out.println("nombre" + nombre);
+            j++;
+            model.setValueAt(codigoLinea, i, j);
+            j++;
+            model.setValueAt(codigoRef, i, j);
+            j++;
+            model.setValueAt(unidades, i, j);
+        }
     }
 
     /**
@@ -49,33 +97,27 @@ public class VistaAlmacen extends javax.swing.JFrame {
         searchButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
         errorMsg = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Identificador", "Detalle"
+                "selected", "nombreBodega", "idLineaCompra", "idReferencia", "unidades"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                true, false
+            Class[] types = new Class [] {
+                java.lang.Boolean.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
             };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
             }
         });
         jScrollPane1.setViewportView(table);
-        if (table.getColumnModel().getColumnCount() > 0) {
-            table.getColumnModel().getColumn(0).setResizable(false);
-            table.getColumnModel().getColumn(1).setResizable(false);
-        }
 
         searchBar.setText("Introducir identificador compra");
 
@@ -95,24 +137,32 @@ public class VistaAlmacen extends javax.swing.JFrame {
 
         errorMsg.setText("Mensaje de error");
 
+        jButton1.setText("Finalizar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(144, Short.MAX_VALUE)
-                .addComponent(errorMsg)
-                .addGap(107, 107, 107)
-                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(errorMsg)
+                        .addGap(107, 107, 107)
+                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(searchBar)
+                        .addComponent(searchBar, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(21, 21, 21))))
@@ -129,7 +179,8 @@ public class VistaAlmacen extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(exitButton)
-                    .addComponent(errorMsg))
+                    .addComponent(errorMsg)
+                    .addComponent(jButton1))
                 .addGap(9, 9, 9))
         );
 
@@ -155,6 +206,7 @@ public class VistaAlmacen extends javax.swing.JFrame {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         int idCompra = Integer.parseInt(searchBar.getText());
+        //System.out.println("que valor tiene aqui" + idCompra);
         controller.procesaDatosIntroducirIdCompra(idCompra);
     }//GEN-LAST:event_searchButtonActionPerformed
 
@@ -163,14 +215,37 @@ public class VistaAlmacen extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_exitButtonActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ArrayList <Integer> codigosCompras = new ArrayList<>();
+        
+        for (int r = 0 ; r < lcs.size(); r++){
+            boolean bandera = (boolean) model.getValueAt(r, 0);
+            String codigoAux;
+            int codigo;
+            if(bandera){
+                codigoAux = (String) model.getValueAt(r, 2);
+                codigo = Integer.parseInt(codigoAux);
+                codigosCompras.add(codigo);
+            }
+        }   
+        try {
+            controller.procesaDatosSeleccionaLineas(codigosCompras);
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaAlmacen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        controller.procesaDatosFinalizar();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel errorMsg;
     private javax.swing.JButton exitButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField searchBar;
     private javax.swing.JButton searchButton;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
+
 }

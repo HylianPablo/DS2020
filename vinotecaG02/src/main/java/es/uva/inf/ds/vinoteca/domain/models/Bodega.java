@@ -48,13 +48,15 @@ public class Bodega {
             JsonObject jsonobject = reader.readObject();
             nombreJson = jsonobject.getString("nombre");
             cifJson = jsonobject.getString("cif");
-            direccionJson = jsonobject.getString("direccionJson");
+            
+            direccionJson = jsonobject.getString("direccion");
             //coger del json
         }catch(Exception ex){
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }
         //crear objeto compra
         Bodega bodega = new Bodega(nombreJson, cifJson, direccionJson);
+        
         return bodega;
     } 
 }

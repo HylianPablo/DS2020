@@ -7,6 +7,8 @@ package es.uva.inf.ds.vinoteca.persistence.daos;
 
 import es.uva.inf.ds.vinoteca.domain.models.Empleado;
 import es.uva.inf.ds.vinoteca.persistence.dbaccess.DBConnection;
+import es.uva.inf.ds.vinoteca.userinterface.VistaAlmacen;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,8 +18,11 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.json.JsonReaderFactory;
 import javax.json.JsonWriter;
 
 /**
@@ -91,7 +96,21 @@ public class DAOLineaPedido {
         return lineaPedidoJSONString;
     }
 
-    public static void insertarLineasPedido(String lineaPedidoJSONString) {
-        
-    }   
+    public static void actualizarLineasDePedido(int id) throws SQLException {
+        DBConnection connection = DBConnection.getInstance();
+        connection.openConnection();
+        System.out.println("me gustaria que llegara aqui");
+        try (PreparedStatement ps = connection.getStatement("UPDATE LINEAPEDIDO SET COMPLETADA = ? WHERE IDLINEACOMPRA = ?")) {
+            ps.setString(1, "1");
+            ps.setInt(2, id);
+            
+            System.out.println("me gustaria que llegara aqui2");
+            // execute the java preparedstatement
+            ps.executeUpdate();
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(VistaAlmacen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connection.closeConnection();
+    }
 }

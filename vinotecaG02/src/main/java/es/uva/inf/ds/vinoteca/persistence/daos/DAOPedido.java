@@ -6,6 +6,7 @@
 package es.uva.inf.ds.vinoteca.persistence.daos;
 
 import es.uva.inf.ds.vinoteca.persistence.dbaccess.DBConnection;
+import es.uva.inf.ds.vinoteca.userinterface.VistaAlmacen;
 import java.io.StringWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -181,7 +182,22 @@ public class DAOPedido {
         return pedidoJSONString;
     }
 
-    public static void actualizaPedido(String pedidoJSONString) {
+    public static void actualizaPedido(int idPedido) {
+        DBConnection connection = DBConnection.getInstance();
+        connection.openConnection();
+        System.out.println("me gustaria que llegara aqui");
+        try (PreparedStatement ps = connection.getStatement("UPDATE PEDIDO SET ESTADO = ? WHERE NUMERO = ?")) {
+            ps.setInt(1, 2);
+            ps.setInt(2, idPedido);
+            
+            System.out.println("me gustaria que llegara aqui2");
+            // execute the java preparedstatement
+            ps.executeUpdate();
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(VistaAlmacen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connection.closeConnection();
     }
     
 }

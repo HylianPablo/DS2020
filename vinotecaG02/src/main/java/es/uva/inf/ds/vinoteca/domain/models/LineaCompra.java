@@ -29,18 +29,19 @@ import javax.json.JsonValue;
  */
 public class LineaCompra {
     
-    private int unidades, codigo;
+    private int unidades, codigo, codigoLinea;
     private String referencia;
     private boolean recibida;
     private LocalDateTime fechaRecepcion;
     private ArrayList<LineaCompra> listaLineas;
     
-    public LineaCompra(int u, LocalDateTime fr, int c, boolean r){
+    public LineaCompra(int u, LocalDateTime fr, int c, boolean r, int cL){
         unidades = u;
         recibida = r;
         fechaRecepcion = fr;
         listaLineas = null;
         codigo = c;
+        codigoLinea = cL;
     }
     
     public void add(LineaCompra linea){
@@ -72,11 +73,16 @@ public class LineaCompra {
         return Referencia.getReferencia(codigo);
     }
     
+    public int getCodigoLinea(){
+        return codigoLinea;
+    }
+    
     //COMPLETAR
     public static ArrayList<LineaCompra> getLineaCompra(int idCompra) {
         String lineasCompraJSONString = DAOLineaCompra.consultaLineaCompra(idCompra);
         int unidades = 0;
         int codigo = 0;
+        int codigoL = 0;
         LocalDateTime fechaRecepcion;
         boolean rec = false;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
@@ -91,8 +97,9 @@ public class LineaCompra {
                 unidades = Integer.parseInt(obj.getString("unidades"));
                 rec = Boolean.parseBoolean("recibidas");
                 fechaRecepcion = LocalDateTime.parse(obj.getString("fechaRecepcion"),formatter);
-                codigo = Integer.parseInt(obj.getString("codigo"));
-                LineaCompra lc = new LineaCompra(unidades, fechaRecepcion, codigo, rec);
+                codigo = Integer.parseInt(obj.getString("codigos"));
+                codigoL = Integer.parseInt(obj.getString("ids"));
+                LineaCompra lc = new LineaCompra(unidades, fechaRecepcion, codigo, rec, codigoL);
                 lcompras.add(lc);
             }
         }catch(Exception ex){

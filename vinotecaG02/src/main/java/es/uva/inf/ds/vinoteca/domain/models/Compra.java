@@ -44,14 +44,20 @@ public class Compra {
         fechaPago = fp;
     }
     
+    public int getIdCompra(){
+        return idCompra;
+    }
+    
     public static Compra getCompra(int id) {
         String compraJSONString = DAOCompra.consultaCompra(id);
+        System.out.println("que pasa=");
         String importeJson=null; 
         String fechaJson=null; 
         JsonReaderFactory factory = Json.createReaderFactory(null);
         try(JsonReader reader = factory.createReader(new StringReader(compraJSONString));){
             JsonObject jsonobject = reader.readObject();
             importeJson = jsonobject.getString("importe");
+            System.out.println("que pasa=" + importeJson);
             fechaJson = jsonobject.getString("fechaPago");
         }catch(Exception ex){
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
@@ -64,6 +70,7 @@ public class Compra {
     }
     
     public Bodega getBodega(){
+        System.out.println("123123213123");
         return Bodega.getBodega(idCompra);
     }    
     
@@ -90,8 +97,5 @@ public class Compra {
             }
         }
         return true;
-    }
-
-    public String getJSON() {
     }
 }

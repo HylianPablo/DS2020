@@ -7,6 +7,10 @@ package es.uva.inf.ds.vinoteca.userinterface;
 
 import es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUIdentificarse;
 import es.uva.inf.ds.vinoteca.domain.controllers.ControladorCURegistrarRecepcionCompra;
+import es.uva.inf.ds.vinoteca.domain.models.Bodega;
+import es.uva.inf.ds.vinoteca.domain.models.LineaCompra;
+import es.uva.inf.ds.vinoteca.domain.models.Referencia;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -25,16 +29,22 @@ public class ControladorVistaAlmacen {
     
     public void procesaDatosIntroducirIdCompra(int idCompra){
         cuController.comprobarCompraNoCompletada(idCompra);
-        
+        Bodega b = cuController.getBodega();
+        ArrayList<LineaCompra> lc = cuController.getLineasCompra();
+        ArrayList<Referencia> ref = cuController.getReferencias();
+        view.actualizarVista(b, lc, ref);
     }
     
-    public void procesaDatosSeleccionaLineas(int indice){
-        cuController.actualizarLineaCompra(indice);
+    public void procesaDatosSeleccionaLineas(ArrayList<Integer> indice) throws SQLException{
+        for(int i = 0; i < indice.size(); i++){
+            cuController.actualizarLineaCompra(indice.get(i));
+        }
     }
     
     //igual comprobarRecibidas no deberia retornar
     public void procesaDatosFinalizar(){
         cuController.comprobarRecibidas();
+        cuController.actualizarPedidos();
         
     }
 }

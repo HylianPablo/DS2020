@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author alerome
  * @author ivagonz
  */
-public class ControladorCUConsultarImpagos { //REVISAR
+public class ControladorCUConsultarImpagos {
     
     /**
      * Factoría de controladores del caso de uso.

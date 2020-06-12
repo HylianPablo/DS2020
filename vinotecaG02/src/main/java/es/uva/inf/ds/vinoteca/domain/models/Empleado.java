@@ -5,6 +5,8 @@
  */
 package es.uva.inf.ds.vinoteca.domain.models;
 
+import es.uva.inf.ds.vinoteca.common.DNIPassNotValidException;
+import es.uva.inf.ds.vinoteca.common.NotActiveException;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
 import java.io.File;
 import java.io.FileReader;
@@ -101,8 +103,12 @@ public class Empleado {
      * Comprueba si el empleado está activo en el sistema.
      * @return {@code True} en caso de que el empleado esté activo y {@code false} en caso contrario.
      */
-    public boolean isActivo(){
-        return DAOEmpleado.empleadoActivo(nif);
+    public boolean isActivo() throws NotActiveException{
+        
+        if(!DAOEmpleado.empleadoActivo(nif)){
+            throw new NotActiveException("El empleado no se encuentra activo actualmente");
+        }
+        return true;
     }
     
     /**
@@ -119,7 +125,7 @@ public class Empleado {
      * @param password Cadena de caracteres que representa la contraseña del empleado que se desea buscar.
      * @return Instancia del empleado que se ha buscado en caso de que exista o {@code null} en caso contrario.
      */
-    public static Empleado getEmpleadoPorLoginYPassword(String user, String password) {
+    public static Empleado getEmpleadoPorLoginYPassword(String user, String password) throws DNIPassNotValidException {
         Empleado empleadoLogin = null;
         String empleadoJSONString = DAOEmpleado.consultaEmpleadoPorLoginYPassword(user,password); 
         if(!empleadoJSONString.equals("")){
@@ -136,6 +142,7 @@ public class Empleado {
             //tipoEmpleadoJson = jsonobject.getString("tipoEmpleado");
             }catch(Exception ex){
                 Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+                throw new DNIPassNotValidException("El empleado no se encuentra en el sistema.");
             }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
             LocalDateTime fechaInicioLDT = LocalDateTime.parse(fechaInicioJson,formatter);

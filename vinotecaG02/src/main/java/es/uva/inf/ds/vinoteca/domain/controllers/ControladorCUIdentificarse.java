@@ -5,7 +5,11 @@
  */
 package es.uva.inf.ds.vinoteca.domain.controllers;
 
+import es.uva.inf.ds.vinoteca.common.NotActiveException;
+import es.uva.inf.ds.vinoteca.common.DNIPassNotValidException;
 import es.uva.inf.ds.vinoteca.domain.models.Empleado;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Controlador del caso de uso "Identificar empleado", encargado de comprobar si un empleado existe en el sistema y está activo.
@@ -30,12 +34,23 @@ public class ControladorCUIdentificarse {
      * @return Instancia del empleado que se ha identificado en el sistema en caso de que exista. {@code Null} en caso contrario.
      */
     public Empleado identificarEmpleado(String user, String password){
-        Empleado empleado = Empleado.getEmpleadoPorLoginYPassword(user, password);
-        if(empleado==null){
-            return empleado;
+        Empleado empleado = null;
+        try{
+        empleado = Empleado.getEmpleadoPorLoginYPassword(user, password);
+        
+            if(empleado==null){
+                return empleado;
+            }
+        }catch(DNIPassNotValidException ex){
+            Logger.getLogger(ControladorCUIdentificarse.class.getName()).log(Level.SEVERE,null,ex);
         }
-        if(!empleado.isActivo()){
-            empleado.setNif("NotActivo");
+        try{
+            if(!empleado.isActivo()){
+                empleado.setNif("NotActivo");
+            
+            }
+        }catch(NotActiveException ex2){
+            Logger.getLogger(ControladorCUIdentificarse.class.getName()).log(Level.SEVERE,null,ex2);
         }
         
         return empleado;

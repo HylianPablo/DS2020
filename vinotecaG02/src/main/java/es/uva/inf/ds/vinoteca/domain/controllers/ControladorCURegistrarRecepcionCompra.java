@@ -5,6 +5,9 @@
  */
 package es.uva.inf.ds.vinoteca.domain.controllers;
 
+import es.uva.inf.ds.vinoteca.common.CompletadaException;
+import es.uva.inf.ds.vinoteca.common.DNIPassNotValidException;
+import es.uva.inf.ds.vinoteca.common.NullCompraException;
 import es.uva.inf.ds.vinoteca.domain.models.Bodega;
 import es.uva.inf.ds.vinoteca.domain.models.Compra;
 import es.uva.inf.ds.vinoteca.domain.models.Empleado;
@@ -49,7 +52,11 @@ public class ControladorCURegistrarRecepcionCompra {
     
     public void comprobarCompraNoCompletada(int idCompra){
         refs = new ArrayList<>();
-        c = Compra.getCompra(idCompra);
+        try{
+            c = Compra.getCompra(idCompra);
+        }catch(NullCompraException | CompletadaException ex){
+            Logger.getLogger(ControladorCURegistrarRecepcionCompra.class.getName()).log(Level.SEVERE,null,ex);
+        }
         b = c.getBodega();
         String nombre = b.getNombre();
         lc = c.getLineasCompra();

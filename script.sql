@@ -303,7 +303,7 @@ INSERT INTO PREFERENCIA VALUES (1,1,1);
 INSERT INTO BODEGA(Nombre,CIF,Direccion) VALUES ('bodega','111111111','calle falsa 0');
 INSERT INTO VINO(NombreComercial,Ano,Comentario,IdDenominacion,Categoria,IdBodega) VALUES ('retola',2014,'vinazo',1,1,1);
 INSERT INTO REFERENCIA(EsPorCajas,ContenidoEnCL,Precio,Disponible,VinoId) VALUES ('1',33,10.0,'1',1);
-INSERT INTO COMPRA(FechaInicioCompra,RecibidaCompleta,FechaCompraCompletada,Importe,Pagada,FechaPago,IdProveedor) VALUES ('2020-06-06','1','2020-06-07',20.0,'1','2020-06-07',1);
+INSERT INTO COMPRA(FechaInicioCompra,RecibidaCompleta,FechaCompraCompletada,Importe,Pagada,FechaPago,IdProveedor) VALUES ('2020-06-06','0','2020-06-07',20.0,'1','2020-06-07',1);
 INSERT INTO COMPRA(FechaInicioCompra,RecibidaCompleta,FechaCompraCompletada,Importe,Pagada,FechaPago,IdProveedor) VALUES ('2019-05-06','1','2019-05-07',20.0,'0','2020-06-07',1);
 INSERT INTO LINEACOMPRA(Unidades,Recibida,FechaRecepcion,IdCompra,CodigoReferencia) VALUES (1,'1','2020-06-07',1,1);
 INSERT INTO LINEACOMPRA(Unidades,Recibida,FechaRecepcion,IdCompra,CodigoReferencia) VALUES (1,'1','2019-05-07',2,1);

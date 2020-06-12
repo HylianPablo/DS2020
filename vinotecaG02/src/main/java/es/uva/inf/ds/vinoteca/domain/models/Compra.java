@@ -5,6 +5,8 @@
  */
 package es.uva.inf.ds.vinoteca.domain.models;
 
+import es.uva.inf.ds.vinoteca.common.CompletadaException;
+import es.uva.inf.ds.vinoteca.common.NullCompraException;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOBodega;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOCompra;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
@@ -48,19 +50,24 @@ public class Compra {
         return idCompra;
     }
     
-    public static Compra getCompra(int id) {
+    public static Compra getCompra(int id) throws NullCompraException, CompletadaException  {
         String compraJSONString = DAOCompra.consultaCompra(id);
         System.out.println("que pasa=");
         String importeJson=null; 
         String fechaJson=null; 
+        String completaJson=null;
         JsonReaderFactory factory = Json.createReaderFactory(null);
         try(JsonReader reader = factory.createReader(new StringReader(compraJSONString));){
             JsonObject jsonobject = reader.readObject();
             importeJson = jsonobject.getString("importe");
             System.out.println("que pasa=" + importeJson);
             fechaJson = jsonobject.getString("fechaPago");
+            completaJson = jsonobject.getString("completa");
         }catch(Exception ex){
-            Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+            throw new NullCompraException("La compra no se encuentra en el sistema");            
+        }
+        if(completaJson.equals("1")){
+            throw new CompletadaException("La compra ya esta completada");
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
         LocalDateTime fechaPago = LocalDateTime.parse(fechaJson,formatter);

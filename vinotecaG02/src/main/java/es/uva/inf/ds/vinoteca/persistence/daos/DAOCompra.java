@@ -10,6 +10,7 @@ import es.uva.inf.ds.vinoteca.domain.models.Empleado;
 import es.uva.inf.ds.vinoteca.persistence.dbaccess.DBConnection;
 import es.uva.inf.ds.vinoteca.userinterface.VistaAlmacen;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,6 +37,7 @@ public class DAOCompra {
         String compraJSONString = "";
         String idd = Integer.toString(id);
         LocalDateTime fechaInicio = null;
+        String completa = null;
         double importe;
         System.out.println("HASTA AQUI LLEGA" + id);
         DBConnection connection = DBConnection.getInstance();
@@ -49,10 +51,11 @@ public class DAOCompra {
             if(result.next()){
                 System.out.println("HASTA AQUI LLEGA??????????????");
                 fechaInicio=result.getTimestamp("fechapago").toLocalDateTime();
+                completa=result.getString("RECIBIDACOMPLETA");
                 System.out.println("fecha" + fechaInicio);
                 importe=result.getDouble("importe");
                 String imp = Double.toString(importe);
-                compraJSONString = obtainCompraJSONString(fechaInicio, imp);
+                compraJSONString = obtainCompraJSONString(fechaInicio, imp, completa);
                 //lo que se quiera de la compra
             }
             result.close();
@@ -63,12 +66,13 @@ public class DAOCompra {
         return compraJSONString;
     }
     
-    private static String obtainCompraJSONString(LocalDateTime fecha, String importe){
+    private static String obtainCompraJSONString(LocalDateTime fecha, String importe, String completa){
         String compraJSONString="";
         //JsonReaderFactory factory = Json.createReaderFactory(null);
         JsonObject compraJson = Json.createObjectBuilder()
                     .add("importe",importe)
                     .add("fechaPago",fecha.toString())
+                    .add("completa",completa)
                     .build();
         try(
                 StringWriter stringWriter = new StringWriter();

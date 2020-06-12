@@ -308,6 +308,8 @@ INSERT INTO COMPRA(FechaInicioCompra,RecibidaCompleta,FechaCompraCompletada,Impo
 INSERT INTO LINEACOMPRA(Unidades,Recibida,FechaRecepcion,IdCompra,CodigoReferencia) VALUES (1,'1','2020-06-07',1,1);
 INSERT INTO LINEACOMPRA(Unidades,Recibida,FechaRecepcion,IdCompra,CodigoReferencia) VALUES (1,'1','2019-05-07',2,1);
 INSERT INTO LINEACOMPRA(Unidades,Recibida,FechaRecepcion,IdCompra,CodigoReferencia) VALUES (1,'1','2019-05-07',2,1);
+INSERT INTO LINEACOMPRA(Unidades,Recibida,FechaRecepcion,IdCompra,CodigoReferencia) VALUES (1,'1','2020-05-07',1,1);
+INSERT INTO LINEACOMPRA(Unidades,Recibida,FechaRecepcion,IdCompra,CodigoReferencia) VALUES (1,'1','2020-03-07',1,1);
 INSERT INTO PEDIDO(Estado,FechaRealizacion,NotaEntrega,Importe,FechaRecepcion,FechaEntrega,NumeroFactura,NumeroAbonado) VALUES (1,'2020-06-06','fragil',10.0,'2020-06-07','2020-06-07',1,1);
 INSERT INTO PEDIDO(Estado,FechaRealizacion,NotaEntrega,Importe,FechaRecepcion,FechaEntrega,NumeroFactura,NumeroAbonado) VALUES (2,'2020-06-06','fragil',10.0,'2020-06-07','2020-06-07',1,1);
 INSERT INTO PEDIDO(Estado,FechaRealizacion,NotaEntrega,Importe,FechaRecepcion,FechaEntrega,NumeroFactura,NumeroAbonado) VALUES (2,'2020-06-06','fragil',10.0,'2020-06-07','2020-06-07',2,1);

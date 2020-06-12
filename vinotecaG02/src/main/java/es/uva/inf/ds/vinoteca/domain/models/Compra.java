@@ -44,10 +44,8 @@ public class Compra {
         fechaPago = fp;
     }
     
-        //COMPLETAR
     public static Compra getCompra(int id) {
         String compraJSONString = DAOCompra.consultaCompra(id);
-        //lo que tenga el json
         String importeJson=null; 
         String fechaJson=null; 
         JsonReaderFactory factory = Json.createReaderFactory(null);
@@ -55,11 +53,9 @@ public class Compra {
             JsonObject jsonobject = reader.readObject();
             importeJson = jsonobject.getString("importe");
             fechaJson = jsonobject.getString("fechaPago");
-            //coger del json
         }catch(Exception ex){
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }
-        //crear objeto compra
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
         LocalDateTime fechaPago = LocalDateTime.parse(fechaJson,formatter);
         double importe = Double.parseDouble(importeJson);
@@ -68,28 +64,14 @@ public class Compra {
     }
     
     public Bodega getBodega(){
-        //return Bodega.
-        // ? ??  ? ? ? ?
         return Bodega.getBodega(idCompra);
-    }
-    
-    /*
-    public boolean comprobarRecibidas(){
-        for(int i = 0; i < LineaCompra.getNumeroLineas(); i++){
-            if (!LineaCompra.comprobarRecibida()){
-                return false;
-            }
-        }
-        return true;        
-    }*/
-    
+    }    
     
     public void marcarRecibidaCompleta(){
         recibidaCompleta = true;
         fechaCompraCompleta = LocalDateTime.now();
     }
     
-    //SERIA MEJOR PASAR DIRECTAMENTE IDCOMPRA Y QUE LA FUNCION NO TUVIERA PARAMETROS
     public ArrayList<LineaCompra> getLineasCompra(){
         lineasCompra = LineaCompra.getLineaCompra(idCompra);
         return lineasCompra;
@@ -98,11 +80,6 @@ public class Compra {
     public boolean compruebaCompletado(){
         return recibidaCompleta;
     }
-    
-    /*
-    public ArrayList<LineaCompra> getLineasCompra(int idCompra){
-        return Compra;
-    }*/
 
     public boolean comprobarRecibidas() {
         boolean recibida = true;

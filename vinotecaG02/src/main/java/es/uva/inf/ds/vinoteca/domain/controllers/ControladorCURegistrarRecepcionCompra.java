@@ -10,8 +10,10 @@ import es.uva.inf.ds.vinoteca.domain.models.Compra;
 import es.uva.inf.ds.vinoteca.domain.models.Referencia;
 import es.uva.inf.ds.vinoteca.domain.models.LineaCompra;
 import es.uva.inf.ds.vinoteca.domain.models.LineaPedido;
+import es.uva.inf.ds.vinoteca.domain.models.Pedido;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOCompra;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOLineaPedido;
+import es.uva.inf.ds.vinoteca.persistence.daos.DAOPedido;
 import java.util.ArrayList;
 
 /**
@@ -22,6 +24,7 @@ public class ControladorCURegistrarRecepcionCompra {
     
     Compra c ;
     Bodega b ;
+    Pedido p ;
     ArrayList<LineaCompra> lc;
     ArrayList<LineaPedido> lp;
     int id;
@@ -52,10 +55,9 @@ public class ControladorCURegistrarRecepcionCompra {
     public void actualizarLineaCompra(int i){
         lc.get(i).marcarRecibido();
         lp = lc.get(i).actualizaLineasPedido();
-        //acabar 
-        //igual es mejor hacer como abajo que String lineaPedidoJSONString = lp.getJSON()
+        //acabAAAAAAAAAAAAAAar 
         String lineaPedidoJSONString = pasarLineasPedidoAJsonString(lp);
-        //acabar
+        //acabaAAAAAAAAAAAAAAAAAr
         DAOLineaPedido.insertarLineasPedido(lineaPedidoJSONString);
     }
     
@@ -69,9 +71,9 @@ public class ControladorCURegistrarRecepcionCompra {
         boolean allRecvs = c.comprobarRecibidas();
         if(allRecvs){
             c.marcarRecibidaCompleta();
-            //acabar
+            //acabAAAAAAAAAAAAAAAAAAar
             String compraJSON = c.getJSON();   
-            //acabar
+            //acabaAAAAAAAAAAAAAAAAAAAr
             DAOCompra.actualizarCompra(compraJSON);
         }else{
             //SEGUIRRRRRRRRRRRR
@@ -80,6 +82,19 @@ public class ControladorCURegistrarRecepcionCompra {
   
        
     public void actualizarPedidos(){
-        
+        boolean bandera = true;
+        for(int i = 0; i < lp.size(); i++){
+            boolean completo = lp.get(i).checkCompleto();
+            if(!completo){
+                bandera = false;
+            }
+        }
+        if(bandera){
+            p = Pedido.getPedido(lp.get(0).getCodigoPedido());
+            p.actualizarEstadoACompletado();
+            //ACABAR LOS METODOS DE PASAR A JSON Y DE INSERTAR EN LA BASE DE DATOS
+            String pedidoJSONString = p.getJSON();
+            DAOPedido.actualizaPedido(pedidoJSONString);
+        }
     }
 }

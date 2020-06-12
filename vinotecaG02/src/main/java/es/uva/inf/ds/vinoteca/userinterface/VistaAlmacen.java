@@ -77,7 +77,7 @@ public class VistaAlmacen extends javax.swing.JFrame {
             table.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        searchBar.setText("Introducir fecha");
+        searchBar.setText("Introducir identificador compra");
 
         searchButton.setText("Buscar");
         searchButton.addActionListener(new java.awt.event.ActionListener() {

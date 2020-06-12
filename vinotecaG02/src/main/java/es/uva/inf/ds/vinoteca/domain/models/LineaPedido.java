@@ -28,23 +28,28 @@ import javax.json.JsonReaderFactory;
 public class LineaPedido {
     
     boolean completada;
-    int unidades;
+    int unidades, codigoPedido;
     
-    public LineaPedido(boolean c, int u){
+    public LineaPedido(boolean c, int u, int cPed){
         unidades = u;
         completada = c;
+        codigoPedido = cPed;
     }
     
     public void marcarCompleto(){
         completada = true;
     }
-
+    
+    public int getCodigoPedido(){
+        return codigoPedido;
+    }
     
     //revisar estoooooo
     public static ArrayList<LineaPedido> getLineasPedido(int idLineaCompra) {
         String lineasPedidoJSONString = DAOLineaPedido.consultaLineasPedido(idLineaCompra);
         ArrayList<LineaPedido> lpedidos = new ArrayList<>();
         int unidades = 0;
+        int codigo = 0;
         boolean completada = false;
         JsonReaderFactory factory = Json.createReaderFactory(null);
         try(JsonReader reader = factory.createReader(new StringReader(lineasPedidoJSONString));){
@@ -54,7 +59,8 @@ public class LineaPedido {
                 JsonObject obj = (JsonObject) array.get(i);
                 unidades = Integer.parseInt(obj.getString("unidades"));
                 completada = Boolean.parseBoolean("completada");
-                LineaPedido lp = new LineaPedido(completada, unidades);
+                codigo = Integer.parseInt(obj.getString("numeros"));
+                LineaPedido lp = new LineaPedido(completada, unidades, codigo);
                 lp.marcarCompleto();
                 lpedidos.add(lp);
             }
@@ -62,6 +68,10 @@ public class LineaPedido {
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }
         return lpedidos;
+    }
+
+    public boolean checkCompleto() {
+        return completada;
     }
     
 }

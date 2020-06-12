@@ -70,7 +70,6 @@ public class DAOCompra {
            
             writer.writeObject(compraJson);
             compraJSONString = stringWriter.toString();
-            System.out.println(compraJSONString);
         }catch(Exception ex){
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE,null,ex);
         }

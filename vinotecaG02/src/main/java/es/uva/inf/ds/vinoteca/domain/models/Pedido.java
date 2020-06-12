@@ -9,12 +9,18 @@ package es.uva.inf.ds.vinoteca.domain.models;
  * @author alejandro
  */    
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOAbonado;
+import es.uva.inf.ds.vinoteca.persistence.daos.DAOCompra;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
+import es.uva.inf.ds.vinoteca.persistence.daos.DAOPedido;
 import java.io.StringReader;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonReaderFactory;
@@ -24,7 +30,9 @@ import javax.json.JsonReaderFactory;
  * @author pablo
  */
 public class Pedido {
-    private int numero,estado, numeroFactura, numeroAbonado;
+
+    private int numero, numeroFactura, numeroAbonado, estado, codigo;
+    //private EstadoPedido estado;
     private LocalDateTime fechaRealizacion, fechaRecepcion, fechaEntrega;
     private String notaEntrega;
     private double importe;
@@ -42,8 +50,55 @@ public class Pedido {
         this.numeroAbonado=numeroAbonado;
     }
     
+    public Pedido(int numero, int estado, LocalDateTime fechaRealizacion, String notaEntrega, double importe,
+                    LocalDateTime fechaRecepcion, LocalDateTime fechaEntrega, int numeroFactura, int numeroAbonado, int codigo){
+        this.numero=numero;
+        this.estado=estado;
+        this.fechaRealizacion=fechaRealizacion;
+        this.notaEntrega=notaEntrega;
+        this.importe=importe;
+        this.fechaRecepcion=fechaRecepcion;
+        this.fechaEntrega=fechaEntrega;
+        this.numeroFactura=numeroFactura;
+        this.numeroAbonado=numeroAbonado;
+        this.codigo=codigo;
+    }
+    
     public int getNumeroPedido(){
         return numero;
+    }
+
+    public static Pedido getPedido(int codPedido){
+        String pedidoJSONString = DAOPedido.consultaPedido(codPedido);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
+        int numeroJ;
+        int estadoJ;
+        int numeroFactura;
+        int numeroAbonadoJ;
+        LocalDateTime fechaRealizacionJ;
+        String notaEntregaJ;
+        double importeJ;
+        LocalDateTime fechaRecepcionJ;
+        LocalDateTime fechaEntregaJ;
+        Pedido p = null;
+        
+        JsonReaderFactory factory = Json.createReaderFactory(null);
+        try(JsonReader reader = factory.createReader(new StringReader(pedidoJSONString));){
+            JsonObject obj = reader.readObject();
+            numeroJ = Integer.parseInt(obj.getString("numero"));
+            estadoJ = Integer.parseInt(obj.getString("estado"));
+            fechaRealizacionJ = LocalDateTime.parse(obj.getString("fechaRealizacion"),formatter);
+            notaEntregaJ = obj.getString("notaEntrega");
+            importeJ = Double.parseDouble(obj.getString("importe"));
+            fechaRecepcionJ = LocalDateTime.parse(obj.getString("fechaRecepcion"),formatter);
+            fechaEntregaJ = LocalDateTime.parse(obj.getString("fechaEntrega"),formatter);
+            numeroFactura = Integer.parseInt("numeroFactura");
+            numeroAbonadoJ = Integer.parseInt(obj.getString("numeroAbonado"));
+            p = new Pedido(numeroJ,estadoJ,fechaRealizacionJ,notaEntregaJ,importeJ,fechaRecepcionJ,fechaEntregaJ,numeroFactura,numeroAbonadoJ,codPedido); 
+        }catch(Exception ex){
+            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE,null,ex);
+        }
+        return p;
     }
     
     public void setNumeroPedido(int n){
@@ -129,5 +184,12 @@ public class Pedido {
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }
         return ab;
+    }
+
+    public void actualizarEstadoACompletado() {
+        estado = 2;
+    }
+
+    public String getJSON() {
     }
 }

@@ -32,8 +32,10 @@ public class DAOLineaPedido {
         int counter = 0;
         String comp = null;
         boolean completada = false;
+        int numeroPedido = 0;
         int codigo = 0;
         ArrayList<Integer> unidades = new ArrayList<>();
+        ArrayList<Integer> numerosPedido = new ArrayList<>();
         ArrayList<Boolean> completadas = new ArrayList<>();
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
@@ -46,9 +48,11 @@ public class DAOLineaPedido {
                 counter ++;
                 numeroUnidades = result.getInt("unidades");
                 comp = result.getString("completada");
+                numeroPedido = result.getInt("numeropedido");
                 if(comp.equals("1")){
                     completada = true;
                 }
+                numerosPedido.add(numeroPedido);
                 unidades.add(numeroUnidades);
                 completadas.add(completada);
             }
@@ -58,18 +62,19 @@ public class DAOLineaPedido {
         }
         connection.closeConnection();
         if(counter!=0){
-            lineaPedidoJSONString = obtainLineaPedidoJSONString(unidades, completadas);
+            lineaPedidoJSONString = obtainLineaPedidoJSONString(unidades, completadas, numerosPedido);
         }
         return lineaPedidoJSONString;
     }
    
-    private static String obtainLineaPedidoJSONString(ArrayList<Integer> unidades, ArrayList<Boolean> completadas) {
+    private static String obtainLineaPedidoJSONString(ArrayList<Integer> unidades, ArrayList<Boolean> completadas, ArrayList<Integer> numerosPedido) {
         String lineaPedidoJSONString = "";
         //JsonReaderFactory factory = Json.createReaderFactory(null);
         JsonArrayBuilder array = Json.createArrayBuilder();
         for(int i=0;i<unidades.size();i++){
             array.add(Json.createObjectBuilder().add("unidades",Integer.toString(unidades.get(i)))
             .add("recibidas", Boolean.toString(completadas.get(i)))
+            .add("numeros",Integer.toString(numerosPedido.get(i)))
             .build());
         }
         try(

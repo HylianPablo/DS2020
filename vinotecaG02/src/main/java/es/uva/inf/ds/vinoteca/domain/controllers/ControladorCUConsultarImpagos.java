@@ -34,7 +34,7 @@ public class ControladorCUConsultarImpagos { //REVISAR
         ArrayList<ArrayList<Pedido>> matrizPedidos = new ArrayList<>();
         ArrayList<Abonado> abonados = new ArrayList<>();
         for(int i=0;i<facturas.size();i++){
-            Factura f0 = facturas.get(0); //Elige usuario o todas????
+            Factura f0 = facturas.get(0);
             ArrayList<Pedido> pedidos = f0.getPedidosAsociados();
             matrizPedidos.add(pedidos);
             Pedido p0 = pedidos.get(0);
@@ -43,7 +43,7 @@ public class ControladorCUConsultarImpagos { //REVISAR
         }
         ArrayList<String> detalles = new ArrayList<>();
         for(int i = 0;i<facturas.size();i++){
-            String detalle = "Factura: "+Integer.toString(facturas.get(i).getNumeroFactura()) +", Abonado: "
+            String detalle = "Factura: "+Integer.toString(facturas.get(i).getNumeroFactura()) +".| Abonado: "
                     + Integer.toString(abonados.get(0).getNumeroAbonado())+" ,";
             String pedidosDetalle="";
             for(int j =0; j<matrizPedidos.get(i).size();j++){

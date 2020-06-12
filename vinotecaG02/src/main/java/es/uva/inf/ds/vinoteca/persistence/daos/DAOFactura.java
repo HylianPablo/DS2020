@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.uva.inf.ds.vinoteca.persistence.daos;
 
 import es.uva.inf.ds.vinoteca.persistence.dbaccess.DBConnection;
@@ -24,11 +19,18 @@ import javax.json.JsonObject;
 import javax.json.JsonWriter;
 
 /**
- *
- * @author pablo
+ * Clase que representa el acceso a la tabla de la base de datos que contiene los datos de las facturas del sistema.
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class DAOFactura {
     
+    /**
+     * Consulta las facturas emitidas antes de una determinada fecha.
+     * @param fecha Cadena de caracteres que representa la fecha a partir de la cual se obtendrán las facturas.
+     * @return JSON en forma de cadena de caracteres que representa las facturas que se hayan emitido anteriormente a la fecha introducida como parámetro. En caso de no existir ninguna devuelve cadena vacía.
+     */
     public static String consultaFacturasAntesDeFecha(String fecha){
         String facturasJSONString = "";
         int numeroFactura = -1;

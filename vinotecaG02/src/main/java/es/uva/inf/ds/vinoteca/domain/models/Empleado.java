@@ -39,8 +39,8 @@ public class Empleado {
      * @throws {@code IllegalArgumentException} en caso de que la longitud del NIF exceda los nueve caracteres.
      */
     public Empleado(String n, String p, LocalDateTime ldt){
-        if(nif.length()>9)
-            throw new IllegalArgumentException();
+        if(n.length()>9)
+            throw new IllegalArgumentException("La longitud del NIF excede los nueve caracteres.");
         nif=n;
         password=p;
         fechaInicio=ldt;

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.uva.inf.ds.vinoteca.persistence.daos;
 
 import es.uva.inf.ds.vinoteca.persistence.dbaccess.DBConnection;
@@ -17,11 +12,18 @@ import javax.json.JsonObject;
 import javax.json.JsonWriter;
 
 /**
- *
- * @author pablo
+ * Clase que representa el acceso a la tabla de la base de datos que contiene los datos de los abonados del sistema.
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class DAOAbonado {
     
+    /**
+     * Obtiene un JSON en forma de cadena de caracteres representando el abonado que se desea buscar en la base de datos. En caso de no existir retorna cadena vacía.
+     * @param numeroAbonado Número entero que representa el abonado que se quiere buscar.
+     * @return JSON en forma de cadena de caracteres que representa al abonado en caso de que el abonado exista o cadena vacía en caso contrario.
+     */
     public static String consultaAbonado(int numeroAbonado){
         String abonadoJSONString = "";
         String openidref = null;

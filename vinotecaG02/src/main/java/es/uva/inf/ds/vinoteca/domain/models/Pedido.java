@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package es.uva.inf.ds.vinoteca.domain.models;
 
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOAbonado;
@@ -17,8 +13,10 @@ import javax.json.JsonReader;
 import javax.json.JsonReaderFactory;
 
 /**
- *
- * @author pablo
+ * Modelo de los pedidos que procesa el sistema.
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class Pedido {
     private int numero,estado, numeroFactura, numeroAbonado;
@@ -26,6 +24,18 @@ public class Pedido {
     private String notaEntrega;
     private double importe;
     
+    /**
+     * Constructor de la clase Pedido.
+     * @param numero Número entero encargado de identificar el pedido.
+     * @param estado Número entero que representa el estado en que se encuentra el pedido.
+     * @param fechaRealizacion Fecha en que se realizó el pedido.
+     * @param notaEntrega Cadena de caractereres que representa la nota de entrega del pedido.
+     * @param importe Número real que representa el importe del pedido.
+     * @param fechaRecepcion Fecha en que se confirmó la recepción del pedido.
+     * @param fechaEntrega Fecha en que se confirmó la entrega del pedido.
+     * @param numeroFactura Número de la factura asociada al pedido.
+     * @param numeroAbonado Número del abonado asociado al pedido.
+     */
     public Pedido(int numero, int estado, LocalDateTime fechaRealizacion, String notaEntrega, double importe,
                     LocalDateTime fechaRecepcion, LocalDateTime fechaEntrega, int numeroFactura, int numeroAbonado){
         this.numero=numero;
@@ -39,78 +49,154 @@ public class Pedido {
         this.numeroAbonado=numeroAbonado;
     }
     
+    /**
+     * Devuelve el número que identifica el pedido.
+     * @return Número entero que identifica el pedido.
+     */
     public int getNumeroPedido(){
         return numero;
     }
     
+    /**
+     * Modifica el número que identifica el pedido.
+     * @param n Número entero que pasará a representar el pedido.
+     */
     public void setNumeroPedido(int n){
         numero=n;
     }
     
+    /**
+     * Devuelve el estado en que se encuentra el pedido.
+     * @return Número entero que representa el estado en que se encuentra el pedido.
+     */
     public int getEstado(){
         return estado;
     }
     
+    /**
+     * Modifica el estado en que se encuentra el pedido.
+     * @param e Número entero que representa el nuevo estado del pedido.
+     */
     public void setEstado(int e){
         estado=e;
     }
     
+    /**
+     * Devuelve la fecha en que se realizó el pedido.
+     * @return {@code LocalDateTime} que representa cuando se realizó el pedido.
+     */
     public LocalDateTime getFechaRealizacion(){
         return fechaRealizacion;
     }
     
+    /**
+     * Modifica la fecha en que se realizó el pedido.
+     * @param ldt {@code LocalDateTime} que representa la nueva fecha que representará cuando se realizó el pedido.
+     */
     public void setFechaRealiazacion(LocalDateTime ldt){
         fechaRealizacion=ldt;
     }
     
+    /**
+     * Devuelve la nota de entrega del pedido.
+     * @return Cadena de caracteres que representa la nota de entrega del pedido.
+     */
     public String getNotaEntrega(){
         return notaEntrega;
     }
     
+    /**
+     * Modifica la nota de entrega del pedido.
+     * @param n Cadena de caracteres que representa la nueva nota de entrega del pedido.
+     */
     public void setNotaEntrega(String n){
         notaEntrega = n;
     }
     
+    /**
+     * Devuelve el importe del pedido.
+     * @return Número real que representa el importe del pedido.
+     */
     public double getImporte(){
         return importe;
     }
     
+    /**
+     * Modifica el importe del pedido.
+     * @param d Número real que representael nuevo importe del pedido.
+     */
     public void setImporte(double d){
         importe=d;
     }
     
+    /**
+     * Obtiene la fecha en que se confirmó la recepción del pedido.
+     * @return {@code LocalDateTime} que representa la fecha de recepción del pedido.
+     */
     public LocalDateTime getFechaRecepcion(){
         return fechaRecepcion;
     }
     
+    /**
+     * Modifica la fecha en que se confirmó la recepción del pedido.
+     * @param ldt {@code LocalDateTime} que representa la nueva fecha de recepción del pedido.
+     */
     public void setFechaRecepcion(LocalDateTime ldt){
         fechaRecepcion = ldt;
     }
     
+    /**
+     * Obtiene la fecha de entrega del pedido.
+     * @return {@code LocalDateTime} que representa la fecha de entrega del pedido.
+     */
     public LocalDateTime getFechaEntrega(){
         return fechaEntrega;
     }
     
+    /**
+     * Modifica la fecha de entrega del pedido.
+     * @param ldt {@LocalDateTime} que representa la nueva fecha de entrega del pedido.
+     */
     public void setFechaEntrega(LocalDateTime ldt){
         fechaEntrega = ldt;
     }
     
+    /**
+     * Obtiene el número de la factura asociada al pedido.
+     * @return Número entero que representa el número de factura asociado al pedido.
+     */
     public int getNumeroFactura(){
         return numeroFactura;
     }
     
+    /**
+     * Modifica el número de la factura asociada al pedido.
+     * @param n Número entero que representa el nuevo número de factura asociado al pedido.
+     */
     public void setNumeroFactura(int n){
         numeroFactura=n;
     }
     
+    /**
+     * Obtiene el número del abonado asociado al pedido.
+     * @return Número entero que representa el número de abonado asociado al pedido.
+     */
     public int getNumeroAbonado(){
         return numeroAbonado;
     }
     
+    /**
+     * Modifica el número de abonado asociado al pedido.
+     * @param n Número entero que representa el nuevo número de abonado asociado al pedido.
+     */
     public void setNumeroAbonado(int n){
         numeroAbonado = n;
     }
     
+    /**
+     * Devuelve el abonado asociado al pedido, tomando como precondición que la base de datos está bien formada y no hay pedidos sin abonados.
+     * @return Instancia del abonado asociado al pedido.
+     */
     public Abonado getAbonado(){
         Abonado ab = null;
         String abonadoJSONString = DAOAbonado.consultaAbonado(numeroAbonado);

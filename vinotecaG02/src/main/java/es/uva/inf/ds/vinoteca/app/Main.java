@@ -19,7 +19,7 @@ public class Main {
     /**
      * Lanzador de la vista inicial de la aplicación.
      */
-    public static void main(){
+    public static void main(String args[]){
         java.awt.EventQueue.invokeLater(new Runnable(){
         public void run(){
             loginView = new VistaIdentificarse();

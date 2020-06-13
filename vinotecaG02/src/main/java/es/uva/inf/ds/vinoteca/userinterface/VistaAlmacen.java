@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 public class VistaAlmacen extends javax.swing.JFrame {
 
     private final ControladorVistaAlmacen controller;
-    private ArrayList<LineaCompra> lcs; 
+    private ArrayList<Integer> lcs; 
     private DefaultTableModel model;
     private DefaultTableModel model2;
     /**
@@ -36,11 +36,11 @@ public class VistaAlmacen extends javax.swing.JFrame {
         
     }
     
-    public void mostrarMensajeUsuario(ArrayList<LineaCompra> lcnr) {
+    public void mostrarMensajeUsuario(ArrayList<Integer> lcnr) {
         model2 = (DefaultTableModel) table2.getModel();
         model2.setRowCount(lcnr.size());
-        for(int i = 0; i<lcnr.size(); i++){
-            model2.setValueAt(lcnr.get(i).getCodigoLinea(), i, 0);
+            for(int i = 0; i<lcnr.size(); i++){
+            model2.setValueAt(lcnr.get(i), i, 0);
             model2.setValueAt("No Recibida", i, 1);
         }
     }
@@ -58,19 +58,19 @@ public class VistaAlmacen extends javax.swing.JFrame {
         errorMsg.setText(message);
     }
 
-    public void actualizarVista(Bodega b, ArrayList<LineaCompra> lc, ArrayList<Referencia> refs) {
+    public void actualizarVista(String nombreB, ArrayList<Integer> codigosLineaCompra, ArrayList<Integer> unidadesLineaCompra,
+            ArrayList<Integer> codigosReferencia) {
         //String [] col = {"selected", "nombreBodega", "idLineaCompra", "idReferencia", "unidades"};
-        String [][] data = new String [lc.size()][4];
-        String nombre = b.getNombre();
-        lcs = lc;
+        String [][] data = new String [codigosLineaCompra.size()][4];
+        lcs = codigosLineaCompra;
         model = (DefaultTableModel) table.getModel();
-        model.setRowCount(lc.size());
-        for(int i = 0; i<lc.size(); i++){
+        model.setRowCount(codigosLineaCompra.size());
+        for(int i = 0; i<codigosLineaCompra.size(); i++){
             int j = 1;
-            String unidades = Integer.toString(lc.get(i).getUnidades());
-            String codigoLinea = Integer.toString(lc.get(i).getCodigoLinea());
-            String codigoRef = Integer.toString(refs.get(i).getCodigo());
-            model.setValueAt(nombre, i, j);
+            String unidades = Integer.toString(unidadesLineaCompra.get(i));
+            String codigoLinea = Integer.toString(codigosLineaCompra.get(i));
+            String codigoRef = Integer.toString(codigosReferencia.get(i));
+            model.setValueAt(nombreB, i, j);
             model.setValueAt(false, i, 0);
             j++;
             model.setValueAt(codigoLinea, i, j);

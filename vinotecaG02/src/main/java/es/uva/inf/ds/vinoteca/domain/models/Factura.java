@@ -189,7 +189,11 @@ public class Factura {
     }
     
     
-    
+    /**
+     * Obtiene las facturas emitidas treinta días antes de la fecha introducida.
+     * @param fecha Cadena de caracteres que representa la fecha utilizada como límite.
+     * @return Lista de facturas que cumplen el plazo inferior a treinta días antes de la fecha.
+     */
     public static ArrayList<Factura> consultaFacturasAntesDeFecha(String fecha){
         ArrayList<Factura> facturas = new ArrayList<>();
         int numeroFactura;

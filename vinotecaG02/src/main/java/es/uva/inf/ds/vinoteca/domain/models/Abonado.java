@@ -50,6 +50,12 @@ public class Abonado {
         return numeroAbonado;
     }
     
+    /**
+     * Obtiene la instancia de un abonado a partir de su identificador.
+     * @param id Número entero que representa el identificador del abonado.
+     * @return Instancia del abonado buscado.
+     * @throws {@code AbonadoNotExistsException} en caso de que el abonado no exista. 
+     */
     public static Abonado getAbonado(int id) throws AbonadoNotExistsException {
         String abonadoJSONString = DAOAbonado.consultaAbonado(id);
         String openIdRefJson=null; 
@@ -110,6 +116,10 @@ public class Abonado {
         nif=s;
     }
     
+    /**
+     * Obtiene los pedidos asociados del abonado.
+     * @return Lista de pedidos asociados al abonado.
+     */
     public ArrayList<Pedido> getPedidos(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
         int numeroJ;

@@ -122,6 +122,11 @@ public class VistaAlmacen extends javax.swing.JFrame {
         jScrollPane1.setViewportView(table);
 
         searchBar.setText("Introducir identificador compra");
+        searchBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBarActionPerformed(evt);
+            }
+        });
 
         searchButton.setText("Buscar");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
@@ -266,6 +271,10 @@ public class VistaAlmacen extends javax.swing.JFrame {
         jButton1.setEnabled(false);
         searchButton.setEnabled(false);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchBarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

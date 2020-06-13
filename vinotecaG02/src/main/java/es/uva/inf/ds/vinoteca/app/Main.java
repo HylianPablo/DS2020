@@ -23,7 +23,7 @@ public class Main {
     public static void main(String args[]){
         java.awt.EventQueue.invokeLater(new Runnable(){
         public void run(){
-            VistaAlmacen loginView = new VistaAlmacen();
+            VistaAlmacen loginView = new VistaAlmacen   ();
             loginView.setVisible(true);
         }
     });

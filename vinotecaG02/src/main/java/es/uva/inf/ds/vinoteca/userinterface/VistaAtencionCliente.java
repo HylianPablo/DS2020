@@ -14,8 +14,14 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
     /**
      * Creates new form VistaAtencionCliente
      */
+    
+    private final ControladorVistaAtencionCliente controller;
+    
     public VistaAtencionCliente() {
         initComponents();
+        setResizable(false);
+        jLabel1.setText("");
+        controller = new ControladorVistaAtencionCliente(this);
         setLocationRelativeTo(null);
     }
 
@@ -41,6 +47,11 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
         abonadoText.setText("Introducir número de abonado");
 
         searchButton.setText("Buscar");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
 
         cantidadText.setText("Cantidad");
         cantidadText.addActionListener(new java.awt.event.ActionListener() {
@@ -117,6 +128,11 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
     private void cantidadTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidadTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cantidadTextActionPerformed
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        int idAbonado = Integer.parseInt(abonadoText.getText());
+        controller.procesaDatosIntroducirNumeroAbonado(idAbonado);
+    }//GEN-LAST:event_searchButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

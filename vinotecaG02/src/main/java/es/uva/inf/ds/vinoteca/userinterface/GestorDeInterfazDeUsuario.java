@@ -15,6 +15,7 @@ public class GestorDeInterfazDeUsuario {
     
     private static VistaContabilidad contabilidadView;
     private static VistaAtencionCliente atencionClienteView;
+    private static VistaAlmacen almacenView;
     
     /**
      * Constructor de la clase.
@@ -39,14 +40,19 @@ public class GestorDeInterfazDeUsuario {
         });
                 break;
             case 2:
-                //lanzar caso 2
+                loginView.setVisible(false);
+                loginView.dispose();
+                java.awt.EventQueue.invokeLater(() -> {
+                    almacenView = new VistaAlmacen();
+                    almacenView.setVisible(true);
+        });
                 break;
             case 3:
                 loginView.setVisible(false);
                 loginView.dispose();
                 java.awt.EventQueue.invokeLater(() -> {
                     atencionClienteView = new VistaAtencionCliente();
-                    contabilidadView.setVisible(true);
+                    atencionClienteView.setVisible(true);
                 });
                 break;
             default:

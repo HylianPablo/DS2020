@@ -55,8 +55,10 @@ public class ControladorVistaAlmacen {
     //igual comprobarRecibidas no deberia retornar
     public void procesaDatosFinalizar(){
         cuController.comprobarRecibidas();
-        ArrayList<LineaCompra> lcnr = cuController.getLineasCompraNoRecibidas();
-        view.mostrarMensajeUsuario(lcnr);
+        if(cuController.getAllRefs()){
+            ArrayList<LineaCompra> lcnr = cuController.getLineasCompraNoRecibidas();
+            view.mostrarMensajeUsuario(lcnr);
+        }
         cuController.actualizarPedidos();
         
     }

@@ -45,6 +45,7 @@ public class ControladorCURegistrarRecepcionCompra {
     ArrayList<Referencia> refs;
     ArrayList<LineaPedido> lp;
     int id;
+    boolean allRecvs;
     //Referencia r;
         
     public static ControladorCURegistrarRecepcionCompra getController(){
@@ -113,11 +114,13 @@ public class ControladorCURegistrarRecepcionCompra {
     }*/
     
     public void comprobarRecibidas(){
-        boolean allRecvs = c.comprobarRecibidas();
-        if(allRecvs){
-            c.marcarRecibidaCompleta();
-            DAOCompra.actualizarCompra(c.getIdCompra());
-        }        
+        allRecvs = c.comprobarRecibidas();
+        c.marcarRecibidaCompleta();
+        DAOCompra.actualizarCompra(c.getIdCompra());
+    }
+    
+    public boolean getAllRefs(){
+        return allRecvs;
     }
     
     public ArrayList<LineaCompra> getLineasCompraNoRecibidas(){

@@ -6,13 +6,16 @@ import es.uva.inf.ds.vinoteca.common.NullCompraException;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOAbonado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOCompra;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
+import es.uva.inf.ds.vinoteca.persistence.daos.DAOPedido;
 import java.io.StringReader;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonReaderFactory;
@@ -109,6 +112,41 @@ public class Abonado {
         if(s.length()>9)
             throw new IllegalArgumentException("La longitud del NIF debe ser como mucho de 9 caracteres");
         nif=s;
+    }
+    
+    public ArrayList<Pedido> getPedidos(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
+        int numeroJ;
+        int estadoJ;
+        LocalDateTime fechaRealizacionJ;
+        String notaEntregaJ;
+        double importeJ;
+        LocalDateTime fechaRecepcionJ;
+        LocalDateTime fechaEntregaJ;
+        int numeroFacturaJ;
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+        String pedidosJSONString = DAOPedido.consultaPedidoAbonado(numeroAbonado);
+        JsonReaderFactory factory = Json.createReaderFactory(null);
+        try(JsonReader reader = factory.createReader(new StringReader(pedidosJSONString));){
+            JsonObject mainObj = reader.readObject();
+            JsonArray array = mainObj.getJsonArray("pedidos");
+            for(int i =0; i<array.size();i++){
+                JsonObject obj = (JsonObject) array.getJsonObject(i);
+                numeroJ = Integer.parseInt(obj.getString("numero"));
+                estadoJ = Integer.parseInt(obj.getString("estado"));
+                fechaRealizacionJ = LocalDateTime.parse(obj.getString("fechaRealizacion"),formatter);
+                notaEntregaJ = obj.getString("notaEntrega");
+                importeJ = Double.parseDouble(obj.getString("importe"));
+                fechaRecepcionJ = LocalDateTime.parse(obj.getString("fechaRecepcion"),formatter);
+                fechaEntregaJ = LocalDateTime.parse(obj.getString("fechaEntrega"),formatter);
+                numeroFacturaJ = Integer.parseInt(obj.getString("numeroFactura"));
+                Pedido p = new Pedido(estadoJ,fechaRealizacionJ,notaEntregaJ,importeJ,fechaRecepcionJ,fechaEntregaJ,numeroFacturaJ,this.numeroAbonado);
+                pedidos.add(p);
+            }
+        }catch(Exception ex){
+            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE,null,ex);
+        }
+        return pedidos;
     }
     
     

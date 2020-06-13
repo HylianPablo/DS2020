@@ -115,5 +115,24 @@ public class DAOFactura {
         return facturasJSONString;
     }
     
+    public static boolean comprobarNoVencido(int numeroFactura){
+        int estadoFactura = -1;
+        DBConnection connection = DBConnection.getInstance();
+        connection.openConnection();
+        try(PreparedStatement ps = connection.getStatement("SELECT * FROM FACTURA f WHERE f.NUMEROFACTURA = ?");)
+        {
+            ps.setInt(1,numeroFactura);
+            ResultSet result = ps.executeQuery();
+            if(result.next()){
+                estadoFactura = result.getInt("ESTADO");
+            }
+            
+        }catch(SQLException ex){
+            Logger.getLogger(DAOFactura.class.getName()).log(Level.SEVERE,null,ex);
+        }
+        connection.closeConnection();
+        return (estadoFactura!=2);
+    }
+    
     
 }

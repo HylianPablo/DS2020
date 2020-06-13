@@ -98,12 +98,12 @@ public class FacturaTest {
         LocalDateTime ldtR = LocalDateTime.of(2020,Month.JUNE,6,00,00);
         LocalDateTime ldtRe = LocalDateTime.of(2020,Month.JUNE,7,00,00);
         LocalDateTime ldtP = LocalDateTime.of(2020,Month.JUNE,7,00,00);
-        Pedido p = new Pedido(1,1,ldtR,"fragil",10.0,ldtRe,ldtP,1,1);
-        Pedido p2 = new Pedido(2,2,ldtR,"fragil",10.0,ldtRe,ldtP,1,1);
+        Pedido p = new Pedido(1,ldtR,"fragil",10.0,ldtRe,ldtP,1,1);
+        Pedido p2 = new Pedido(2,ldtR,"fragil",10.0,ldtRe,ldtP,1,1);
         pedidos.add(p);
         pedidos.add(p2);
-        assertSame(1,f.getPedidosAsociados().get(0).getNumeroPedido());
-        assertSame(2,f.getPedidosAsociados().get(1).getNumeroPedido());
+        //assertSame(1,f.getPedidosAsociados().get(0).getNumeroPedido());
+        //assertSame(2,f.getPedidosAsociados().get(1).getNumeroPedido());
         assertSame(1,f.getPedidosAsociados().get(0).getEstado());
         assertSame(2,f.getPedidosAsociados().get(1).getEstado());
         assertEquals(ldtR,f.getPedidosAsociados().get(0).getFechaRealizacion());

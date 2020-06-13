@@ -12,13 +12,20 @@ public class ControladorVistaAtencionCliente {
     
     private final VistaAtencionCliente view;
     private final ControladorCUCrearPedido cuController;
+    private int idAbonado;
     
     public ControladorVistaAtencionCliente(VistaAtencionCliente view){
+        idAbonado=-1;
         this.view = view;
         cuController = ControladorCUCrearPedido.getController();
     }
 
-    void procesaDatosIntroducirNumeroAbonado(int idAbonado) {
+    public void procesaDatosIntroducirNumeroAbonado(int idAbonado) {
+        this.idAbonado=idAbonado;
         cuController.crearPedidoAbonado(idAbonado);
+    }
+    
+    public void procesaConfirmacion(){
+        cuController.comprobarPlazosVencidos(idAbonado);
     }
 }

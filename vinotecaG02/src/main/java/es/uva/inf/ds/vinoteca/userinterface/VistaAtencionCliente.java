@@ -41,6 +41,7 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
         referenciaText = new javax.swing.JTextField();
         endButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        confirmarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,6 +67,13 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
 
         jLabel1.setText("Mensaje de error");
 
+        confirmarButton.setText("Confirmar");
+        confirmarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmarButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -83,8 +91,10 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
                         .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(endButton, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
-                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(confirmarButton, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(endButton, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                        .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
@@ -96,7 +106,9 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
                     .addComponent(searchButton))
                 .addGap(58, 58, 58)
                 .addComponent(cantidadText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
+                .addGap(9, 9, 9)
+                .addComponent(confirmarButton)
+                .addGap(3, 3, 3)
                 .addComponent(referenciaText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -134,10 +146,15 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
         controller.procesaDatosIntroducirNumeroAbonado(idAbonado);
     }//GEN-LAST:event_searchButtonActionPerformed
 
+    private void confirmarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarButtonActionPerformed
+        controller.procesaConfirmacion();
+    }//GEN-LAST:event_confirmarButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField abonadoText;
     private javax.swing.JTextField cantidadText;
+    private javax.swing.JButton confirmarButton;
     private javax.swing.JButton endButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

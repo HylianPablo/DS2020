@@ -2,6 +2,8 @@ package es.uva.inf.ds.vinoteca.domain.controllers;
 
 import es.uva.inf.ds.vinoteca.common.AbonadoNotExistsException;
 import es.uva.inf.ds.vinoteca.domain.models.Abonado;
+import es.uva.inf.ds.vinoteca.domain.models.Pedido;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,7 +20,7 @@ public class ControladorCUCrearPedido {
      * @return Nueva instancia del controlador del caso de uso "Crear pedido de Abonado".
      */
     
-    Abonado b;
+    private Abonado b;
     
     public static ControladorCUCrearPedido getController(){
         return new ControladorCUCrearPedido();
@@ -29,6 +31,20 @@ public class ControladorCUCrearPedido {
             b = Abonado.getAbonado(idAbonado);
         }catch(AbonadoNotExistsException ex){
             Logger.getLogger(ControladorCURegistrarRecepcionCompra.class.getName()).log(Level.SEVERE,null,ex);
+        }
+    }
+    
+    public void comprobarPlazosVencidos(int idAbonado){ //Necesario idAbonado?? comprobar
+        ArrayList<Pedido> pedidos = b.getPedidos();
+        boolean bandera = true;
+        for(int i=0;i<pedidos.size();i++){
+            if(pedidos.get(i).comprobarNoVencido()){
+                bandera=false;
+                break;
+            }
+        }
+        if(bandera){
+            Pedido newPedido = new Pedido(1,null,"notaEntrega",0.0,null,null,0,0);
         }
     }
 }

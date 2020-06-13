@@ -179,7 +179,7 @@ public class Factura {
                 fechaRecepcionJ = LocalDateTime.parse(obj.getString("fechaRecepcion"),formatter);
                 fechaEntregaJ = LocalDateTime.parse(obj.getString("fechaEntrega"),formatter);
                 numeroAbonadoJ = Integer.parseInt(obj.getString("numeroAbonado"));
-                Pedido p = new Pedido(numeroJ,estadoJ,fechaRealizacionJ,notaEntregaJ,importeJ,fechaRecepcionJ,fechaEntregaJ,this.numeroFactura,numeroAbonadoJ);
+                Pedido p = new Pedido(estadoJ,fechaRealizacionJ,notaEntregaJ,importeJ,fechaRecepcionJ,fechaEntregaJ,this.numeroFactura,numeroAbonadoJ);
                 pedidos.add(p);
             }
         }catch(Exception ex){

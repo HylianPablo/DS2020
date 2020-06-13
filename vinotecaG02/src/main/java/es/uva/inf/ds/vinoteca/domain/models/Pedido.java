@@ -7,6 +7,7 @@ package es.uva.inf.ds.vinoteca.domain.models;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOAbonado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOCompra;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
+import es.uva.inf.ds.vinoteca.persistence.daos.DAOFactura;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOPedido;
 import java.io.StringReader;
 import java.time.LocalDateTime;
@@ -46,9 +47,8 @@ public class Pedido {
      * @param numeroFactura Número de la factura asociada al pedido.
      * @param numeroAbonado Número del abonado asociado al pedido.
      */
-    public Pedido(int numero, int estado, LocalDateTime fechaRealizacion, String notaEntrega, double importe,
+    public Pedido(int estado, LocalDateTime fechaRealizacion, String notaEntrega, double importe,
                     LocalDateTime fechaRecepcion, LocalDateTime fechaEntrega, int numeroFactura, int numeroAbonado){
-        this.numero=numero;
         this.estado=estado;
         this.fechaRealizacion=fechaRealizacion;
         this.notaEntrega=notaEntrega;
@@ -273,5 +273,9 @@ public class Pedido {
 
     public void actualizarEstadoACompletado() {
         estado = 2;
+    }
+    
+    public boolean comprobarNoVencido(){
+        return DAOFactura.comprobarNoVencido(numeroFactura);
     }
 }

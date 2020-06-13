@@ -75,16 +75,71 @@ public class DAOPedido {
                 
             }
         }catch(SQLException ex){
-            Logger.getLogger(DAOFactura.class.getName()).log(Level.SEVERE,null,ex);
+            Logger.getLogger(DAOPedido.class.getName()).log(Level.SEVERE,null,ex);
         }
         connection.closeConnection();
         if(counter!=0)
-            pedidosJSONString = pedidosToJSONString(numeros,estados,fechasRealizacion,notasEntrega,importes,fechasRecepcion,fechasEntrega,numerosAbonado,numeroFactura);
+            pedidosJSONString = pedidosToJSONStringP(numeros,estados,fechasRealizacion,notasEntrega,importes,fechasRecepcion,fechasEntrega,numerosAbonado,numeroFactura);
         return pedidosJSONString;
     }
     
+    public static String consultaPedidoAbonado(int numeroAbonado){
+        String pedidosJSONstring="";
+        String pedidosJSONString = "";
+        int numero = -1;
+        int estado = -1;
+        LocalDateTime fechaRealizacion = null;
+        String notaEntrega = null;
+        double importe = 0.0;
+        LocalDateTime fechaRecepcion = null;
+        LocalDateTime fechaEntrega = null;
+        int numeroFactura = -1;
+        ArrayList<Integer> numeros = new ArrayList<>();
+        ArrayList<Integer> estados = new ArrayList<>();
+        ArrayList<LocalDateTime> fechasRealizacion = new ArrayList<>();
+        ArrayList<String> notasEntrega = new ArrayList<>();
+        ArrayList<Double> importes = new ArrayList<>();
+        ArrayList<LocalDateTime> fechasRecepcion = new ArrayList<>();
+        ArrayList<LocalDateTime> fechasEntrega = new ArrayList<>();
+        ArrayList<Integer> numerosFactura = new ArrayList<>();
+        DBConnection connection = DBConnection.getInstance();
+        
+        int counter=0;
+        connection.openConnection();
+        try(PreparedStatement ps = connection.getStatement("SELECT * FROM PEDIDO p WHERE p.NUMEROABONADO = ?");)
+        {
+            ps.setInt(1, numeroAbonado);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                counter++;
+                numero = rs.getInt("NUMERO");
+                numeros.add(numero);
+                estado = rs.getInt("ESTADO");
+                estados.add(estado);
+                fechaRealizacion = rs.getTimestamp("FECHAREALIZACION").toLocalDateTime();
+                fechasRealizacion.add(fechaRealizacion);
+                notaEntrega = rs.getString("NOTAENTREGA");
+                notasEntrega.add(notaEntrega);
+                importe = rs.getDouble("IMPORTE");
+                importes.add(importe);
+                fechaRecepcion = rs.getTimestamp("FECHARECEPCION").toLocalDateTime();
+                fechasRecepcion.add(fechaRecepcion);
+                fechaEntrega = rs.getTimestamp("FECHAENTREGA").toLocalDateTime();
+                fechasEntrega.add(fechaEntrega);
+                numeroFactura = rs.getInt("NUMEROFACTURA");
+                numerosFactura.add(numeroFactura);
+                
+            }
+        }catch(SQLException ex){
+            Logger.getLogger(DAOPedido.class.getName()).log(Level.SEVERE,null,ex);
+        }
+        connection.closeConnection();
+        if(counter!=0)
+            pedidosJSONString = pedidosToJSONStringA(numeros,estados,fechasRealizacion,notasEntrega,importes,fechasRecepcion,fechasEntrega,numerosFactura,numeroAbonado);
+        return pedidosJSONString;
+    }
     
-    private static String pedidosToJSONString(ArrayList<Integer> numeros, ArrayList<Integer> estados, ArrayList<LocalDateTime> fechasRealizacion,
+    private static String pedidosToJSONStringP(ArrayList<Integer> numeros, ArrayList<Integer> estados, ArrayList<LocalDateTime> fechasRealizacion,
                                 ArrayList<String> notasEntrega, ArrayList<Double> importes, ArrayList<LocalDateTime> fechasRecepcion,
                                 ArrayList<LocalDateTime> fechasEntrega, ArrayList<Integer> numerosAbonado, int numeroFactura){
         String pedidosJSONString = "";
@@ -99,6 +154,37 @@ public class DAOPedido {
             .add("fechaEntrega",fechasEntrega.get(i).toString())
             .add("numeroAbonado",Integer.toString(numerosAbonado.get(i)))
             .add("numeroFactura",Integer.toString(numeroFactura))
+            .build());
+        }
+        try(
+                StringWriter stringWriter = new StringWriter();
+                JsonWriter writer = Json.createWriter(stringWriter);
+                ){
+           
+            JsonObject jsonObj = Json.createObjectBuilder().add("pedidos",array).build();
+            writer.writeObject(jsonObj);
+            pedidosJSONString = stringWriter.toString();
+        }catch(Exception ex){
+            Logger.getLogger(DAOFactura.class.getName()).log(Level.SEVERE,null,ex);
+        }
+        return pedidosJSONString;
+    }
+    
+    private static String pedidosToJSONStringA(ArrayList<Integer> numeros, ArrayList<Integer> estados, ArrayList<LocalDateTime> fechasRealizacion,
+                                ArrayList<String> notasEntrega, ArrayList<Double> importes, ArrayList<LocalDateTime> fechasRecepcion,
+                                ArrayList<LocalDateTime> fechasEntrega, ArrayList<Integer> numerosFactura, int numeroAbonado){
+        String pedidosJSONString = "";
+        JsonArrayBuilder array = Json.createArrayBuilder();
+        for(int i=0;i<numeros.size();i++){
+            array.add(Json.createObjectBuilder().add("numero",Integer.toString(numeros.get(i)))
+            .add("estado",Integer.toString(estados.get(i)))
+            .add("fechaRealizacion",fechasRealizacion.get(i).toString())
+            .add("notaEntrega",notasEntrega.get(i))
+            .add("importe",Double.toString(importes.get(i)))
+            .add("fechaRecepcion",fechasRecepcion.get(i).toString())
+            .add("fechaEntrega",fechasEntrega.get(i).toString())
+            .add("numeroAbonado",Integer.toString(numeroAbonado))
+            .add("numeroFactura",Integer.toString(numerosFactura.get(i)))
             .build());
         }
         try(

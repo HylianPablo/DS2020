@@ -1,0 +1,5 @@
+Examen sin teoría: patrones diseño.
+
+Patron adaptador para tres tfg
+Paton estrategia para cambiar
+Patron compuesto para Correcion

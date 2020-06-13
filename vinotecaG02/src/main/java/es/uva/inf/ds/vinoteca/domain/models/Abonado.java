@@ -1,11 +1,7 @@
 package es.uva.inf.ds.vinoteca.domain.models;
 
 import es.uva.inf.ds.vinoteca.common.AbonadoNotExistsException;
-import es.uva.inf.ds.vinoteca.common.CompletadaException;
-import es.uva.inf.ds.vinoteca.common.NullCompraException;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOAbonado;
-import es.uva.inf.ds.vinoteca.persistence.daos.DAOCompra;
-import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOPedido;
 import java.io.StringReader;
 import java.time.LocalDateTime;
@@ -140,7 +136,7 @@ public class Abonado {
                 fechaRecepcionJ = LocalDateTime.parse(obj.getString("fechaRecepcion"),formatter);
                 fechaEntregaJ = LocalDateTime.parse(obj.getString("fechaEntrega"),formatter);
                 numeroFacturaJ = Integer.parseInt(obj.getString("numeroFactura"));
-                Pedido p = new Pedido(estadoJ,fechaRealizacionJ,notaEntregaJ,importeJ,fechaRecepcionJ,fechaEntregaJ,numeroFacturaJ,this.numeroAbonado);
+                Pedido p = new Pedido(numeroJ,estadoJ,fechaRealizacionJ,notaEntregaJ,importeJ,fechaRecepcionJ,fechaEntregaJ,numeroFacturaJ,this.numeroAbonado);
                 pedidos.add(p);
             }
         }catch(Exception ex){

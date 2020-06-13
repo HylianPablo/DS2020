@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.uva.inf.ds.vinoteca.userinterface;
 
 import es.uva.inf.ds.vinoteca.common.ReferenciaNoDisponibleException;
@@ -10,23 +5,32 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author pablo
+ * Interfaz utilizada para generar un nuevo pedido para un abonado.
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class VistaAtencionCliente extends javax.swing.JFrame {
-
-    /**
-     * Creates new form VistaAtencionCliente
-     */
     
     private final ControladorVistaAtencionCliente controller;
     
+    /**
+     * Constructor de la interfaz.
+     */
     public VistaAtencionCliente() {
         initComponents();
         setResizable(false);
-        jLabel1.setText("");
+        errorMsg.setText("");
         controller = new ControladorVistaAtencionCliente(this);
         setLocationRelativeTo(null);
+    }
+    
+    /**
+     * Modifica el mensaje de error de la interfaz.
+     * @param m Cadena de caracteres que representa el mensaje de error que se muestra en la interfaz.
+     */
+    public void setMensajeError(String m){
+        errorMsg.setText(m);
     }
 
     /**
@@ -45,6 +49,8 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
         referenciaText = new javax.swing.JTextField();
         introducirButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        endButton = new javax.swing.JButton();
+        errorMsg = new javax.swing.JLabel();
         confirmarButton = new javax.swing.JButton();
         endButton = new javax.swing.JButton();
 
@@ -75,7 +81,7 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Mensaje de error");
+        errorMsg.setText("Mensaje de error");
 
         confirmarButton.setText("Confirmar");
         confirmarButton.addActionListener(new java.awt.event.ActionListener() {
@@ -112,7 +118,14 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
                     .addComponent(introducirButton, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
                     .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(endButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(14, 14, 14))
+                .addGap(14, 14, 14)
+                        .addComponent(errorMsg)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(confirmarButton, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                    .addComponent(endButton, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,6 +153,10 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(endButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(endButton)
+                    .addComponent(errorMsg))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -163,15 +180,17 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cantidadTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidadTextActionPerformed
-        // TODO add your handling code here:
+        errorMsg.setText("");
     }//GEN-LAST:event_cantidadTextActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        errorMsg.setText("");
         int idAbonado = Integer.parseInt(abonadoText.getText());
         controller.procesaDatosIntroducirNumeroAbonado(idAbonado);
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void confirmarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarButtonActionPerformed
+        errorMsg.setText("");
         controller.procesaConfirmacion();
     }//GEN-LAST:event_confirmarButtonActionPerformed
 
@@ -197,6 +216,7 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
     private javax.swing.JButton endButton;
     private javax.swing.JButton introducirButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel errorMsg;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField referenciaText;
     private javax.swing.JButton searchButton;

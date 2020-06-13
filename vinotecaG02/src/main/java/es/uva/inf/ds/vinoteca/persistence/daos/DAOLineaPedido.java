@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.uva.inf.ds.vinoteca.persistence.daos;
 
 import es.uva.inf.ds.vinoteca.common.NullCompraException;
@@ -14,12 +9,10 @@ import java.io.StringWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
-import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -27,11 +20,18 @@ import javax.json.JsonReaderFactory;
 import javax.json.JsonWriter;
 
 /**
- *
- * @author alejandro
+ * Clase que representa el acceso a la tabla de la base de datos que contiene los datos de las líneas de pedido del sistema.
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class DAOLineaPedido {
 
+     /**
+     * Obtiene un JSON en forma de cadena de caracteres representando las líneas de pedido que se desean buscar en la base de datos. En caso de no existir retorna cadena vacía.
+     * @param id Número entero que representa el identificador del pedido a la cual pertenecen las líneas de pedido que se quieren buscar.
+     * @return JSON en forma de cadena de caracteres que representa las líneas de pedido en caso de que existan o cadena vacía en caso contrario.
+     */
     public static String consultaLineasPedido(int id){
         String lineaPedidoJSONString = "";
         int numeroUnidades = 0;
@@ -97,6 +97,11 @@ public class DAOLineaPedido {
         return lineaPedidoJSONString;
     }
 
+    /**
+     * Actualiza una línea de pedido marcándola como completada.
+     * @param id Número entero que representa el identificador de la línea de compra a la que va asociada la línea de pedido.
+     * @throws {@code SQLException} en caso de que la actualización no se pueda realizar. 
+     */
     public static void actualizarLineasDePedido(int id) throws SQLException {
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();

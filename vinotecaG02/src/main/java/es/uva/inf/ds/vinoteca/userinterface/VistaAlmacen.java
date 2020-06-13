@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.uva.inf.ds.vinoteca.userinterface;
 
 import es.uva.inf.ds.vinoteca.domain.models.Bodega;
@@ -33,6 +28,7 @@ public class VistaAlmacen extends javax.swing.JFrame {
         errorMsg.setText("");
         controller = new ControladorVistaAlmacen(this);
         lcs =  new ArrayList<>();
+        setLocationRelativeTo(null);
         
     }
     

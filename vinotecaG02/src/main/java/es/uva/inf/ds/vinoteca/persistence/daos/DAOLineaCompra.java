@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.uva.inf.ds.vinoteca.persistence.daos;
 
 import es.uva.inf.ds.vinoteca.domain.models.Empleado;
@@ -16,20 +11,23 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
-import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import javax.json.JsonWriter;
 
 /**
- *
- * @author alejandro
+ * Clase que representa el acceso a la tabla de la base de datos que contiene los datos de las líneas de compra del sistema.
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class DAOLineaCompra {
     
-    //Es posible que esto no funcione
-    
+    /**
+     * Obtiene un JSON en forma de cadena de caracteres representando las líneas de compra que se desean buscar en la base de datos. En caso de no existir retorna cadena vacía.
+     * @param id Número entero que representa el identificador de la compra a la cual pertenecen las líneas de compra que se quieren buscar.
+     * @return JSON en forma de cadena de caracteres que representa las líneas de compra en caso de que existan o cadena vacía en caso contrario.
+     */
     public static String consultaLineaCompra(int id){
         String lineaCompraJSONString = "";
         LocalDateTime fechaRecepcion = null;
@@ -62,7 +60,6 @@ public class DAOLineaCompra {
                 }
                 codigo = result.getInt("codigoreferencia");
                 fechaRecepcion = result.getTimestamp("fecharecepcion").toLocalDateTime();
-                //boolean recibida = result.getBoolean
                 unidades.add(numeroUnidades);
                 codigos.add(codigo);
                 ids.add(idL);
@@ -83,7 +80,6 @@ public class DAOLineaCompra {
     private static String obtainLineaCompraJSONString(ArrayList<Integer> unidades, ArrayList<LocalDateTime> fechasRecepcion
             , ArrayList<Integer> codigos, ArrayList<Boolean> recibidas, ArrayList<Integer> ids) {
         String lineaCompraJSONString = "";
-        //JsonReaderFactory factory = Json.createReaderFactory(null);
         JsonArrayBuilder array = Json.createArrayBuilder();
         for(int i=0;i<unidades.size();i++){
             array.add(Json.createObjectBuilder().add("unidades",Integer.toString(unidades.get(i)))

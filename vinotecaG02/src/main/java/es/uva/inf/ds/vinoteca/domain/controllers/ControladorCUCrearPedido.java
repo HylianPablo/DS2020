@@ -2,6 +2,7 @@ package es.uva.inf.ds.vinoteca.domain.controllers;
 
 import es.uva.inf.ds.vinoteca.common.AbonadoNotExistsException;
 import es.uva.inf.ds.vinoteca.common.ReferenciaNoDisponibleException;
+import es.uva.inf.ds.vinoteca.common.FacturaVencidaException;
 import es.uva.inf.ds.vinoteca.domain.models.Abonado;
 import es.uva.inf.ds.vinoteca.domain.models.LineaPedido;
 import es.uva.inf.ds.vinoteca.domain.models.Pedido;
@@ -30,12 +31,16 @@ public class ControladorCUCrearPedido {
     private Referencia r;
     private Pedido newPedido;
     private LineaPedido newLineaPedido;
-    
+
     public static ControladorCUCrearPedido getController(){
         return new ControladorCUCrearPedido();
     }
 
-    public void crearPedidoAbonado(int idAbonado) {
+    /**
+     * Comprueba que el abonado existe en el sistema.
+     * @param idAbonado Número entero que representa el identificador del abonado.
+     */
+    public void comprobarAbonado(int idAbonado) {
         try{
             b = Abonado.getAbonado(idAbonado);
         }catch(AbonadoNotExistsException ex){
@@ -43,18 +48,25 @@ public class ControladorCUCrearPedido {
         }
     }
     
-    public void comprobarPlazosVencidos(int idAbonado){ //Necesario idAbonado?? comprobar
+    /**
+     * Comprueba si el abonado tiene pedidos vencidos antes de crear el nuevo pedido.
+     * @return {@code True} en caso de que el abonado no tenga pedidos vencidos y {@code false} en caso contrario.
+     * @throws {@code FacturaVencidaException} si el abonado tiene pedidos vencidos. 
+     */
+    public boolean comprobarPlazosVencidos() throws FacturaVencidaException{ //Necesario idAbonado?? comprobar
         ArrayList<Pedido> pedidos = b.getPedidos();
         boolean bandera = true;
         for(int i=0;i<pedidos.size();i++){
             if(pedidos.get(i).comprobarNoVencido()){
                 bandera=false;
-                break;
+                throw new FacturaVencidaException("Existen facturas vencidas.");
             }
         }
         if(bandera){
             newPedido = new Pedido(1,LocalDateTime.now(),"notaEntrega",0.0,null,null,0,b.getNumeroAbonado());
+
         }
+        return bandera;
     }
 
     public void comprobarReferencia(int idReferencia, int cantidad) throws ReferenciaNoDisponibleException {

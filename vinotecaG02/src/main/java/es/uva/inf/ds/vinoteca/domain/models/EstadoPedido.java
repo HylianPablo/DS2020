@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.uva.inf.ds.vinoteca.domain.models;
 
 /**
- *
- * @author alejandro
+ * Posibles estado que puede tener un pedido.
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public enum EstadoPedido {
     PENDIENTE, TRAMITADO, COMPLETADO, SERVIDO, FACTURADO, PAGADO

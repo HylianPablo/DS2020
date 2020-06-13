@@ -18,6 +18,8 @@ import java.util.ArrayList;
  * @author alejandro
  */
 public class ControladorVistaAlmacen {
+
+
     
     private final VistaAlmacen view;
     private final ControladorCURegistrarRecepcionCompra cuController;
@@ -26,6 +28,15 @@ public class ControladorVistaAlmacen {
         this.view=view;
         cuController = ControladorCURegistrarRecepcionCompra.getController();
     }
+
+    public ControladorVistaAlmacen() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    /*
+    public static void mostrarLineasCompraNoCompletadas(ArrayList<LineaCompra> lcnr) {
+        view.mostrarMensajeUsuario(lcnr);
+    }*/
     
     public void procesaDatosIntroducirIdCompra(int idCompra){
         cuController.comprobarCompraNoCompletada(idCompra);
@@ -44,6 +55,8 @@ public class ControladorVistaAlmacen {
     //igual comprobarRecibidas no deberia retornar
     public void procesaDatosFinalizar(){
         cuController.comprobarRecibidas();
+        ArrayList<LineaCompra> lcnr = cuController.getLineasCompraNoRecibidas();
+        view.mostrarMensajeUsuario(lcnr);
         cuController.actualizarPedidos();
         
     }

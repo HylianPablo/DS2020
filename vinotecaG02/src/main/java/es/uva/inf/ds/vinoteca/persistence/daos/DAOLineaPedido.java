@@ -99,13 +99,9 @@ public class DAOLineaPedido {
     public static void actualizarLineasDePedido(int id) throws SQLException {
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
-        System.out.println("me gustaria que llegara aqui");
         try (PreparedStatement ps = connection.getStatement("UPDATE LINEAPEDIDO SET COMPLETADA = ? WHERE IDLINEACOMPRA = ?")) {
             ps.setString(1, "1");
             ps.setInt(2, id);
-            
-            System.out.println("me gustaria que llegara aqui2");
-            // execute the java preparedstatement
             ps.executeUpdate();
         }
         catch (SQLException ex) {

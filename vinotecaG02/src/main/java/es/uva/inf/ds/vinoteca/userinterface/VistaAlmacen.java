@@ -23,6 +23,7 @@ public class VistaAlmacen extends javax.swing.JFrame {
     private final ControladorVistaAlmacen controller;
     private ArrayList<LineaCompra> lcs; 
     private DefaultTableModel model;
+    private DefaultTableModel model2;
     /**
      * Creates new form VistaContabilidad
      */
@@ -35,8 +36,13 @@ public class VistaAlmacen extends javax.swing.JFrame {
         
     }
     
-    public void seleccionaLineaCompra(){
-        
+    public void mostrarMensajeUsuario(ArrayList<LineaCompra> lcnr) {
+        model2 = (DefaultTableModel) table2.getModel();
+        model2.setRowCount(lcnr.size());
+        for(int i = 0; i<lcnr.size(); i++){
+            model2.setValueAt(lcnr.get(i).getCodigoLinea(), i, 0);
+            model2.setValueAt("No Recibida", i, 1);
+        }
     }
     
     public void inotrudeIdentificadorCompra(){
@@ -52,14 +58,10 @@ public class VistaAlmacen extends javax.swing.JFrame {
         errorMsg.setText(message);
     }
 
-
-
-
     public void actualizarVista(Bodega b, ArrayList<LineaCompra> lc, ArrayList<Referencia> refs) {
         //String [] col = {"selected", "nombreBodega", "idLineaCompra", "idReferencia", "unidades"};
         String [][] data = new String [lc.size()][4];
         String nombre = b.getNombre();
-        System.out.println(lc.size() + "tamño" );
         lcs = lc;
         model = (DefaultTableModel) table.getModel();
         model.setRowCount(lc.size());
@@ -68,10 +70,8 @@ public class VistaAlmacen extends javax.swing.JFrame {
             String unidades = Integer.toString(lc.get(i).getUnidades());
             String codigoLinea = Integer.toString(lc.get(i).getCodigoLinea());
             String codigoRef = Integer.toString(refs.get(i).getCodigo());
-            //System.out.println("nombre" + nombre);
-            //data[i][j] = nombre;
             model.setValueAt(nombre, i, j);
-            //System.out.println("nombre" + nombre);
+            model.setValueAt(false, i, 0);
             j++;
             model.setValueAt(codigoLinea, i, j);
             j++;
@@ -98,6 +98,8 @@ public class VistaAlmacen extends javax.swing.JFrame {
         exitButton = new javax.swing.JButton();
         errorMsg = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -144,44 +146,67 @@ public class VistaAlmacen extends javax.swing.JFrame {
             }
         });
 
+        table2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "idLineaCompra", "descripcion"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(table2);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(searchBar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(errorMsg)
+                .addGap(94, 94, 94)
+                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(errorMsg)
-                        .addGap(107, 107, 107)
-                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(searchBar, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21))))
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchButton))
+                    .addComponent(searchButton)
+                    .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(exitButton)
                     .addComponent(errorMsg)
-                    .addComponent(jButton1))
-                .addGap(9, 9, 9))
+                    .addComponent(jButton1)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -190,8 +215,7 @@ public class VistaAlmacen extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,7 +230,6 @@ public class VistaAlmacen extends javax.swing.JFrame {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         int idCompra = Integer.parseInt(searchBar.getText());
-        //System.out.println("que valor tiene aqui" + idCompra);
         controller.procesaDatosIntroducirIdCompra(idCompra);
     }//GEN-LAST:event_searchButtonActionPerformed
 
@@ -217,6 +240,7 @@ public class VistaAlmacen extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         ArrayList <Integer> codigosCompras = new ArrayList<>();
+        ArrayList <Integer> codigosComprasNoMarcadas = new ArrayList<>();
         
         for (int r = 0 ; r < lcs.size(); r++){
             boolean bandera = (boolean) model.getValueAt(r, 0);
@@ -226,6 +250,11 @@ public class VistaAlmacen extends javax.swing.JFrame {
                 codigoAux = (String) model.getValueAt(r, 2);
                 codigo = Integer.parseInt(codigoAux);
                 codigosCompras.add(codigo);
+                
+            }else{
+                codigoAux = (String) model.getValueAt(r, 2);
+                codigo = Integer.parseInt(codigoAux);
+                codigosComprasNoMarcadas.add(codigo);
             }
         }   
         try {
@@ -234,6 +263,8 @@ public class VistaAlmacen extends javax.swing.JFrame {
             Logger.getLogger(VistaAlmacen.class.getName()).log(Level.SEVERE, null, ex);
         }
         controller.procesaDatosFinalizar();
+        jButton1.setEnabled(false);
+        searchButton.setEnabled(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
@@ -243,9 +274,11 @@ public class VistaAlmacen extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField searchBar;
     private javax.swing.JButton searchButton;
     private javax.swing.JTable table;
+    private javax.swing.JTable table2;
     // End of variables declaration//GEN-END:variables
 
 }

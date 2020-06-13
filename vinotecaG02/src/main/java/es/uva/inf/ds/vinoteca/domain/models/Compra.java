@@ -31,19 +31,21 @@ public class Compra {
     
     private Bodega bodega;
     private ArrayList<LineaCompra> lineasCompra;
+    private ArrayList<LineaCompra> lineasCompraNoRecibidas;
     private boolean recibidaCompleta;
     private LocalDateTime fechaCompraCompleta, fechaPago;
     private int idCompra;
     private double importe;
     
     public Compra(int id, double i, LocalDateTime fp){
-        lineasCompra = null;
+        lineasCompra = new ArrayList<>();
         importe = i;
         bodega = null;
         recibidaCompleta = false;
         fechaCompraCompleta = null;
         idCompra = id;
         fechaPago = fp;
+        lineasCompraNoRecibidas = new ArrayList<>();
     }
     
     public int getIdCompra(){
@@ -52,7 +54,6 @@ public class Compra {
     
     public static Compra getCompra(int id) throws NullCompraException, CompletadaException  {
         String compraJSONString = DAOCompra.consultaCompra(id);
-        System.out.println("que pasa=");
         String importeJson=null; 
         String fechaJson=null; 
         String completaJson=null;
@@ -60,7 +61,6 @@ public class Compra {
         try(JsonReader reader = factory.createReader(new StringReader(compraJSONString));){
             JsonObject jsonobject = reader.readObject();
             importeJson = jsonobject.getString("importe");
-            System.out.println("que pasa=" + importeJson);
             fechaJson = jsonobject.getString("fechaPago");
             completaJson = jsonobject.getString("completa");
         }catch(Exception ex){
@@ -77,7 +77,6 @@ public class Compra {
     }
     
     public Bodega getBodega(){
-        System.out.println("123123213123");
         return Bodega.getBodega(idCompra);
     }    
     
@@ -94,15 +93,21 @@ public class Compra {
     public boolean compruebaCompletado(){
         return recibidaCompleta;
     }
-
+    
+    public ArrayList<LineaCompra> getLineasCompraNoRecibidas(){
+        return lineasCompraNoRecibidas;
+    }
+    
     public boolean comprobarRecibidas() {
         boolean recibida = true;
+        boolean bandera = true;
         for (int i = 0; i < lineasCompra.size(); i++){
             recibida = lineasCompra.get(i).comprobarRecibida();
             if (recibida != true){
-                return false;
+                bandera = false;
+                lineasCompraNoRecibidas.add(lineasCompra.get(i));
             }
         }
-        return true;
+        return bandera;
     }
 }

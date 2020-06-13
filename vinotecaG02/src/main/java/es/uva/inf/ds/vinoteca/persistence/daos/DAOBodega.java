@@ -52,7 +52,6 @@ public class DAOBodega {
     
     private static String obtainBodegaSONString(String cif, String nombre, String direccion){
         String bodegaJSONString="";
-        //JsonReaderFactory factory = Json.createReaderFactory(null);
         JsonObject bodegaJson = Json.createObjectBuilder()
                     .add("cif",cif)
                     .add("nombre",nombre)
@@ -65,7 +64,6 @@ public class DAOBodega {
            
             writer.writeObject(bodegaJson);
             bodegaJSONString = stringWriter.toString();
-            System.out.println(bodegaJSONString);
         }catch(Exception ex){
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE,null,ex);
         }

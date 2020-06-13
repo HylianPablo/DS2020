@@ -41,6 +41,7 @@ public class ControladorCURegistrarRecepcionCompra {
     LineaCompra l;
     Referencia r;
     ArrayList<LineaCompra> lc;
+    ArrayList<LineaCompra> lcnr;
     ArrayList<Referencia> refs;
     ArrayList<LineaPedido> lp;
     int id;
@@ -62,11 +63,8 @@ public class ControladorCURegistrarRecepcionCompra {
         lc = c.getLineasCompra();
         for (int i = 0; i < lc.size(); i++){
             r = lc.get(i).getReferencia();
-            System.out.println(r);
-            System.out.println(r.getContenido());
             refs.add(r);
         }
-        System.out.println("aqui llego=?0");
     }
     
     public ArrayList<LineaCompra> getLineasCompra(){
@@ -92,7 +90,6 @@ public class ControladorCURegistrarRecepcionCompra {
         DAOLineaPedido.actualizarLineasDePedido(l.getCodigoLinea());
     }
     
-    //completar, pasar el array de lineas de pedido a json
     /*
     private String pasarLineasPedidoAJsonString(ArrayList<LineaPedido> lp){
         String estadoLineaPedidoJSONString = "";
@@ -115,18 +112,16 @@ public class ControladorCURegistrarRecepcionCompra {
         return estadoLineaPedidoJSONString;
     }*/
     
-    //esta deberia ser void, ojo al diseño
     public void comprobarRecibidas(){
         boolean allRecvs = c.comprobarRecibidas();
         if(allRecvs){
             c.marcarRecibidaCompleta();
-            //acabAAAAAAAAAAAAAAAAAAar
-            //String compraJSON = c.getJSON();   
-            //acabaAAAAAAAAAAAAAAAAAAAr
             DAOCompra.actualizarCompra(c.getIdCompra());
-        }else{
-            //SEGUIRRRRRRRRRRRR
         }        
+    }
+    
+    public ArrayList<LineaCompra> getLineasCompraNoRecibidas(){
+        return c.getLineasCompraNoRecibidas();
     }
   
        
@@ -141,8 +136,6 @@ public class ControladorCURegistrarRecepcionCompra {
         if(bandera){
             p = Pedido.getPedido(lp.get(0).getCodigoPedido());
             p.actualizarEstadoACompletado();
-            //ACABAR LOS METODOS DE PASAR A JSON Y DE INSERTAR EN LA BASE DE DATOS
-            //String pedidoJSONString = p.getJSON();
             DAOPedido.actualizaPedido(lp.get(0).getCodigoPedido());
         }
     }

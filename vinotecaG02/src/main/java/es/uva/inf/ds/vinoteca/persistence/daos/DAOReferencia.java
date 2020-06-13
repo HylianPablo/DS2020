@@ -36,7 +36,6 @@ public class DAOReferencia {
         
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
-        System.out.println("me quedo aqui???");
         try(
             PreparedStatement ps = connection.getStatement("SELECT * FROM REFERENCIA r WHERE r.CODIGO= ?");
             
@@ -56,7 +55,6 @@ public class DAOReferencia {
                     disponible=true;
                 }
                 referenciaJSONString = obtainReferenciaJSONString(precio, contenido, codigoRef, esPorCajas, disponible);
-                System.out.println(referenciaJSONString);
             }
             result.close();
         }catch(SQLException ex){

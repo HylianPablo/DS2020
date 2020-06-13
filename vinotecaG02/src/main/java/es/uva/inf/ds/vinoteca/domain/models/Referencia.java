@@ -82,11 +82,6 @@ public class Referencia {
         boolean esPorCajas = Boolean.parseBoolean(esPorCajasJson);
         boolean disponible = Boolean.parseBoolean(diponibleJson);
         Referencia referencia = new Referencia(codigo, contenido, precio, esPorCajas, disponible);
-        System.out.println(codigo);
-        System.out.println(contenido);
-        System.out.println(precio);
-        System.out.println(esPorCajas);
-        System.out.println(disponible);
         return referencia;
     }
     

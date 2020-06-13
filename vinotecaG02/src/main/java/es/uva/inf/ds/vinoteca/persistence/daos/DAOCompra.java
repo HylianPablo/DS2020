@@ -31,15 +31,12 @@ import javax.json.JsonWriter;
  */
 public class DAOCompra {
     
-    
-    //COMPLETAR
     public static String consultaCompra(int id) {
         String compraJSONString = "";
         String idd = Integer.toString(id);
         LocalDateTime fechaInicio = null;
         String completa = null;
         double importe;
-        System.out.println("HASTA AQUI LLEGA" + id);
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
         try(
@@ -49,14 +46,11 @@ public class DAOCompra {
             ps.setString(1, idd);
             ResultSet result = ps.executeQuery();
             if(result.next()){
-                System.out.println("HASTA AQUI LLEGA??????????????");
                 fechaInicio=result.getTimestamp("fechapago").toLocalDateTime();
                 completa=result.getString("RECIBIDACOMPLETA");
-                System.out.println("fecha" + fechaInicio);
                 importe=result.getDouble("importe");
                 String imp = Double.toString(importe);
                 compraJSONString = obtainCompraJSONString(fechaInicio, imp, completa);
-                //lo que se quiera de la compra
             }
             result.close();
         }catch(SQLException ex){
@@ -68,7 +62,6 @@ public class DAOCompra {
     
     private static String obtainCompraJSONString(LocalDateTime fecha, String importe, String completa){
         String compraJSONString="";
-        //JsonReaderFactory factory = Json.createReaderFactory(null);
         JsonObject compraJson = Json.createObjectBuilder()
                     .add("importe",importe)
                     .add("fechaPago",fecha.toString())
@@ -92,14 +85,10 @@ public class DAOCompra {
         connection.openConnection();
         LocalDateTime now = LocalDateTime.now();
         Timestamp timestamp = Timestamp.valueOf(now);
-        System.out.println("me gustaria que llegara aqui");
         try (PreparedStatement ps = connection.getStatement("UPDATE COMPRA SET FECHACOMPRACOMPLETADA = ?, RECIBIDACOMPLETA = ? WHERE IDCOMPRA = ?")) {
             ps.setTimestamp(1, timestamp);
             ps.setString(2, "1");
             ps.setInt(3, idCompra);
-            
-            System.out.println("me gustaria que llegara aqui2");
-            // execute the java preparedstatement
             ps.executeUpdate();
         }
         catch (SQLException ex) {

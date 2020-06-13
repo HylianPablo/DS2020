@@ -187,13 +187,9 @@ public class DAOPedido {
     public static void actualizaPedido(int idPedido) {
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
-        System.out.println("me gustaria que llegara aqui");
         try (PreparedStatement ps = connection.getStatement("UPDATE PEDIDO SET ESTADO = ? WHERE NUMERO = ?")) {
             ps.setInt(1, 2);
             ps.setInt(2, idPedido);
-            
-            System.out.println("me gustaria que llegara aqui2");
-            // execute the java preparedstatement
             ps.executeUpdate();
         }
         catch (SQLException ex) {

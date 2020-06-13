@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package es.uva.inf.ds.vinoteca.userinterface;
 
 import es.uva.inf.ds.vinoteca.common.ReferenciaNoDisponibleException;
@@ -5,12 +10,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Interfaz utilizada para generar un nuevo pedido para un abonado.
- * @author pamarti
- * @author alerome
- * @author ivagonz
+ *
+ * @author pablo
  */
 public class VistaAtencionCliente extends javax.swing.JFrame {
+
+    /**
+     * Creates new form VistaAtencionCliente
+     */
     
     private final ControladorVistaAtencionCliente controller;
     
@@ -33,6 +40,7 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
         errorMsg.setText(m);
     }
 
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,8 +56,6 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
         cantidadText = new javax.swing.JTextField();
         referenciaText = new javax.swing.JTextField();
         introducirButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        endButton = new javax.swing.JButton();
         errorMsg = new javax.swing.JLabel();
         confirmarButton = new javax.swing.JButton();
         endButton = new javax.swing.JButton();
@@ -111,21 +117,14 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
                             .addComponent(abonadoText, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(55, 55, 55)
-                        .addComponent(jLabel1)))
+                        .addComponent(errorMsg)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(confirmarButton, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
                     .addComponent(introducirButton, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
                     .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(endButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(14, 14, 14)
-                        .addComponent(errorMsg)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(confirmarButton, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
-                    .addComponent(endButton, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
-                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(20, 20, 20))
+                .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,15 +147,11 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
                         .addGap(22, 22, 22)
                         .addComponent(referenciaText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
+                        .addComponent(errorMsg)
                         .addContainerGap(33, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(endButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(endButton)
-                    .addComponent(errorMsg))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -180,17 +175,15 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cantidadTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidadTextActionPerformed
-        errorMsg.setText("");
+        // TODO add your handling code here:
     }//GEN-LAST:event_cantidadTextActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        errorMsg.setText("");
         int idAbonado = Integer.parseInt(abonadoText.getText());
         controller.procesaDatosIntroducirNumeroAbonado(idAbonado);
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void confirmarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarButtonActionPerformed
-        errorMsg.setText("");
         controller.procesaConfirmacion();
     }//GEN-LAST:event_confirmarButtonActionPerformed
 
@@ -214,9 +207,8 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
     private javax.swing.JTextField cantidadText;
     private javax.swing.JButton confirmarButton;
     private javax.swing.JButton endButton;
-    private javax.swing.JButton introducirButton;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel errorMsg;
+    private javax.swing.JButton introducirButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField referenciaText;
     private javax.swing.JButton searchButton;

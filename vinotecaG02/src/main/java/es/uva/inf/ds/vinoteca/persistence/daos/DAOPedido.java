@@ -1,6 +1,7 @@
 package es.uva.inf.ds.vinoteca.persistence.daos;
 
 import es.uva.inf.ds.vinoteca.persistence.dbaccess.DBConnection;
+import es.uva.inf.ds.vinoteca.userinterface.VistaAlmacen;
 import java.io.StringWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -113,4 +114,88 @@ public class DAOPedido {
         }
         return pedidosJSONString;
     }
+
+    public static String consultaPedido(int codigoLineaPedido){ //REVISAR: POSIBLEMENTE VAYA EN DAOPEDIDO
+        String pedidoJSONString = "";
+        int numero = -1;
+        int estado = -1;
+        LocalDateTime fechaRealizacion = null;
+        String notaEntrega = null;
+        double importe = 0.0;
+        LocalDateTime fechaRecepcion = null;
+        LocalDateTime fechaEntrega = null;
+        int numeroAbonado = -1;
+        int numeroFactura = -1;
+        DBConnection connection = DBConnection.getInstance();  
+        int counter=0;
+        connection.openConnection();
+        try(PreparedStatement ps = connection.getStatement("SELECT * FROM PEDIDO p WHERE p.NUMERO = ?");)
+        {
+            ps.setInt(1, codigoLineaPedido);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                counter++;
+                numero = rs.getInt("NUMERO");
+                estado = rs.getInt("ESTADO");
+                fechaRealizacion = rs.getTimestamp("FECHAREALIZACION").toLocalDateTime();
+                notaEntrega = rs.getString("NOTAENTREGA");
+                importe = rs.getDouble("IMPORTE");
+                fechaRecepcion = rs.getTimestamp("FECHARECEPCION").toLocalDateTime();
+                fechaEntrega = rs.getTimestamp("FECHAENTREGA").toLocalDateTime();
+                numeroAbonado = rs.getInt("NUMEROABONADO");    
+                numeroFactura = rs.getInt("NUMEROFACTURA");
+            }
+        }catch(SQLException ex){
+            Logger.getLogger(DAOFactura.class.getName()).log(Level.SEVERE,null,ex);
+        }
+        connection.closeConnection();
+        if(counter!=0)
+            pedidoJSONString = pedidoToJSONString(numero,estado,fechaRealizacion,notaEntrega,importe,fechaRecepcion,fechaEntrega,numeroAbonado,codigoLineaPedido, numeroFactura);
+        return pedidoJSONString;
+    }
+    
+    private static String pedidoToJSONString(int numero, int estado, LocalDateTime fechaRealizacion,
+                                String notaEntrega, double importe, LocalDateTime fechaRecepcion,
+                                LocalDateTime fechaEntrega, int numeroAbonado, int codigoLineaPedido,
+                                int numeroFactura){
+        String pedidoJSONString = "";
+        JsonObject compraJson = Json.createObjectBuilder()
+            .add("numero",Integer.toString(numero))
+            .add("estado",Integer.toString(estado))
+            .add("fechaRealizacion",fechaRealizacion.toString())
+            .add("notaEntrega",notaEntrega)
+            .add("importe",Double.toString(importe))
+            .add("fechaRecepcion",fechaRecepcion.toString())
+            .add("fechaEntrega",fechaEntrega.toString())
+            .add("numeroAbonado",Integer.toString(numeroAbonado))
+            .add("numeroFactura",Integer.toString(numeroFactura))
+            .add("codigoLineaPedido",Integer.toString(codigoLineaPedido))
+            .build();
+                try(
+                StringWriter stringWriter = new StringWriter();
+                JsonWriter writer = Json.createWriter(stringWriter);
+                ){
+           
+            writer.writeObject(compraJson);
+            pedidoJSONString = stringWriter.toString();
+        }catch(Exception ex){
+            Logger.getLogger(DAOFactura.class.getName()).log(Level.SEVERE,null,ex);
+        }
+        return pedidoJSONString;
+    }
+
+    public static void actualizaPedido(int idPedido) {
+        DBConnection connection = DBConnection.getInstance();
+        connection.openConnection();
+        try (PreparedStatement ps = connection.getStatement("UPDATE PEDIDO SET ESTADO = ? WHERE NUMERO = ?")) {
+            ps.setInt(1, 2);
+            ps.setInt(2, idPedido);
+            ps.executeUpdate();
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(VistaAlmacen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connection.closeConnection();
+    }
+    
 }

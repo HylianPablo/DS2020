@@ -209,6 +209,5 @@ public class DAOEmpleado {
         }
         connection.closeConnection();
         return r;
-    }
-    
+    } 
 }

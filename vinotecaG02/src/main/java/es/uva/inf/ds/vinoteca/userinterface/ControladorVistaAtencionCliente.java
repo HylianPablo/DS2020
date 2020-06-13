@@ -17,4 +17,8 @@ public class ControladorVistaAtencionCliente {
         this.view = view;
         cuController = ControladorCUCrearPedido.getController();
     }
+
+    void procesaDatosIntroducirNumeroAbonado(int idAbonado) {
+        cuController.crearPedidoAbonado(idAbonado);
+    }
 }

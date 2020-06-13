@@ -69,6 +69,12 @@ public class ControladorCUCrearPedido {
         return bandera;
     }
 
+    /**
+     * Comprueba que la referencia es válida y de serlo inicia el proceso para crear un nuevo pedido.
+     * @param idReferencia Número entero que representa el identificador de la referencia.
+     * @param cantidad Número entero que representa la cantidad escogida.
+     * @throws {@code ReferenciaNoDisponibleException} en caso de que la referencia no se encuentre disponible. 
+     */
     public void comprobarReferencia(int idReferencia, int cantidad) throws ReferenciaNoDisponibleException {
         r = null;
         r = Referencia.getReferencia(idReferencia);
@@ -86,6 +92,9 @@ public class ControladorCUCrearPedido {
         //falta crear pedido bien
     }
 
+    /**
+     * Registra un nuevo pedido en el sistema.
+     */
     public void registrarPedido() {
         newPedido.cambiarEstadoPendiente();
         String jsonNewPedido = newPedido.getJson();

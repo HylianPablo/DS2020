@@ -116,6 +116,10 @@ public class DAOLineaPedido {
         connection.closeConnection();
     }
 
+    /**
+     * Añade una nueva línea de pedido a la base de datos.
+     * @param jsonNewLinea JSON en forma de cadena de caracteres que contiene los datos de la línea de pedido a insertar en la base de datos.
+     */
     public static void añadirLineaPedido(String jsonNewLinea) {
         
         JsonReaderFactory factory = Json.createReaderFactory(null);

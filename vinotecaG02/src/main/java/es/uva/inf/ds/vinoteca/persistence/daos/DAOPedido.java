@@ -305,7 +305,10 @@ public class DAOPedido {
         connection.closeConnection();
     }
         
-
+    /**
+     * Añade un nuevo pedido a la base de datos.
+     * @param jsonNewPedido JSON en forma de cadena de caracteres que contiene los datos del pedido a introducir en la base de datos.
+     */
     public static void añadirPedido(String jsonNewPedido) {
         JsonReaderFactory factory = Json.createReaderFactory(null);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
@@ -339,7 +342,7 @@ public class DAOPedido {
         Timestamp fechaEntregaT = Timestamp.valueOf(fechaEntrega);
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
-        try (PreparedStatement ps = connection.getStatement("INSET INTO PEDIDO" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+        try (PreparedStatement ps = connection.getStatement("INSERT INTO PEDIDO" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
             ps.setInt(1, numero);
             ps.setInt(2, estado);
             ps.setTimestamp(3, fechaRealizacionT);

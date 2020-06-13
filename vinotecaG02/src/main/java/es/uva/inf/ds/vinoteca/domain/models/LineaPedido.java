@@ -103,6 +103,10 @@ public class LineaPedido {
         return completada;
     }
 
+    /**
+     * Obtiene el JSON que representa la instancia de la línea de pedido.
+     * @return JSON en forma de cadena de caracteres que representa la línea de pedido.
+     */
     public String getJson() {
         String newLineaPedidoJSONString = "";
         JsonObject abonadoJSON = Json.createObjectBuilder()

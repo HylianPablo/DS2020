@@ -3,6 +3,7 @@ package es.uva.inf.ds.vinoteca.userinterface;
 import es.uva.inf.ds.vinoteca.common.ReferenciaNoDisponibleException;
 import es.uva.inf.ds.vinoteca.common.FacturaVencidaException;
 import es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUCrearPedido;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,6 +36,8 @@ public class ControladorVistaAtencionCliente {
     public void procesaDatosIntroducirNumeroAbonado(int idAbonado) {
         this.idAbonado=idAbonado;
         cuController.comprobarAbonado(idAbonado);
+        ArrayList<String> datos = cuController.getDatos();
+        view.actualizarVista(datos);
     }
     
     /**

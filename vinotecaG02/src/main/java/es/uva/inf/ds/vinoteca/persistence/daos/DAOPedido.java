@@ -339,7 +339,7 @@ public class DAOPedido {
         Timestamp fechaEntregaT = Timestamp.valueOf(fechaEntrega);
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
-        try (PreparedStatement ps = connection.getStatement("INSET INTO PEDIDO" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+        try (PreparedStatement ps = connection.getStatement("INSERT INTO PEDIDO" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
             ps.setInt(1, numero);
             ps.setInt(2, estado);
             ps.setTimestamp(3, fechaRealizacionT);

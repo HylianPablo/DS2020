@@ -104,11 +104,11 @@ public class Empleado {
      * @return {@code True} en caso de que el empleado esté activo y {@code false} en caso contrario.
      */
     public boolean isActivo() throws NotActiveException{
-        
-        if(!DAOEmpleado.empleadoActivo(nif)){
+        boolean b = DAOEmpleado.empleadoActivo(nif);
+        if(!b){
             throw new NotActiveException("El empleado no se encuentra activo actualmente");
         }
-        return true;
+        return b;
     }
     
     /**
@@ -139,9 +139,7 @@ public class Empleado {
                 nifJson = jsonobject.getString("nif");
                 passJson = jsonobject.getString("password");
                 fechaInicioJson = jsonobject.getString("fechaInicio");
-            //tipoEmpleadoJson = jsonobject.getString("tipoEmpleado");
             }catch(Exception ex){
-                Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
                 throw new DNIPassNotValidException("El empleado no se encuentra en el sistema.");
             }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);

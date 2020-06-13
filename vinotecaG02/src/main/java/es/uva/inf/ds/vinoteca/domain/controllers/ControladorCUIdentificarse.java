@@ -47,9 +47,9 @@ public class ControladorCUIdentificarse {
         try{
             if(!empleado.isActivo()){
                 empleado.setNif("NotActivo");
-            
             }
         }catch(NotActiveException ex2){
+            empleado.setNif("NotActivo");
             Logger.getLogger(ControladorCUIdentificarse.class.getName()).log(Level.SEVERE,null,ex2);
         }
         

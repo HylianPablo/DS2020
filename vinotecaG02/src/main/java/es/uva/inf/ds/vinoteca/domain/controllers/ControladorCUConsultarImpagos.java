@@ -1,10 +1,16 @@
 
 package es.uva.inf.ds.vinoteca.domain.controllers;
 
+import es.uva.inf.ds.vinoteca.common.IllegalDateException;
 import es.uva.inf.ds.vinoteca.domain.models.Abonado;
 import es.uva.inf.ds.vinoteca.domain.models.Factura;
 import es.uva.inf.ds.vinoteca.domain.models.Pedido;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Controlador del caso de uso "Consultar impagos".
@@ -30,6 +36,14 @@ public class ControladorCUConsultarImpagos {
      * El {@code ArrayList} podrá estar vacío en caso de no existir ninguna factura que cumpla con los requisitos.
      */
     public ArrayList<String> consultarImpagos(String fecha){
+        ArrayList<String> detalles = null;
+        try {
+            if(!comprobarFechaCorrecta(fecha)){
+                return null;
+            }
+        } catch (IllegalDateException ex) {
+            Logger.getLogger(ControladorCUConsultarImpagos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ArrayList <Factura> facturas = Factura.consultaFacturasAntesDeFecha(fecha);
         ArrayList<ArrayList<Pedido>> matrizPedidos = new ArrayList<>();
         ArrayList<Abonado> abonados = new ArrayList<>();
@@ -41,7 +55,7 @@ public class ControladorCUConsultarImpagos {
             Abonado ab = p0.getAbonado();
             abonados.add(ab);
         }
-        ArrayList<String> detalles = new ArrayList<>();
+        detalles = new ArrayList<>();
         for(int i = 0;i<facturas.size();i++){
             String detalle = "Factura: "+Integer.toString(facturas.get(i).getNumeroFactura()) +".| Abonado: "
                     + Integer.toString(abonados.get(0).getNumeroAbonado())+" ,";
@@ -58,6 +72,30 @@ public class ControladorCUConsultarImpagos {
             detalles.add(detalle);
         }
         return detalles;
+    }
+
+    private boolean comprobarFechaCorrecta(String fecha) throws IllegalDateException{
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd",Locale.US);
+        if(fecha==null ||!coincideFormato(fecha) ){
+            throw new IllegalDateException("La fecha introducida es errónea.");
+        }
+        LocalDate fechaLDT = LocalDate.parse(fecha,formatter);
+        LocalDate now = LocalDate.now();
+        LocalDate limite = now.minusDays(30);
+        return fechaLDT.isBefore(limite);
+        //Comprobar que es 30 dias inferior a actual
+    }
+    
+    private boolean coincideFormato(String fecha){
+        if(fecha.matches("[1-2][0-9][0-9][0-9][-][0][1-9][-][0-2][1-9]"))
+            return true;
+        if(fecha.matches("[1-2][0-9][0-9][0-9][-][1][0-2][-][0-2][1-9]"))
+            return true;
+        if(fecha.matches("[1-2][0-9][0-9][0-9][-][0][1-9][-][3][0-1]"))
+            return true;
+        if(fecha.matches("[1-2][0-9][0-9][0-9][-][1][0-2][-][3][0-1]"))
+            return true;
+        return false;
     }
     
     

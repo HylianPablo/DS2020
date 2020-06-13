@@ -5,6 +5,8 @@
  */
 package es.uva.inf.ds.vinoteca.domain.model;
 
+import es.uva.inf.ds.vinoteca.common.DNIPassNotValidException;
+import es.uva.inf.ds.vinoteca.common.NotActiveException;
 import es.uva.inf.ds.vinoteca.domain.models.Empleado;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -85,25 +87,25 @@ public class EmpleadoTest {
     }
     
     @org.junit.jupiter.api.Test
-    public void empleadoActivo(){
+    public void empleadoActivo() throws NotActiveException{
         assertTrue(e.isActivo());
     }
     
     @org.junit.jupiter.api.Test
-    public void empleadoNoActivo(){
+    public void empleadoNoActivo() throws NotActiveException{
         Empleado e2 = new Empleado("987654321","password",ldt);
         assertTrue(e.isActivo());
     }
     
     @org.junit.jupiter.api.Test
-    public void consultaEmpleadoCorrecta(){
+    public void consultaEmpleadoCorrecta() throws DNIPassNotValidException{
         assertEquals(e.getNif(),Empleado.getEmpleadoPorLoginYPassword("123456789", "password").getNif());
         assertEquals(e.getPassword(),Empleado.getEmpleadoPorLoginYPassword("123456789", "password").getPassword());
         assertEquals(e.getFecha(),Empleado.getEmpleadoPorLoginYPassword("123456789", "password").getFecha());
     }
     
     @org.junit.jupiter.api.Test
-    public void consultaEmpleadoErronea(){
+    public void consultaEmpleadoErronea() throws DNIPassNotValidException{
         assertNull(Empleado.getEmpleadoPorLoginYPassword("121212123", "password"));
     }
 }

@@ -41,6 +41,6 @@ public class ControladorCUConsultarImpagosTest {
 
     @Test
     public void consultarImpagosString(){
-        assertEquals("Factura: 2. Abonado: 1 ,Pedido: 3.",cu.consultarImpagos("2020-01-01").get(0));
+        assertEquals("Factura: 2.| Abonado: 1 ,Pedido: 3.",cu.consultarImpagos("2020-01-01").get(0));
     }
 }

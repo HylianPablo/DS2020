@@ -4,6 +4,7 @@ import es.uva.inf.ds.vinoteca.persistence.daos.DAOAbonado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOFactura;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOPedido;
+import es.uva.inf.ds.vinoteca.persistence.daos.DAOPersona;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
@@ -256,18 +257,36 @@ public class Pedido {
     public Abonado getAbonado(){
         Abonado ab = null;
         String abonadoJSONString = DAOAbonado.consultaAbonado(numeroAbonado);
-        String openidref;
-        String nif;
+        String openidref=null;
+        String nif=null;
+        String nifJson=null; 
+        String nombreJson=null;
+        String direccionJson=null;
+        String apellidosJson=null;
+        String telefonoJson=null;
+        String emailJson=null;
         JsonReaderFactory factory = Json.createReaderFactory(null);
         try(JsonReader reader = factory.createReader(new StringReader(abonadoJSONString));){
             JsonObject jsonobject = reader.readObject();
             openidref = jsonobject.getString("openIdRef");
             nif = jsonobject.getString("nif");
-            ab = new Abonado(numeroAbonado,openidref,nif);
         }catch(Exception ex){
-            Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+            Logger.getLogger(DAOAbonado.class.getName()).log(Level.SEVERE,null,ex);
         }
-        return ab;
+                String personaJSONString = DAOPersona.consultaPersona(nif);
+        factory = Json.createReaderFactory(null);
+        try(JsonReader reader = factory.createReader(new StringReader(personaJSONString));){
+            JsonObject jsonobject = reader.readObject();
+            nombreJson = jsonobject.getString("nombre");
+            direccionJson = jsonobject.getString("direccion");
+            apellidosJson = jsonobject.getString("apellidos");
+            telefonoJson = jsonobject.getString("telefono");
+            emailJson = jsonobject.getString("email");
+        }catch(Exception ex){
+            Logger.getLogger(DAOPersona.class.getName()).log(Level.SEVERE,null,ex);            
+        }
+        Abonado abonado = new Abonado(numeroAbonado, openidref, nif, nombreJson, apellidosJson, direccionJson, telefonoJson, emailJson);
+        return abonado;
     }
 
     /**

@@ -6,6 +6,7 @@ import es.uva.inf.ds.vinoteca.common.FacturaVencidaException;
 import es.uva.inf.ds.vinoteca.domain.models.Abonado;
 import es.uva.inf.ds.vinoteca.domain.models.LineaPedido;
 import es.uva.inf.ds.vinoteca.domain.models.Pedido;
+import es.uva.inf.ds.vinoteca.domain.models.Persona;
 import es.uva.inf.ds.vinoteca.domain.models.Referencia;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOLineaPedido;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOPedido;
@@ -31,6 +32,7 @@ public class ControladorCUCrearPedido {
     private Referencia r;
     private Pedido newPedido;
     private LineaPedido newLineaPedido;
+    private Persona p;
 
     public static ControladorCUCrearPedido getController(){
         return new ControladorCUCrearPedido();
@@ -48,6 +50,18 @@ public class ControladorCUCrearPedido {
         }
     }
     
+    /**
+     * Obtiene los datos del abonado.
+     * @return Lista de cadenas de caracteres que contiene los datos del abonado.
+     */
+    public ArrayList<String> getDatos(){
+        ArrayList<String> datos = new ArrayList<>();       
+        datos.add(b.getNombre());
+        datos.add(b.getApellidos());
+        datos.add(b.getTelefono());
+        datos.add(b.getEmail());
+        return datos;
+    }
     /**
      * Comprueba si el abonado tiene pedidos vencidos antes de crear el nuevo pedido.
      * @return {@code True} en caso de que el abonado no tenga pedidos vencidos y {@code false} en caso contrario.

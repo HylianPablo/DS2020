@@ -1,9 +1,5 @@
-
 package es.uva.inf.ds.vinoteca.domain.models;
-/**
- *
- * @author alejandro
- */    
+
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOAbonado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOFactura;
@@ -255,10 +251,17 @@ public class Pedido {
         return ab;
     }
 
+    /**
+     * Actualiza el estado del pedido a completado.
+     */
     public void actualizarEstadoACompletado() {
         estado = 2;
     }
     
+    /**
+     * Comprueba si un pedido ha vencido.
+     * @return {@code True} en caso de que el pedido haya vencido y {@code false} en caso contrario.
+     */
     public boolean comprobarNoVencido(){
         return DAOFactura.comprobarNoVencido(numeroFactura);
     }

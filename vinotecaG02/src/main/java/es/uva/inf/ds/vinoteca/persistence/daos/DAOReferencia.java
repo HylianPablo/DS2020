@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.uva.inf.ds.vinoteca.persistence.daos;
 
 import es.uva.inf.ds.vinoteca.domain.models.Empleado;
@@ -11,7 +6,6 @@ import java.io.StringWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -19,20 +13,27 @@ import javax.json.JsonObject;
 import javax.json.JsonWriter;
 
 /**
- *
- * @author alejandro
+ * Clase que representa el acceso a la tabla de la base de datos que contiene los datos de las referencias del sistema.
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class DAOReferencia {
     
+     /**
+     * Obtiene un JSON en forma de cadena de caracteres representando la referencia que se desea buscar en la base de datos. En caso de no existir retorna cadena vacía.
+     * @param id Número entero que representa el identificador de la referencia que se quiere buscar.
+     * @return JSON en forma de cadena de caracteres que representa la referencia en caso de que esta exista o cadena vacía en caso contrario.
+     */
     public static String consultaReferencia(int codigo) {
         String referenciaJSONString = "";
-        double precio = 0;
+        double precio = -1.0;
         boolean esPorCajas = false;
         String esPc = null;
         boolean disponible = false;
         String disp = null;
-        int contenido = 0;
-        int codigoRef = 0;
+        int contenido = -1;
+        int codigoRef = -1;
         
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
@@ -54,13 +55,15 @@ public class DAOReferencia {
                 if(disp.equals("1")){
                     disponible=true;
                 }
-                referenciaJSONString = obtainReferenciaJSONString(precio, contenido, codigoRef, esPorCajas, disponible);
+                
             }
             result.close();
         }catch(SQLException ex){
             Logger.getLogger(DAOCompra.class.getName()).log(Level.SEVERE,null,ex);
         }
         connection.closeConnection();
+        if(esPc!=null)
+            referenciaJSONString = obtainReferenciaJSONString(precio, contenido, codigoRef, esPorCajas, disponible);
         return referenciaJSONString;
     }
     

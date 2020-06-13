@@ -83,6 +83,11 @@ public class DAOPedido {
         return pedidosJSONString;
     }
     
+    /**
+     * Devuelve los pedidos asociados a una abonado determinado.
+     * @param numeroFactura Número entero que representa la factura de la que se quiere obtener los pedidos.
+     * @return JSON en forma de cadena de caracteres que representa los pedidos asociados a la factura. No se contempla la posibilidad de facturas sin pedidos.
+     */
     public static String consultaPedidoAbonado(int numeroAbonado){
         String pedidosJSONstring="";
         String pedidosJSONString = "";
@@ -201,7 +206,12 @@ public class DAOPedido {
         return pedidosJSONString;
     }
 
-    public static String consultaPedido(int codigoLineaPedido){ //REVISAR: POSIBLEMENTE VAYA EN DAOPEDIDO
+     /**
+     * Devuelve el pedido asociado a una línea de pedido determinada.
+     * @param numeroFactura Número entero que representa la línea de pedido de la que se quiere obtener el pedido.
+     * @return JSON en forma de cadena de caracteres que representa el pedido buscado. No se contempla la posibilidad de que exista una línea de pedido sin un pedido asociado.
+     */
+    public static String consultaPedido(int codigoLineaPedido){
         String pedidoJSONString = "";
         int numero = -1;
         int estado = -1;
@@ -270,6 +280,10 @@ public class DAOPedido {
         return pedidoJSONString;
     }
 
+    /**
+     * Actualiza un pedido actualizando el estado en que se encuentra.
+     * @param idPedido Número entero que representa el identificador del pedido a actualizar.
+     */
     public static void actualizaPedido(int idPedido) {
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();

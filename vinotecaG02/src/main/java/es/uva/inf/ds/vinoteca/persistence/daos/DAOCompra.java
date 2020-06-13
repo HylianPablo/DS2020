@@ -1,24 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.uva.inf.ds.vinoteca.persistence.daos;
 
-import es.uva.inf.ds.vinoteca.domain.models.Compra;
 import es.uva.inf.ds.vinoteca.domain.models.Empleado;
 import es.uva.inf.ds.vinoteca.persistence.dbaccess.DBConnection;
 import es.uva.inf.ds.vinoteca.userinterface.VistaAlmacen;
 import java.io.StringWriter;
-import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import static java.time.LocalDateTime.now;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -26,17 +16,25 @@ import javax.json.JsonObject;
 import javax.json.JsonWriter;
 
 /**
- *
- * @author alejandro
+ * Clase que representa el acceso a la tabla de la base de datos que contiene los datos de las compras del sistema.
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class DAOCompra {
     
+    /**
+     * Obtiene un JSON en forma de cadena de caracteres representando la compra que se desea buscar en la base de datos. En caso de no existir retorna cadena vacía.
+     * @param id Número entero que representa el identificador de la compra que se quiere buscar.
+     * @return JSON en forma de cadena de caracteres que representa al abonado en caso de que la compra exista o cadena vacía en caso contrario.
+     */
     public static String consultaCompra(int id) {
         String compraJSONString = "";
         String idd = Integer.toString(id);
         LocalDateTime fechaInicio = null;
         String completa = null;
-        double importe;
+        double importe = -1.0;
+        String imp = null;
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
         try(
@@ -49,14 +47,16 @@ public class DAOCompra {
                 fechaInicio=result.getTimestamp("fechapago").toLocalDateTime();
                 completa=result.getString("RECIBIDACOMPLETA");
                 importe=result.getDouble("importe");
-                String imp = Double.toString(importe);
-                compraJSONString = obtainCompraJSONString(fechaInicio, imp, completa);
+                imp = Double.toString(importe);
+                
             }
             result.close();
         }catch(SQLException ex){
             Logger.getLogger(DAOCompra.class.getName()).log(Level.SEVERE,null,ex);
         }
         connection.closeConnection();
+        if(fechaInicio!=null)
+            compraJSONString = obtainCompraJSONString(fechaInicio, imp, completa);
         return compraJSONString;
     }
     
@@ -80,6 +80,10 @@ public class DAOCompra {
         return compraJSONString;
     }
 
+    /**
+     * Actualiza una compra marcándola como completada y utilizando la fecha actual como fecha en que se completó la compra.
+     * @param idCompra Número entero que representa el identificador de la compra.
+     */
     public static void actualizarCompra(int idCompra) {
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();

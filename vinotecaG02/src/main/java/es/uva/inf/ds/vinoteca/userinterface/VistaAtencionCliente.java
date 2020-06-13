@@ -1,22 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.uva.inf.ds.vinoteca.userinterface;
 
 /**
- *
- * @author pablo
+ * Interfaz utilizada para generar un nuevo pedido para un abonado.
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class VistaAtencionCliente extends javax.swing.JFrame {
-
-    /**
-     * Creates new form VistaAtencionCliente
-     */
     
     private final ControladorVistaAtencionCliente controller;
     
+    /**
+     * Constructor de la interfaz.
+     */
     public VistaAtencionCliente() {
         initComponents();
         setResizable(false);
@@ -25,6 +21,10 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     
+    /**
+     * Modifica el mensaje de error de la interfaz.
+     * @param m Cadena de caracteres que representa el mensaje de error que se muestra en la interfaz.
+     */
     public void setMensajeError(String m){
         errorMsg.setText(m);
     }

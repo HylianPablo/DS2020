@@ -8,15 +8,10 @@ package es.uva.inf.ds.vinoteca.domain.models;
 import es.uva.inf.ds.vinoteca.common.DNIPassNotValidException;
 import es.uva.inf.ds.vinoteca.common.NotActiveException;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
-import java.io.File;
-import java.io.FileReader;
 import java.io.StringReader;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.json.Json;
 
 import javax.json.JsonObject;

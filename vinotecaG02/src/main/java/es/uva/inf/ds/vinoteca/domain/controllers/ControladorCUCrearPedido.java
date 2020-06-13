@@ -28,7 +28,11 @@ public class ControladorCUCrearPedido {
         return new ControladorCUCrearPedido();
     }
 
-    public void crearPedidoAbonado(int idAbonado) {
+    /**
+     * Comprueba que el abonado existe en el sistema.
+     * @param idAbonado Número entero que representa el identificador del abonado.
+     */
+    public void comprobarAbonado(int idAbonado) {
         try{
             b = Abonado.getAbonado(idAbonado);
         }catch(AbonadoNotExistsException ex){
@@ -36,7 +40,12 @@ public class ControladorCUCrearPedido {
         }
     }
     
-    public boolean comprobarPlazosVencidos(int idAbonado) throws FacturaVencidaException{ //Necesario idAbonado?? comprobar
+    /**
+     * Comprueba si el abonado tiene pedidos vencidos antes de crear el nuevo pedido.
+     * @return {@code True} en caso de que el abonado no tenga pedidos vencidos y {@code false} en caso contrario.
+     * @throws {@code FacturaVencidaException} si el abonado tiene pedidos vencidos. 
+     */
+    public boolean comprobarPlazosVencidos() throws FacturaVencidaException{ //Necesario idAbonado?? comprobar
         ArrayList<Pedido> pedidos = b.getPedidos();
         boolean bandera = true;
         for(int i=0;i<pedidos.size();i++){

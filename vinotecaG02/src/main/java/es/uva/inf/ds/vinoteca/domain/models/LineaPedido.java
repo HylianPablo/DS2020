@@ -6,13 +6,9 @@
 package es.uva.inf.ds.vinoteca.domain.models;
 
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
-import es.uva.inf.ds.vinoteca.persistence.daos.DAOLineaCompra;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOLineaPedido;
 import java.io.StringReader;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -22,29 +18,48 @@ import javax.json.JsonReader;
 import javax.json.JsonReaderFactory;
 
 /**
- *
- * @author alejandro
+ * Modelo que representa una línea de pedido del sistema.
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class LineaPedido {
     
     boolean completada;
     int unidades, codigoPedido;
     
+    /**
+     * Constructor de la clase.
+     * @param c Valor booleano que representa si la línea de pedido ha sido completada.
+     * @param u Número entero que representa las unidades de la línea de pedido.
+     * @param cPed Número entero que representa el identificador del pedido asociado a la línea de pedido.
+     */
     public LineaPedido(boolean c, int u, int cPed){
         unidades = u;
         completada = c;
         codigoPedido = cPed;
     }
     
+    /**
+     * Marca la línea de pedido como completada.
+     */
     public void marcarCompleto(){
         completada = true;
     }
     
+    /**
+     * Obtiene el código del pedido asociado a la línea de pedido.
+     * @return Número entero que representa el identificador del pedido asociado a la línea de pedido.
+     */
     public int getCodigoPedido(){
         return codigoPedido;
     }
     
-    //revisar estoooooo
+    /**
+     *  Obtiene una lista de instancias de líneas de pedido relacionadas con una línea de compra.
+     * @param idLineaCompra Número entero que representa el identificador de la línea de compra.
+     * @return Lista de instancias de líneas de pedido relacionadas con una línea de compra.
+     */
     public static ArrayList<LineaPedido> getLineasPedido(int idLineaCompra) {
         String lineasPedidoJSONString = DAOLineaPedido.consultaLineasPedido(idLineaCompra);
         ArrayList<LineaPedido> lpedidos = new ArrayList<>();
@@ -70,6 +85,10 @@ public class LineaPedido {
         return lpedidos;
     }
 
+    /**
+     * Comprueba si una línea de pedido ha sido completada.
+     * @return {@code True} en caso de que la línea de pedido haya sido completada y {@code false} en caso contrario.
+     */
     public boolean checkCompleto() {
         return completada;
     }

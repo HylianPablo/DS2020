@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.uva.inf.ds.vinoteca.persistence.daos;
 
 import es.uva.inf.ds.vinoteca.domain.models.Empleado;
@@ -11,8 +6,6 @@ import java.io.StringWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -20,15 +13,23 @@ import javax.json.JsonObject;
 import javax.json.JsonWriter;
 
 /**
- *
- * @author alejandro
+ * Clase que representa el acceso a la tabla de la base de datos que contiene los datos de las bodegas del sistema.
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class DAOBodega {
     
-    //COMPLETAR
+    /**
+     * Obtiene un JSON en forma de cadena de caracteres representando la bodega que se desea buscar en la base de datos. En caso de no existir retorna cadena vacía.
+     * @param id Número entero que representa el identificador de la bodega que se quiere buscar.
+     * @return JSON en forma de cadena de caracteres que representa al abonado en caso de que la bodega exista o cadena vacía en caso contrario.
+     */
     public static String consultaBodega(int id) {
         String bodegaJSONString = "";     
-        String cif, nombre, direccion;
+        String cif = null;
+        String nombre= null;
+        String direccion = null;
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
         try(
@@ -40,13 +41,15 @@ public class DAOBodega {
                 cif = result.getString("cif");
                 nombre = result.getString("nombre");
                 direccion = result.getString("direccion");
-                bodegaJSONString = obtainBodegaSONString(cif, nombre, direccion);
+                
             }
             result.close();
         }catch(SQLException ex){
             Logger.getLogger(DAOCompra.class.getName()).log(Level.SEVERE,null,ex);
         }
         connection.closeConnection();
+        if(cif!=null)
+            bodegaJSONString = obtainBodegaSONString(cif, nombre, direccion);
         return bodegaJSONString;
     }
     

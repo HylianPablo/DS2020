@@ -1,11 +1,7 @@
 package es.uva.inf.ds.vinoteca.domain.models;
 
 import es.uva.inf.ds.vinoteca.common.AbonadoNotExistsException;
-import es.uva.inf.ds.vinoteca.common.CompletadaException;
-import es.uva.inf.ds.vinoteca.common.NullCompraException;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOAbonado;
-import es.uva.inf.ds.vinoteca.persistence.daos.DAOCompra;
-import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOPedido;
 import java.io.StringReader;
 import java.time.LocalDateTime;

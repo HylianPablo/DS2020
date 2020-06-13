@@ -1,13 +1,7 @@
 package es.uva.inf.ds.vinoteca.userinterface;
 
-import es.uva.inf.ds.vinoteca.common.IllegalDateException;
 import es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUConsultarImpagos;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Controlador de la interfaz del caso de uso "Consultar impagos".
@@ -29,7 +23,7 @@ public class ControladorVistaContabilidad {
     }
     
     /**
-     * Comprueba que la fecha introducida es correcta y en ese caso, activa el caso de uso.
+     * Obtiene las facturas por debajo de la fecha introducida y muestra sus detalles en la interfaz.
      * @param fecha Fecha que representa el periodo a partir del cual buscar las facturas.
      */
     public void procesarIntroduceFecha(String fecha){

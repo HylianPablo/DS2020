@@ -33,27 +33,17 @@ public class LineaCompra {
     private String referencia;
     private boolean recibida;
     private LocalDateTime fechaRecepcion;
-    private ArrayList<LineaCompra> listaLineas;
     
     public LineaCompra(int u, LocalDateTime fr, int c, boolean r, int cL){
         unidades = u;
         recibida = r;
         fechaRecepcion = fr;
-        listaLineas = null;
         codigo = c;
         codigoLinea = cL;
     }
-    
-    public void add(LineaCompra linea){
-        listaLineas.add(linea);
-    }
-    
+        
     public ArrayList<LineaPedido> actualizaLineasPedido(){
         return LineaPedido.getLineasPedido(codigo);
-    }
-    
-    public int getNumeroLineas(){
-        return listaLineas.size();
     }
     
     public boolean comprobarRecibida() {

@@ -5,10 +5,12 @@
  */
 package es.uva.inf.ds.vinoteca.domain.models;
 
+import es.uva.inf.ds.vinoteca.persistence.daos.DAOAbonado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOLineaCompra;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOLineaPedido;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonReaderFactory;
+import javax.json.JsonWriter;
 
 /**
  *
@@ -28,11 +31,17 @@ import javax.json.JsonReaderFactory;
 public class LineaPedido {
     
     boolean completada;
-    int unidades, codigoPedido;
+    int unidades, codigoPedido, codigoReferencia;
     
     public LineaPedido(boolean c, int u, int cPed){
         unidades = u;
         completada = c;
+        codigoPedido = cPed;
+    }
+    
+    public LineaPedido(int cRef, int cPed, int u){
+        unidades = u;
+        codigoReferencia = cRef;
         codigoPedido = cPed;
     }
     
@@ -72,6 +81,25 @@ public class LineaPedido {
 
     public boolean checkCompleto() {
         return completada;
+    }
+
+    public String getJson() {
+        String newLineaPedidoJSONString = "";
+        JsonObject abonadoJSON = Json.createObjectBuilder()
+                .add("codReferencia",Integer.toString(codigoReferencia))
+                .add("codPedido",Integer.toString(codigoPedido))
+                .add("unidades",Integer.toString(unidades)).build();
+        try(
+                StringWriter stringWriter = new StringWriter();
+                JsonWriter writer = Json.createWriter(stringWriter);
+                ){
+           
+            writer.writeObject(abonadoJSON);
+            newLineaPedidoJSONString = stringWriter.toString();
+        }catch(Exception ex){
+            Logger.getLogger(DAOAbonado.class.getName()).log(Level.SEVERE,null,ex);
+        }
+        return newLineaPedidoJSONString;
     }
     
 }

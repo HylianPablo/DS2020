@@ -5,6 +5,7 @@
  */
 package es.uva.inf.ds.vinoteca.domain.models;
 
+import es.uva.inf.ds.vinoteca.common.ReferenciaNoDisponibleException;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOCompra;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOReferencia;
@@ -74,6 +75,7 @@ public class Referencia {
             contenidoEnCLJson = jsonobject.getString("contenido");
             //coger del json
         }catch(Exception ex){
+            //throw new ReferenciaNoDisponibleException("No existe una referencia con esa id");
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }
         //crear objeto compra

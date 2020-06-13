@@ -28,15 +28,6 @@ public class ControladorVistaAlmacen {
         this.view=view;
         cuController = ControladorCURegistrarRecepcionCompra.getController();
     }
-
-    public ControladorVistaAlmacen() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    /*
-    public static void mostrarLineasCompraNoCompletadas(ArrayList<LineaCompra> lcnr) {
-        view.mostrarMensajeUsuario(lcnr);
-    }*/
     
     public void procesaDatosIntroducirIdCompra(int idCompra){
         cuController.comprobarCompraNoCompletada(idCompra);

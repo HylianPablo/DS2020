@@ -1,5 +1,6 @@
 package es.uva.inf.ds.vinoteca.userinterface;
 
+import es.uva.inf.ds.vinoteca.common.ReferenciaNoDisponibleException;
 import es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUCrearPedido;
 
 /**
@@ -27,5 +28,13 @@ public class ControladorVistaAtencionCliente {
     
     public void procesaConfirmacion(){
         cuController.comprobarPlazosVencidos(idAbonado);
+    }
+
+    void procesaIntroducirReferencia(int idReferencia, int cantidad) throws ReferenciaNoDisponibleException {
+        cuController.comprobarReferencia(idReferencia, cantidad);
+    }
+
+    void procesarTerminarProceso() {
+        cuController.registrarPedido();
     }
 }

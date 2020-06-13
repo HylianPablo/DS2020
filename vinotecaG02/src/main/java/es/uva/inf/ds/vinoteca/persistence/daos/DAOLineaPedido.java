@@ -5,6 +5,7 @@
  */
 package es.uva.inf.ds.vinoteca.persistence.daos;
 
+import es.uva.inf.ds.vinoteca.common.NullCompraException;
 import es.uva.inf.ds.vinoteca.domain.models.Empleado;
 import es.uva.inf.ds.vinoteca.persistence.dbaccess.DBConnection;
 import es.uva.inf.ds.vinoteca.userinterface.VistaAlmacen;
@@ -102,6 +103,38 @@ public class DAOLineaPedido {
         try (PreparedStatement ps = connection.getStatement("UPDATE LINEAPEDIDO SET COMPLETADA = ? WHERE IDLINEACOMPRA = ?")) {
             ps.setString(1, "1");
             ps.setInt(2, id);
+            ps.executeUpdate();
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(VistaAlmacen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connection.closeConnection();
+    }
+
+    public static void añadirLineaPedido(String jsonNewLinea) {
+        
+        JsonReaderFactory factory = Json.createReaderFactory(null);
+        int codigoReferencia = -1;
+        int codigoPedido = -1;
+        int unidadesLinea = -1;
+        String Completada = "0";
+        int IdLineaCompra = 1;
+        try(JsonReader reader = factory.createReader(new StringReader(jsonNewLinea));){
+            JsonObject jsonobject = reader.readObject();
+            codigoReferencia = Integer.parseInt(jsonobject.getString("codReferencia"));
+            codigoPedido = Integer.parseInt(jsonobject.getString("codPedido"));
+            unidadesLinea = Integer.parseInt(jsonobject.getString("unidades"));
+        }catch(Exception ex){
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE,null,ex);
+        }
+        DBConnection connection = DBConnection.getInstance();
+        connection.openConnection();
+        try (PreparedStatement ps = connection.getStatement("INSET INTO LINEAPEDIDO" + "VALUES (?, ?, ?, ?, ?)   ")) {
+            ps.setInt(3, codigoReferencia);
+            ps.setInt(4, codigoPedido);
+            ps.setString(2, Completada);
+            ps.setInt(5, IdLineaCompra);
+            ps.setInt(1, unidadesLinea);
             ps.executeUpdate();
         }
         catch (SQLException ex) {

@@ -10,6 +10,7 @@ import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOFactura;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOPedido;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonReaderFactory;
+import javax.json.JsonWriter;
 
 /**
  * Modelo de los pedidos que procesa el sistema.
@@ -60,7 +62,7 @@ public class Pedido {
     }
     
     public Pedido(int numero, int estado, LocalDateTime fechaRealizacion, String notaEntrega, double importe,
-                    LocalDateTime fechaRecepcion, LocalDateTime fechaEntrega, int numeroFactura, int numeroAbonado, int codigo){
+                    LocalDateTime fechaRecepcion, LocalDateTime fechaEntrega, int numeroFactura, int numeroAbonado){
         this.numero=numero;
         this.estado=estado;
         this.fechaRealizacion=fechaRealizacion;
@@ -70,7 +72,6 @@ public class Pedido {
         this.fechaEntrega=fechaEntrega;
         this.numeroFactura=numeroFactura;
         this.numeroAbonado=numeroAbonado;
-        this.codigo=codigo;
     }
     
     /**
@@ -107,7 +108,7 @@ public class Pedido {
             fechaEntregaJ = LocalDateTime.parse(obj.getString("fechaEntrega"),formatter);
             numeroFactura = Integer.parseInt(obj.getString("numeroFactura"));
             numeroAbonadoJ = Integer.parseInt(obj.getString("numeroAbonado"));
-            p = new Pedido(numeroJ,estadoJ,fechaRealizacionJ,notaEntregaJ,importeJ,fechaRecepcionJ,fechaEntregaJ,numeroFactura,numeroAbonadoJ,codPedido); 
+            p = new Pedido(numeroJ,estadoJ,fechaRealizacionJ,notaEntregaJ,importeJ,fechaRecepcionJ,fechaEntregaJ,numeroFactura,numeroAbonadoJ); 
         }catch(Exception ex){
             Logger.getLogger(Factura.class.getName()).log(Level.SEVERE,null,ex);
         }
@@ -277,5 +278,41 @@ public class Pedido {
     
     public boolean comprobarNoVencido(){
         return DAOFactura.comprobarNoVencido(numeroFactura);
+    }
+
+    public LineaPedido crearLineaPedido(int idReferencia, int cantidad) {
+        LineaPedido p = new LineaPedido(idReferencia, numero, cantidad);
+        return p;
+    }
+
+    public void cambiarEstadoPendiente() {
+        estado = 0;
+    }
+    
+    public String getJson() {
+        String newPedidoJSONString = "";
+        JsonObject abonadoJSON = Json.createObjectBuilder()
+                .add("numero",Integer.toString(numero))
+                .add("estado",Integer.toString(estado))
+                .add("fechaRealizacion",fechaRealizacion.toString())
+                .add("notaEntrega", notaEntrega)
+                .add("importe",Double.toString(importe))
+                .add("fechaRecepcion",fechaRecepcion.toString())
+                .add("fechaEntrega",fechaEntrega.toString())
+                .add("numeroFactura",Integer.toString(numeroFactura))
+                .add("numeroAbonado",Integer.toString(numeroAbonado))
+                .add("codigo",Integer.toString(codigo))
+                .build();
+        try(
+                StringWriter stringWriter = new StringWriter();
+                JsonWriter writer = Json.createWriter(stringWriter);
+                ){
+           
+            writer.writeObject(abonadoJSON);
+            newPedidoJSONString = stringWriter.toString();
+        }catch(Exception ex){
+            Logger.getLogger(DAOAbonado.class.getName()).log(Level.SEVERE,null,ex);
+        }
+        return newPedidoJSONString;
     }
 }

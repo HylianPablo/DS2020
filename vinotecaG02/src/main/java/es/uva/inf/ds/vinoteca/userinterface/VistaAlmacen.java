@@ -45,15 +45,6 @@ public class VistaAlmacen extends javax.swing.JFrame {
         }
     }
     
-    public void inotrudeIdentificadorCompra(){
-        int idCompra = Integer.parseInt(searchBar.getText());
-        controller.procesaDatosIntroducirIdCompra(idCompra);
-    }
-    
-    public void actualizarTabla(ArrayList<String> detalles){
-        table.setValueAt(detalles.get(0), 0, 0);
-    }
-    
     public void setMensajeError(String message){
         errorMsg.setText(message);
     }

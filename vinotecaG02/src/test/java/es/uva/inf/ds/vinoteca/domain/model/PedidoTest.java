@@ -38,7 +38,7 @@ public class PedidoTest {
     
     @BeforeEach
     public void setUp() {
-        p = new Pedido(1,ldtRea,"fragil",10.0,ldtRe,ldtE,1,1);
+        p = new Pedido(1,1,ldtRea,"fragil",10.0,ldtRe,ldtE,1,1);
     }
     
     @AfterEach

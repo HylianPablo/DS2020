@@ -20,9 +20,13 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
     public VistaAtencionCliente() {
         initComponents();
         setResizable(false);
-        jLabel1.setText("");
+        errorMsg.setText("");
         controller = new ControladorVistaAtencionCliente(this);
         setLocationRelativeTo(null);
+    }
+    
+    public void setMensajeError(String m){
+        errorMsg.setText(m);
     }
 
     /**
@@ -40,7 +44,7 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
         cantidadText = new javax.swing.JTextField();
         referenciaText = new javax.swing.JTextField();
         endButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        errorMsg = new javax.swing.JLabel();
         confirmarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -65,7 +69,7 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
 
         endButton.setText("Finalizar");
 
-        jLabel1.setText("Mensaje de error");
+        errorMsg.setText("Mensaje de error");
 
         confirmarButton.setText("Confirmar");
         confirmarButton.addActionListener(new java.awt.event.ActionListener() {
@@ -88,13 +92,12 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
                             .addComponent(abonadoText, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(55, 55, 55)
-                        .addComponent(jLabel1)))
+                        .addComponent(errorMsg)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(confirmarButton, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(endButton, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
-                        .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(endButton, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
@@ -113,7 +116,7 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(endButton)
-                    .addComponent(jLabel1))
+                    .addComponent(errorMsg))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -138,15 +141,17 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cantidadTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidadTextActionPerformed
-        // TODO add your handling code here:
+        errorMsg.setText("");
     }//GEN-LAST:event_cantidadTextActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        errorMsg.setText("");
         int idAbonado = Integer.parseInt(abonadoText.getText());
         controller.procesaDatosIntroducirNumeroAbonado(idAbonado);
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void confirmarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarButtonActionPerformed
+        errorMsg.setText("");
         controller.procesaConfirmacion();
     }//GEN-LAST:event_confirmarButtonActionPerformed
 
@@ -156,7 +161,7 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
     private javax.swing.JTextField cantidadText;
     private javax.swing.JButton confirmarButton;
     private javax.swing.JButton endButton;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel errorMsg;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField referenciaText;
     private javax.swing.JButton searchButton;

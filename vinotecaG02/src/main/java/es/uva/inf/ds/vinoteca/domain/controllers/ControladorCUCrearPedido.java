@@ -1,6 +1,7 @@
 package es.uva.inf.ds.vinoteca.domain.controllers;
 
 import es.uva.inf.ds.vinoteca.common.AbonadoNotExistsException;
+import es.uva.inf.ds.vinoteca.common.FacturaVencidaException;
 import es.uva.inf.ds.vinoteca.domain.models.Abonado;
 import es.uva.inf.ds.vinoteca.domain.models.Pedido;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class ControladorCUCrearPedido {
      */
     
     private Abonado b;
+    private Pedido newPedido;
     
     public static ControladorCUCrearPedido getController(){
         return new ControladorCUCrearPedido();
@@ -34,17 +36,18 @@ public class ControladorCUCrearPedido {
         }
     }
     
-    public void comprobarPlazosVencidos(int idAbonado){ //Necesario idAbonado?? comprobar
+    public boolean comprobarPlazosVencidos(int idAbonado) throws FacturaVencidaException{ //Necesario idAbonado?? comprobar
         ArrayList<Pedido> pedidos = b.getPedidos();
         boolean bandera = true;
         for(int i=0;i<pedidos.size();i++){
             if(pedidos.get(i).comprobarNoVencido()){
                 bandera=false;
-                break;
+                throw new FacturaVencidaException("Existen facturas vencidas.");
             }
         }
         if(bandera){
-            Pedido newPedido = new Pedido(1,null,"notaEntrega",0.0,null,null,0,0);
+            newPedido = new Pedido(-1,1,null,"notaEntrega",0.0,null,null,0,0);
         }
+        return bandera;
     }
 }

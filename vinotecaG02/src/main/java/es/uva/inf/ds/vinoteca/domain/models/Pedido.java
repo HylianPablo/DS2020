@@ -5,19 +5,16 @@ package es.uva.inf.ds.vinoteca.domain.models;
  * @author alejandro
  */    
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOAbonado;
-import es.uva.inf.ds.vinoteca.persistence.daos.DAOCompra;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOFactura;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOPedido;
 import java.io.StringReader;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
-import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonReaderFactory;
@@ -47,20 +44,8 @@ public class Pedido {
      * @param numeroFactura Número de la factura asociada al pedido.
      * @param numeroAbonado Número del abonado asociado al pedido.
      */
-    public Pedido(int estado, LocalDateTime fechaRealizacion, String notaEntrega, double importe,
-                    LocalDateTime fechaRecepcion, LocalDateTime fechaEntrega, int numeroFactura, int numeroAbonado){
-        this.estado=estado;
-        this.fechaRealizacion=fechaRealizacion;
-        this.notaEntrega=notaEntrega;
-        this.importe=importe;
-        this.fechaRecepcion=fechaRecepcion;
-        this.fechaEntrega=fechaEntrega;
-        this.numeroFactura=numeroFactura;
-        this.numeroAbonado=numeroAbonado;
-    }
-    
     public Pedido(int numero, int estado, LocalDateTime fechaRealizacion, String notaEntrega, double importe,
-                    LocalDateTime fechaRecepcion, LocalDateTime fechaEntrega, int numeroFactura, int numeroAbonado, int codigo){
+                    LocalDateTime fechaRecepcion, LocalDateTime fechaEntrega, int numeroFactura, int numeroAbonado){
         this.numero=numero;
         this.estado=estado;
         this.fechaRealizacion=fechaRealizacion;
@@ -70,7 +55,6 @@ public class Pedido {
         this.fechaEntrega=fechaEntrega;
         this.numeroFactura=numeroFactura;
         this.numeroAbonado=numeroAbonado;
-        this.codigo=codigo;
     }
     
     /**
@@ -107,7 +91,7 @@ public class Pedido {
             fechaEntregaJ = LocalDateTime.parse(obj.getString("fechaEntrega"),formatter);
             numeroFactura = Integer.parseInt(obj.getString("numeroFactura"));
             numeroAbonadoJ = Integer.parseInt(obj.getString("numeroAbonado"));
-            p = new Pedido(numeroJ,estadoJ,fechaRealizacionJ,notaEntregaJ,importeJ,fechaRecepcionJ,fechaEntregaJ,numeroFactura,numeroAbonadoJ,codPedido); 
+            p = new Pedido(numeroJ,estadoJ,fechaRealizacionJ,notaEntregaJ,importeJ,fechaRecepcionJ,fechaEntregaJ,numeroFactura,numeroAbonadoJ); 
         }catch(Exception ex){
             Logger.getLogger(Factura.class.getName()).log(Level.SEVERE,null,ex);
         }

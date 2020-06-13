@@ -33,6 +33,7 @@ public class VistaAlmacen extends javax.swing.JFrame {
         errorMsg.setText("");
         controller = new ControladorVistaAlmacen(this);
         lcs =  new ArrayList<>();
+        setLocationRelativeTo(null);
         
     }
     

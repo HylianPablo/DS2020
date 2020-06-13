@@ -1,6 +1,9 @@
 package es.uva.inf.ds.vinoteca.userinterface;
 
+import es.uva.inf.ds.vinoteca.common.FacturaVencidaException;
 import es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUCrearPedido;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Controlador de la interfaz del caso de uso "Crear pedido de Abonado".
@@ -26,6 +29,15 @@ public class ControladorVistaAtencionCliente {
     }
     
     public void procesaConfirmacion(){
-        cuController.comprobarPlazosVencidos(idAbonado);
+        try {
+            boolean b = cuController.comprobarPlazosVencidos(idAbonado);
+            if(!b){
+                String textoCorreo = "Desde la vinoteca G02 le informamos de que aún tiene facturas vencidas y no puede "
+                        + "realizar otro pedido en estos momentos.";
+                view.setMensajeError("Tiene pedidos vencidos.");
+            }
+        } catch (FacturaVencidaException ex) {
+            Logger.getLogger(ControladorVistaAtencionCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

@@ -1,5 +1,22 @@
 package es.uva.inf.ds.vinoteca.domain.models;
 
+import es.uva.inf.ds.vinoteca.common.AbonadoNotExistsException;
+import es.uva.inf.ds.vinoteca.common.CompletadaException;
+import es.uva.inf.ds.vinoteca.common.NullCompraException;
+import es.uva.inf.ds.vinoteca.persistence.daos.DAOAbonado;
+import es.uva.inf.ds.vinoteca.persistence.daos.DAOCompra;
+import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
+import java.io.StringReader;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.json.JsonReaderFactory;
+
 /**
  * Modelo que representa un abonado del sistema.
  * @author pamarti
@@ -7,6 +24,7 @@ package es.uva.inf.ds.vinoteca.domain.models;
  * @author ivagonz
  */
 public class Abonado {
+
     private int numeroAbonado;
     private String openidref, nif;
     
@@ -31,6 +49,23 @@ public class Abonado {
      */
     public int getNumeroAbonado(){
         return numeroAbonado;
+    }
+    
+    public static Abonado getAbonado(int id) throws AbonadoNotExistsException {
+        String abonadoJSONString = DAOAbonado.consultaAbonado(id);
+        String openIdRefJson=null; 
+        String nifJson=null; 
+        JsonReaderFactory factory = Json.createReaderFactory(null);
+        try(JsonReader reader = factory.createReader(new StringReader(abonadoJSONString));){
+            JsonObject jsonobject = reader.readObject();
+            openIdRefJson = jsonobject.getString("OPENIDREF");
+            nifJson = jsonobject.getString("NIF");
+        }catch(Exception ex){
+            throw new AbonadoNotExistsException("No existe un abonado con ese numero");
+            //Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);            
+        }
+        Abonado abonado = new Abonado(id, openIdRefJson, nifJson);
+        return abonado;
     }
     
     /**

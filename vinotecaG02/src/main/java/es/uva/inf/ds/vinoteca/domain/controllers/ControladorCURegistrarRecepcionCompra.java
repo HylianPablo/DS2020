@@ -68,16 +68,32 @@ public class ControladorCURegistrarRecepcionCompra {
         }
     }
     
-    public ArrayList<LineaCompra> getLineasCompra(){
-        return lc;
+    public ArrayList<Integer> getCodigosLineasCompra(){
+        ArrayList<Integer> codigos = new ArrayList<>();
+        for(int i = 0; i < lc.size(); i++){
+            codigos.add(lc.get(i).getCodigoLinea());
+        }
+        return codigos;
     }
     
-    public Bodega getBodega(){
-        return b;
+    public ArrayList<Integer> getNumeroUnidadesLineasCompra(){
+        ArrayList<Integer> numeros = new ArrayList<>();
+        for(int i = 0; i < lc.size(); i++){
+            numeros.add(lc.get(i).getUnidades());
+        }
+        return numeros;
     }
     
-    public ArrayList<Referencia> getReferencias(){
-        return refs;
+    public String getNombreBodega(){
+        return b.getNombre();
+    }
+    
+    public ArrayList<Integer> getCodigosReferencias(){
+        ArrayList<Integer> codigos = new ArrayList<>();
+        for(int i = 0; i < refs.size(); i++){
+            codigos.add(refs.get(i).getCodigo());
+        }
+        return codigos;
     }
     
     public void actualizarLineaCompra(int i) throws SQLException {
@@ -123,8 +139,13 @@ public class ControladorCURegistrarRecepcionCompra {
         return allRecvs;
     }
     
-    public ArrayList<LineaCompra> getLineasCompraNoRecibidas(){
-        return c.getLineasCompraNoRecibidas();
+    public ArrayList<Integer> getIdLineasCompraNoRecibidas(){
+        ArrayList<Integer> codigos = new ArrayList<>();
+        ArrayList<LineaCompra> lcnrr = c.getLineasCompraNoRecibidas();
+        for(int i = 0; i < lcnrr.size(); i++){
+            codigos.add(lcnrr.get(i).getCodigoLinea());
+        }
+        return codigos;
     }
   
        

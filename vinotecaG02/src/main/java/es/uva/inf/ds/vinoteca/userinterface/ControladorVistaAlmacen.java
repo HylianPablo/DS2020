@@ -40,10 +40,11 @@ public class ControladorVistaAlmacen {
     
     public void procesaDatosIntroducirIdCompra(int idCompra){
         cuController.comprobarCompraNoCompletada(idCompra);
-        Bodega b = cuController.getBodega();
-        ArrayList<LineaCompra> lc = cuController.getLineasCompra();
-        ArrayList<Referencia> ref = cuController.getReferencias();
-        view.actualizarVista(b, lc, ref);
+        String nombreB = cuController.getNombreBodega();
+        ArrayList<Integer> unidadesLinea = cuController.getNumeroUnidadesLineasCompra();
+        ArrayList<Integer> codigosLinea= cuController.getCodigosLineasCompra();
+        ArrayList<Integer> codigosReferencia = cuController.getCodigosReferencias();
+        view.actualizarVista(nombreB, codigosLinea, unidadesLinea, codigosReferencia);
     }
     
     public void procesaDatosSeleccionaLineas(ArrayList<Integer> indice) throws SQLException{
@@ -55,8 +56,8 @@ public class ControladorVistaAlmacen {
     //igual comprobarRecibidas no deberia retornar
     public void procesaDatosFinalizar(){
         cuController.comprobarRecibidas();
-        if(cuController.getAllRefs()){
-            ArrayList<LineaCompra> lcnr = cuController.getLineasCompraNoRecibidas();
+        if(!cuController.getAllRefs()){
+            ArrayList<Integer> lcnr = cuController.getIdLineasCompraNoRecibidas();
             view.mostrarMensajeUsuario(lcnr);
         }
         cuController.actualizarPedidos();

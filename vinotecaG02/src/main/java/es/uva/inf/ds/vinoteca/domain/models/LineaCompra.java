@@ -70,6 +70,22 @@ public class LineaCompra {
     public int getUnidades(){
         return unidades;
     }
+
+    /**
+     * Obtiene la fecha de recepción de la línea de compra
+     * @return {@code LocalDateTime} que representa la fecha de recepción de la compra
+     */
+    public LocalDateTime getFechaRecepcion(){
+        return fechaRecepcion;
+    }
+
+    /**
+     * Obtiene el codigo de la referencia de la linea de compra
+     * @return Entero que representa el codigo de la referencia de la linea de compra.
+     */
+    public int getCodigo(){
+        return codigo;
+    }
     
     /**
      * Marca como recibida la línea de compra.

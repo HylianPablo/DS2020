@@ -2,9 +2,6 @@ package es.uva.inf.ds.vinoteca.userinterface;
 
 import es.uva.inf.ds.vinoteca.common.CompletadaException;
 import es.uva.inf.ds.vinoteca.common.ReferenciaNoValidaException;
-import es.uva.inf.ds.vinoteca.domain.models.Bodega;
-import es.uva.inf.ds.vinoteca.domain.models.LineaCompra;
-import es.uva.inf.ds.vinoteca.domain.models.Referencia;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;

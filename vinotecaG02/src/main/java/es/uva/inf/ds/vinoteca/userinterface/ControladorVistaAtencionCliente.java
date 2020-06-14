@@ -65,8 +65,8 @@ public class ControladorVistaAtencionCliente {
     /**
      * Comprueba si la referencia está disponible y de ser así muestra sus datos.
      * @param idReferencia Número entero que representa el identificador de la referencia que se quiere comprar.
-     * @param cantidad Número entero que representa la cantidad que se quiere comprar.
-     * @throws {@code ReferenciaNoDisponibleException} en caso de que la referencia no se encuentre disponible. 
+     * @param cantidad Número entero que representa la cantidad que se quiere comprar. 
+     * @throws es.uva.inf.ds.vinoteca.common.ReferenciaNoDisponibleException 
      */
     public void procesaIntroducirReferencia(int idReferencia, int cantidad) throws ReferenciaNoDisponibleException {
         Referencia r = cuController.comprobarReferencia(idReferencia, cantidad);

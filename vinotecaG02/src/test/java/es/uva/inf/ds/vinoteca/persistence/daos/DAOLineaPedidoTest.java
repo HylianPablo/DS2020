@@ -67,15 +67,13 @@ public class DAOLineaPedidoTest {
         connection.openConnection();
         String completa = null;
         try(  
-            PreparedStatement ps = connection.getStatement("SELECT * FROM LINEAPEDIDO lp WHERE lp.CodigoReferencia= 2");
+            PreparedStatement ps = connection.getStatement("SELECT * FROM LINEAPEDIDO lp WHERE lp.CodigoReferencia= 2"); ResultSet result = ps.executeQuery();
             
         ){
-            ResultSet result = ps.executeQuery();
             if(result.next()){
                 completa=result.getString("COMPLETADA");
                 
             }
-            result.close();
         }catch(SQLException ex){
             Logger.getLogger(DAOCompra.class.getName()).log(Level.SEVERE,null,ex);
         }
@@ -89,15 +87,13 @@ public class DAOLineaPedidoTest {
         connection.openConnection();
         int countInit = -1;
         try(  
-            PreparedStatement ps = connection.getStatement("SELECT COUNT(*) AS total FROM LINEAPEDIDO lp");
+            PreparedStatement ps = connection.getStatement("SELECT COUNT(*) AS total FROM LINEAPEDIDO lp"); ResultSet result = ps.executeQuery();
             
         ){
-            ResultSet result = ps.executeQuery();
             if(result.next()){
                 countInit=result.getInt("total");
                 
             }
-            result.close();
         }catch(SQLException ex){
             Logger.getLogger(DAOCompra.class.getName()).log(Level.SEVERE,null,ex);
         }
@@ -106,15 +102,13 @@ public class DAOLineaPedidoTest {
         connection.openConnection();
         int countFinal = -1;
         try(  
-            PreparedStatement ps = connection.getStatement("SELECT COUNT(*) AS total FROM LINEAPEDIDO lp");
+            PreparedStatement ps = connection.getStatement("SELECT COUNT(*) AS total FROM LINEAPEDIDO lp"); ResultSet result = ps.executeQuery();
             
         ){
-            ResultSet result = ps.executeQuery();
             if(result.next()){
                 countFinal=result.getInt("total");
                 
             }
-            result.close();
         }catch(SQLException ex){
             Logger.getLogger(DAOCompra.class.getName()).log(Level.SEVERE,null,ex);
         }

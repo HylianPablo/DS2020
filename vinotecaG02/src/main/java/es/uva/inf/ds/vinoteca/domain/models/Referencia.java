@@ -2,11 +2,8 @@ package es.uva.inf.ds.vinoteca.domain.models;
 
 import es.uva.inf.ds.vinoteca.common.ReferenciaNoDisponibleException;
 import es.uva.inf.ds.vinoteca.common.ReferenciaNoValidaException;
-import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOReferencia;
 import java.io.StringReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -75,6 +72,7 @@ public class Referencia {
     /**
      * Comprueba si la referencia se encuentra disponible.
      * @return {@code True} en caso de que la referencia se encuentre disponible y {@code false} en caso contrario.
+     * @throws es.uva.inf.ds.vinoteca.common.ReferenciaNoDisponibleException
      */
     public boolean comprobarDisponible() throws ReferenciaNoDisponibleException{
         if(!disponible){
@@ -87,6 +85,7 @@ public class Referencia {
      * Obtiene la instancia de una referencia a partir de su identificador.
      * @param codigo Número entero que representa el código de la referencia.
      * @return Instancia de la referencia buscada.
+     * @throws es.uva.inf.ds.vinoteca.common.ReferenciaNoValidaException
      */
     public static Referencia getReferencia(int codigo) throws ReferenciaNoValidaException {
         String referenciaJSONString = DAOReferencia.consultaReferencia(codigo);

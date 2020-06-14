@@ -18,7 +18,6 @@ public class Persona {
      * @param direccion Cadena de caracteres que representa la dirección de la persona.
      * @param telefono Cadena de caracteres que representa el teléfono de la persona.
      * @param email Cadena de caracteres que representa el email de la persona.
-     * @throws {@code IllegalArgumentException} si la longitud del NIF supera los nueve caracteres.
      */
     public Persona(String nif, String nombre, String apellidos, String direccion, String telefono, String email){
         if(nif.length()>9)
@@ -82,7 +81,6 @@ public class Persona {
     /**
      * Modifica el NIF de la persona.
      * @param s Cadena de caracteres que representa el nuevo NIF de la persona.
-     * @throws {@code IllegalArgumentException} si la longitud del NIF supera los nueve caracteres.
      */
     public void setNif(String s){
         if(s.length()>9)

@@ -105,15 +105,13 @@ public class DAOPedidoTest {
         connection.openConnection();
         int countInit = -1;
         try(  
-            PreparedStatement ps = connection.getStatement("SELECT COUNT(*) AS total FROM PEDIDO p");
+            PreparedStatement ps = connection.getStatement("SELECT COUNT(*) AS total FROM PEDIDO p"); ResultSet result = ps.executeQuery();
             
         ){
-            ResultSet result = ps.executeQuery();
             if(result.next()){
                 countInit=result.getInt("total");
                 
             }
-            result.close();
         }catch(SQLException ex){
             Logger.getLogger(DAOCompra.class.getName()).log(Level.SEVERE,null,ex);
         }
@@ -122,15 +120,13 @@ public class DAOPedidoTest {
         connection.openConnection();
         int countFinal = -1;
         try(  
-            PreparedStatement ps = connection.getStatement("SELECT COUNT(*) AS total FROM PEDIDO p");
+            PreparedStatement ps = connection.getStatement("SELECT COUNT(*) AS total FROM PEDIDO p"); ResultSet result = ps.executeQuery();
             
         ){
-            ResultSet result = ps.executeQuery();
             if(result.next()){
                 countFinal=result.getInt("total");
                 
             }
-            result.close();
         }catch(SQLException ex){
             Logger.getLogger(DAOCompra.class.getName()).log(Level.SEVERE,null,ex);
         }

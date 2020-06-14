@@ -3,6 +3,8 @@ package es.uva.inf.ds.vinoteca.userinterface;
 import es.uva.inf.ds.vinoteca.common.ReferenciaNoDisponibleException;
 import es.uva.inf.ds.vinoteca.common.FacturaVencidaException;
 import es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUCrearPedido;
+import es.uva.inf.ds.vinoteca.domain.models.Abonado;
+import es.uva.inf.ds.vinoteca.domain.models.Referencia;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,9 +37,13 @@ public class ControladorVistaAtencionCliente {
      */
     public void procesaDatosIntroducirNumeroAbonado(int idAbonado) {
         this.idAbonado=idAbonado;
-        cuController.comprobarAbonado(idAbonado);
-        ArrayList<String> datos = cuController.getDatos();
-        view.actualizarVista(datos);
+        Abonado ab = cuController.comprobarAbonado(idAbonado);
+        if(ab == null){
+            view.setMensajeError("El empleado no existe en la BD.");
+        }else{
+            ArrayList<String> datos = cuController.getDatos();
+            view.actualizarVista(datos);
+        }
     }
     
     /**
@@ -63,7 +69,15 @@ public class ControladorVistaAtencionCliente {
      * @throws {@code ReferenciaNoDisponibleException} en caso de que la referencia no se encuentre disponible. 
      */
     public void procesaIntroducirReferencia(int idReferencia, int cantidad) throws ReferenciaNoDisponibleException {
-        cuController.comprobarReferencia(idReferencia, cantidad);
+        Referencia r = cuController.comprobarReferencia(idReferencia, cantidad);
+        if(r == null){
+            view.setMensajeError("La referencia no existe en la BD");
+        }
+        boolean b2 = cuController.comprobarDisponibilidad();
+        if(!b2){
+            view.setMensajeError("La referencia no esta disponible");
+            view.funcionBandera();
+        }
     }
 
     /**

@@ -1,5 +1,6 @@
 package es.uva.inf.ds.vinoteca.userinterface;
 
+import es.uva.inf.ds.vinoteca.common.ReferenciaNoValidaException;
 import es.uva.inf.ds.vinoteca.domain.models.Bodega;
 import es.uva.inf.ds.vinoteca.domain.models.LineaCompra;
 import es.uva.inf.ds.vinoteca.domain.models.Referencia;
@@ -222,7 +223,11 @@ public class VistaAlmacen extends javax.swing.JFrame {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         int idCompra = Integer.parseInt(searchBar.getText());
-        controller.procesaDatosIntroducirIdCompra(idCompra);
+        try {
+            controller.procesaDatosIntroducirIdCompra(idCompra);
+        } catch (ReferenciaNoValidaException ex) {
+            Logger.getLogger(VistaAlmacen.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed

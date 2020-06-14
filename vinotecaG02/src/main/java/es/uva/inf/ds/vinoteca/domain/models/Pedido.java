@@ -1,5 +1,6 @@
 package es.uva.inf.ds.vinoteca.domain.models;
 
+import es.uva.inf.ds.vinoteca.common.FacturaVencidaException;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOAbonado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOFactura;
@@ -299,8 +300,12 @@ public class Pedido {
     /**
      * Comprueba si un pedido ha vencido.
      * @return {@code True} en caso de que el pedido haya vencido y {@code false} en caso contrario.
+     * @throws es.uva.inf.ds.vinoteca.common.FacturaVencidaException
      */
-    public boolean comprobarNoVencido(){
+    public boolean comprobarNoVencido() throws FacturaVencidaException{
+        if(!DAOFactura.comprobarNoVencido(numeroFactura)){
+            throw new FacturaVencidaException("Existen facturas vencidas.");
+        }      
         return DAOFactura.comprobarNoVencido(numeroFactura);
     }
 

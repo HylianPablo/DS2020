@@ -8,6 +8,7 @@ package es.uva.inf.ds.vinoteca.domain.controllers;
 import es.uva.inf.ds.vinoteca.common.CompletadaException;
 import es.uva.inf.ds.vinoteca.common.DNIPassNotValidException;
 import es.uva.inf.ds.vinoteca.common.NullCompraException;
+import es.uva.inf.ds.vinoteca.common.ReferenciaNoValidaException;
 import es.uva.inf.ds.vinoteca.domain.models.Bodega;
 import es.uva.inf.ds.vinoteca.domain.models.Compra;
 import es.uva.inf.ds.vinoteca.domain.models.Empleado;
@@ -52,7 +53,7 @@ public class ControladorCURegistrarRecepcionCompra {
         return new ControladorCURegistrarRecepcionCompra();
     }
     
-    public void comprobarCompraNoCompletada(int idCompra){
+    public void comprobarCompraNoCompletada(int idCompra) throws ReferenciaNoValidaException{
         refs = new ArrayList<>();
         try{
             c = Compra.getCompra(idCompra);

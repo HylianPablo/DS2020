@@ -1,5 +1,6 @@
 package es.uva.inf.ds.vinoteca.userinterface;
 
+import es.uva.inf.ds.vinoteca.common.ReferenciaNoValidaException;
 import es.uva.inf.ds.vinoteca.domain.controllers.ControladorCURegistrarRecepcionCompra;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,8 +28,9 @@ public class ControladorVistaAlmacen {
     /**
      * Comprueba que la compra existe y muestra sus datos.
      * @param idCompra Número entero que representa el identificador de la compra.
+     * @throws es.uva.inf.ds.vinoteca.common.ReferenciaNoValidaException
      */
-    public void procesaDatosIntroducirIdCompra(int idCompra){
+    public void procesaDatosIntroducirIdCompra(int idCompra) throws ReferenciaNoValidaException{
         cuController.comprobarCompraNoCompletada(idCompra);
         String nombreB = cuController.getNombreBodega();
         ArrayList<Integer> unidadesLinea = cuController.getNumeroUnidadesLineasCompra();

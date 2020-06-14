@@ -1,5 +1,7 @@
 package es.uva.inf.ds.vinoteca.domain.models;
 
+import es.uva.inf.ds.vinoteca.common.ReferenciaNoDisponibleException;
+import es.uva.inf.ds.vinoteca.common.ReferenciaNoValidaException;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOReferencia;
 import java.io.StringReader;
@@ -74,7 +76,10 @@ public class Referencia {
      * Comprueba si la referencia se encuentra disponible.
      * @return {@code True} en caso de que la referencia se encuentre disponible y {@code false} en caso contrario.
      */
-    public boolean comprobarDisponible(){
+    public boolean comprobarDisponible() throws ReferenciaNoDisponibleException{
+        if(!disponible){
+            throw new ReferenciaNoDisponibleException("La referencia no esta disponible");
+        }
         return disponible;
     }
 
@@ -83,7 +88,7 @@ public class Referencia {
      * @param codigo Número entero que representa el código de la referencia.
      * @return Instancia de la referencia buscada.
      */
-    public static Referencia getReferencia(int codigo) {
+    public static Referencia getReferencia(int codigo) throws ReferenciaNoValidaException {
         String referenciaJSONString = DAOReferencia.consultaReferencia(codigo);
         String precioJson=null; 
         String codigoJson=null;
@@ -98,8 +103,8 @@ public class Referencia {
             esPorCajasJson = jsonobject.getString("porCajas");
             contenidoEnCLJson = jsonobject.getString("contenido");
         }catch(Exception ex){
-            //throw new ReferenciaNoDisponibleException("No existe una referencia con esa id");
-            Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+            throw new ReferenciaNoValidaException("No existe una referencia con esa id");
+            //Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }
         double precio = Double.parseDouble(precioJson);
         int contenido = Integer.parseInt(contenidoEnCLJson);

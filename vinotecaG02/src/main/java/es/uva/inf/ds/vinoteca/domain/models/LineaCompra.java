@@ -1,5 +1,6 @@
 package es.uva.inf.ds.vinoteca.domain.models;
 
+import es.uva.inf.ds.vinoteca.common.ReferenciaNoValidaException;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOLineaCompra;
 import java.io.StringReader;
@@ -82,7 +83,7 @@ public class LineaCompra {
      * Obtiene la referencia asociada a la línea de compra.
      * @return Instancia de la referencia asociada a la línea de compra.
      */
-    public Referencia getReferencia(){
+    public Referencia getReferencia() throws ReferenciaNoValidaException{
         return Referencia.getReferencia(codigo);
     }
     

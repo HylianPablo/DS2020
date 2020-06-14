@@ -3,6 +3,7 @@ package es.uva.inf.ds.vinoteca.domain.controllers;
 import es.uva.inf.ds.vinoteca.common.AbonadoNotExistsException;
 import es.uva.inf.ds.vinoteca.common.ReferenciaNoDisponibleException;
 import es.uva.inf.ds.vinoteca.common.FacturaVencidaException;
+import es.uva.inf.ds.vinoteca.common.ReferenciaNoValidaException;
 import es.uva.inf.ds.vinoteca.domain.models.Abonado;
 import es.uva.inf.ds.vinoteca.domain.models.LineaPedido;
 import es.uva.inf.ds.vinoteca.domain.models.Pedido;
@@ -34,6 +35,7 @@ public class ControladorCUCrearPedido {
     private Pedido newPedido;
     private LineaPedido newLineaPedido;
     private Persona p;
+    private boolean temp;
 
     public static ControladorCUCrearPedido getController(){
         return new ControladorCUCrearPedido();
@@ -43,12 +45,14 @@ public class ControladorCUCrearPedido {
      * Comprueba que el abonado existe en el sistema.
      * @param idAbonado Número entero que representa el identificador del abonado.
      */
-    public void comprobarAbonado(int idAbonado) {
+    public Abonado comprobarAbonado(int idAbonado) {
+        b = null;
         try{
             b = Abonado.getAbonado(idAbonado);
         }catch(AbonadoNotExistsException ex){
             Logger.getLogger(ControladorCURegistrarRecepcionCompra.class.getName()).log(Level.SEVERE,null,ex);
         }
+        return b;
     }
     
     /**
@@ -66,20 +70,21 @@ public class ControladorCUCrearPedido {
     /**
      * Comprueba si el abonado tiene pedidos vencidos antes de crear el nuevo pedido.
      * @return {@code True} en caso de que el abonado no tenga pedidos vencidos y {@code false} en caso contrario.
-     * @throws {@code FacturaVencidaException} si el abonado tiene pedidos vencidos. 
+     * @throws es.uva.inf.ds.vinoteca.common.FacturaVencidaException 
      */
     public boolean comprobarPlazosVencidos() throws FacturaVencidaException{ //Necesario idAbonado?? comprobar
         ArrayList<Pedido> pedidos = b.getPedidos();
         boolean bandera = true;
-        for(int i=0;i<pedidos.size();i++){
-            if(!pedidos.get(i).comprobarNoVencido()){
-                bandera=false;
-                throw new FacturaVencidaException("Existen facturas vencidas.");
+        try{
+            for(int i=0;i<pedidos.size();i++){
+                pedidos.get(i).comprobarNoVencido();                   
             }
+        }catch(FacturaVencidaException ex){
+            bandera=false;
+            Logger.getLogger(ControladorCURegistrarRecepcionCompra.class.getName()).log(Level.SEVERE,null,ex);
         }
         if(bandera){
             newPedido = new Pedido(1,LocalDateTime.now(),"notaEntrega",0.0,null,null,0,b.getNumeroAbonado());
-
         }
         return bandera;
     }
@@ -88,20 +93,33 @@ public class ControladorCUCrearPedido {
      * Comprueba que la referencia es válida y de serlo inicia el proceso para crear un nuevo pedido.
      * @param idReferencia Número entero que representa el identificador de la referencia.
      * @param cantidad Número entero que representa la cantidad escogida.
-     * @throws {@code ReferenciaNoDisponibleException} en caso de que la referencia no se encuentre disponible. 
+     * @return 
+     * @throws es.uva.inf.ds.vinoteca.common.ReferenciaNoDisponibleException 
      */
-    public void comprobarReferencia(int idReferencia, int cantidad) throws ReferenciaNoDisponibleException {
+    public Referencia comprobarReferencia(int idReferencia, int cantidad) throws ReferenciaNoDisponibleException {
+        temp = true;
         r = null;
-        r = Referencia.getReferencia(idReferencia);
-        newPedido.setImporte(cantidad * r.getPrecio());
-        if(r==null){
-            throw new ReferenciaNoDisponibleException("No existe una referencia con esa id");
-        }
-        boolean disponible = r.comprobarDisponible();
-        if(!disponible){
-            throw new ReferenciaNoDisponibleException("La referencia no esta disponible");
-        }
-        newLineaPedido = newPedido.crearLineaPedido(idReferencia, cantidad);             
+        try{
+            r = Referencia.getReferencia(idReferencia);
+        }catch(ReferenciaNoValidaException ex){
+            Logger.getLogger(ControladorCURegistrarRecepcionCompra.class.getName()).log(Level.SEVERE,null,ex);
+        }   
+        if(r!=null){
+            newPedido.setImporte(cantidad * r.getPrecio());            
+            try{
+                r.comprobarDisponible();                   
+                
+            }catch(ReferenciaNoDisponibleException ex){
+                temp = false;
+                Logger.getLogger(ControladorCURegistrarRecepcionCompra.class.getName()).log(Level.SEVERE,null,ex);
+            } 
+            newLineaPedido = newPedido.crearLineaPedido(idReferencia, cantidad);  
+        } 
+        return r;  
+    }
+    
+    public boolean comprobarDisponibilidad(){
+        return temp;
     }
 
     /**

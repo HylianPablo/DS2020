@@ -43,7 +43,8 @@ public class DAOPersona {
             Logger.getLogger(DAOAbonado.class.getName()).log(Level.SEVERE,null,ex);
         }
         connection.closeConnection();
-        personaJSONString = abonadoToJSONString(nombre,apellidos,direccion,telefono,email);
+        if(nombre!=null)
+            personaJSONString = abonadoToJSONString(nombre,apellidos,direccion,telefono,email);
         return personaJSONString;
     }
     

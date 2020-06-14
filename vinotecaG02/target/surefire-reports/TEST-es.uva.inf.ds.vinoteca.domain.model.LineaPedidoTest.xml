@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleadoTest" time="0.571" tests="5" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="es.uva.inf.ds.vinoteca.domain.model.LineaPedidoTest" time="0.014" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="gnome"/>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
@@ -17,8 +17,8 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
-    <property name="sun.java.command" value="/home/pablo/Diseño/FINAL/dise-o2020/vinotecaG02/target/surefire/surefirebooter1135986769246092943.jar /home/pablo/Diseño/FINAL/dise-o2020/vinotecaG02/target/surefire 2020-06-14T19-31-12_455-jvmRun1 surefire2055744565394196275tmp surefire_0959400111211016169tmp"/>
-    <property name="test" value="es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleadoTest"/>
+    <property name="sun.java.command" value="/home/pablo/Diseño/FINAL/dise-o2020/vinotecaG02/target/surefire/surefirebooter5284141364461839716.jar /home/pablo/Diseño/FINAL/dise-o2020/vinotecaG02/target/surefire 2020-06-14T19-32-18_213-jvmRun1 surefire6296766093898600417tmp surefire_05476892299765822328tmp"/>
+    <property name="test" value="es.uva.inf.ds.vinoteca.domain.model.LineaPedidoTest"/>
     <property name="surefire.test.class.path" value="/home/pablo/Diseño/FINAL/dise-o2020/vinotecaG02/target/test-classes:/home/pablo/Diseño/FINAL/dise-o2020/vinotecaG02/target/classes:/home/pablo/.m2/repository/javax/json/javax.json-api/1.0/javax.json-api-1.0.jar:/home/pablo/.m2/repository/org/apache/derby/derbynet/10.14.2.0/derbynet-10.14.2.0.jar:/home/pablo/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar:/home/pablo/.m2/repository/org/apache/derby/derbyclient/10.14.2.0/derbyclient-10.14.2.0.jar:/home/pablo/.m2/repository/org/glassfish/javax.json/1.0.4/javax.json-1.0.4.jar:/home/pablo/.m2/repository/org/junit/platform/junit-platform-surefire-provider/1.0.3/junit-platform-surefire-provider-1.0.3.jar:/home/pablo/.m2/repository/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar:/home/pablo/.m2/repository/org/junit/platform/junit-platform-launcher/1.0.3/junit-platform-launcher-1.0.3.jar:/home/pablo/.m2/repository/org/apache/maven/surefire/surefire-api/2.19.1/surefire-api-2.19.1.jar:/home/pablo/.m2/repository/org/apache/maven/surefire/common-java5/2.19.1/common-java5-2.19.1.jar:/home/pablo/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.3.1/junit-jupiter-params-5.3.1.jar:/home/pablo/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.3.1/junit-jupiter-engine-5.3.1.jar:/home/pablo/.m2/repository/org/junit/platform/junit-platform-engine/1.3.1/junit-platform-engine-1.3.1.jar:/home/pablo/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.3.2/junit-jupiter-api-5.3.2.jar:/home/pablo/.m2/repository/org/opentest4j/opentest4j/1.1.1/opentest4j-1.1.1.jar:/home/pablo/.m2/repository/org/junit/platform/junit-platform-commons/1.3.2/junit-platform-commons-1.3.2.jar:/home/pablo/.m2/repository/commons-io/commons-io/2.5/commons-io-2.5.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/home/pablo"/>
@@ -31,7 +31,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/home/pablo/Diseño/FINAL/dise-o2020/vinotecaG02/target/surefire/surefirebooter1135986769246092943.jar"/>
+    <property name="surefire.real.class.path" value="/home/pablo/Diseño/FINAL/dise-o2020/vinotecaG02/target/surefire/surefirebooter5284141364461839716.jar"/>
     <property name="sun.boot.class.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/resources.jar:/usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jsse.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:/usr/lib/jvm/java-8-oracle/jre/lib/charsets.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jfr.jar:/usr/lib/jvm/java-8-oracle/jre/classes"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="1.8.0_201-b09"/>
@@ -60,9 +60,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="52.0"/>
   </properties>
-  <testcase name="consultaRolEmpleado" classname="es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleadoTest" time="0.373"/>
-  <testcase name="consultaEmpleadoActivo" classname="es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleadoTest" time="0.02"/>
-  <testcase name="consultaEmpleadoErronea" classname="es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleadoTest" time="0.055"/>
-  <testcase name="consultaEmpleadoCorrecta" classname="es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleadoTest" time="0.085"/>
-  <testcase name="consultaEmpleadoNoActivo" classname="es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleadoTest" time="0.016"/>
+  <testcase name="constructorCorrecto" classname="es.uva.inf.ds.vinoteca.domain.model.LineaPedidoTest" time="0.004"/>
 </testsuite>

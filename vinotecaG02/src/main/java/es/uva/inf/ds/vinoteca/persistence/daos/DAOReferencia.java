@@ -37,13 +37,14 @@ public class DAOReferencia {
         
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
+        ResultSet result = null;
         try(
             PreparedStatement ps = connection.getStatement("SELECT * FROM REFERENCIA r WHERE r.CODIGO= ?");
             
         ){
             ps.setInt(1, codigo);
-            ResultSet result = ps.executeQuery();
-            if(result.next()){
+            result = ps.executeQuery();
+            if(result!=null && result.next()){
                 precio=result.getDouble("precio");
                 contenido=result.getInt("contenidoencl");
                 codigoRef=result.getInt("codigo");
@@ -57,9 +58,15 @@ public class DAOReferencia {
                 }
                 
             }
-            result.close();
         }catch(SQLException ex){
             Logger.getLogger(DAOCompra.class.getName()).log(Level.SEVERE,null,ex);
+        }finally{
+            try {
+                if(result!=null)
+                result.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOReferencia.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         connection.closeConnection();
         if(esPc!=null)

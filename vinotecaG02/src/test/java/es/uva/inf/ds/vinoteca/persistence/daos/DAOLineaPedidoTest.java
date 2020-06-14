@@ -44,12 +44,6 @@ public class DAOLineaPedidoTest {
     @AfterEach
     public void tearDown() {
     }
-
-    @Test
-    public void JSONCorrecto(){
-        assertEquals("{\"lineasCompra\":[{\"unidades\":\"1\",\"recibidas\":\"true\",\"numeros\":\"1\"},{\"unidades\":\"2\",\"recibidas\":\"true\",\"numeros\":\"2\"},"+
-                "{\"unidades\":\"3\",\"recibidas\":\"true\",\"numeros\":\"3\"}]}",DAOLineaPedido.consultaLineasPedido(1));
-    }
     
     @Test
     public void JSONErroneo(){

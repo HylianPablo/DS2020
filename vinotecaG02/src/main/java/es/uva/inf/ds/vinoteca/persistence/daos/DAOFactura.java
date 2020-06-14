@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -53,17 +54,19 @@ public class DAOFactura {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date parsedDate = dateFormat.parse(fecha);
             timestamp = new java.sql.Timestamp(parsedDate.getTime());
-        } catch(Exception e) { //this generic but you can control another types of exception
+        } catch(ParseException e) { //this generic but you can control another types of exception
     // look the origin of excption 
         }
                 
                 
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
+        ResultSet result = null;
         try(PreparedStatement ps = connection.getStatement("SELECT * FROM FACTURA f WHERE f.FECHAEMISION < ?");)
         {
             ps.setTimestamp(1,timestamp);
-            ResultSet result = ps.executeQuery();
+            result = ps.executeQuery();
+            if(result!=null){
             while(result.next()){
                 counter++;
                 numeroFactura = result.getInt("NUMEROFACTURA");
@@ -79,8 +82,16 @@ public class DAOFactura {
                 idExtractoBancario = result.getString("IDEXTRACTOBANCARIO");
                 idExtractosBancarios.add(idExtractoBancario);
             }
+            }
         }catch(SQLException ex){
             Logger.getLogger(DAOFactura.class.getName()).log(Level.SEVERE,null,ex);
+        }finally{
+            try {
+                if(result!=null)
+                result.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOFactura.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         connection.closeConnection();
         if(counter!=0)
@@ -115,20 +126,24 @@ public class DAOFactura {
         return facturasJSONString;
     }
     
-    public static boolean comprobarNoVencido(int numeroFactura){
+    public static boolean comprobarNoVencido(int numeroFactura) throws SQLException{
         int estadoFactura = -1;
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
+        ResultSet result = null;
         try(PreparedStatement ps = connection.getStatement("SELECT * FROM FACTURA f WHERE f.NUMEROFACTURA = ?");)
         {
             ps.setInt(1,numeroFactura);
-            ResultSet result = ps.executeQuery();
+            result = ps.executeQuery();
             if(result.next()){
                 estadoFactura = result.getInt("ESTADO");
             }
             
         }catch(SQLException ex){
             Logger.getLogger(DAOFactura.class.getName()).log(Level.SEVERE,null,ex);
+        }finally{
+            if(result!=null)
+            result.close();
         }
         connection.closeConnection();
         return (estadoFactura!=2);

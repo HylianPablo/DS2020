@@ -32,20 +32,28 @@ public class DAOBodega {
         String direccion = null;
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
+        ResultSet result=null;
         try(
             PreparedStatement ps = connection.getStatement("SELECT * FROM BODEGA b WHERE b.ID= ?");   
         ){
             ps.setInt(1, id);
-            ResultSet result = ps.executeQuery();
-            if(result.next()){
+            result = ps.executeQuery();
+            if(result!=null && result.next()){
                 cif = result.getString("cif");
                 nombre = result.getString("nombre");
                 direccion = result.getString("direccion");
                 
             }
-            result.close();
+            
         }catch(SQLException ex){
             Logger.getLogger(DAOCompra.class.getName()).log(Level.SEVERE,null,ex);
+        }finally{
+            try {
+                if(result!=null)
+                    result.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOBodega.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         connection.closeConnection();
         if(cif!=null)

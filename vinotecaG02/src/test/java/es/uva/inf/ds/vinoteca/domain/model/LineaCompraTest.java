@@ -78,7 +78,6 @@ public class LineaCompraTest {
     public void testActualizaLineasPedido() {
         ArrayList<LineaCompra> lcompras = LineaCompra.getLineaCompra(1);
         ArrayList<LineaPedido> lpedidos = lcompras.get(0).actualizaLineasPedido();
-        assertEquals(3, lpedidos.size());
+        assertEquals(4, lpedidos.size());
     }
-
 }

@@ -39,9 +39,7 @@ public class DAOLineaCompraTest {
 
     @Test
     public void accesoCorrecto(){
-        assertEquals("{\"lineasCompra\":[{\"unidades\":\"1\",\"fechaRecepcion\":\"2020-06-07T00:00\",\"codigos\":\"1\",\"recibidas\":\"true\",\"ids\":\"1\"},"+
-        "{\"unidades\":\"1\",\"fechaRecepcion\":\"2020-05-07T00:00\",\"codigos\":\"1\",\"recibidas\":\"true\",\"ids\":\"4\"},"+
-        "{\"unidades\":\"1\",\"fechaRecepcion\":\"2020-03-07T00:00\",\"codigos\":\"1\",\"recibidas\":\"true\",\"ids\":\"5\"}]}",DAOLineaCompra.consultaLineaCompra(1));
+        assertEquals("{\"lineasCompra\":[{\"unidades\":\"1\",\"fechaRecepcion\":\"2020-06-07T00:00\",\"codigos\":\"1\",\"recibidas\":\"true\",\"ids\":\"1\"},{\"unidades\":\"1\",\"fechaRecepcion\":\"2020-05-07T00:00\",\"codigos\":\"1\",\"recibidas\":\"false\",\"ids\":\"4\"},{\"unidades\":\"1\",\"fechaRecepcion\":\"2020-03-07T00:00\",\"codigos\":\"1\",\"recibidas\":\"true\",\"ids\":\"5\"}]}",DAOLineaCompra.consultaLineaCompra(1));
     }
     
     @Test

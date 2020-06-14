@@ -5,6 +5,7 @@
  */
 package es.uva.inf.ds.vinoteca.persistence.daos;
 
+import java.sql.SQLException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,12 +50,12 @@ public class DAOFacturaTest {
     }
     
     @Test
-    public void facturaNoVencida(){
+    public void facturaNoVencida() throws SQLException{
         assertTrue(DAOFactura.comprobarNoVencido(1));
     }
     
     @Test
-    public void facturaVencida(){
+    public void facturaVencida() throws SQLException{
         assertFalse(DAOFactura.comprobarNoVencido(3));
     }
 

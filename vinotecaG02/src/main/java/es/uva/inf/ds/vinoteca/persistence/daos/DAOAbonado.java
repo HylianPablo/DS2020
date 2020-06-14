@@ -30,17 +30,25 @@ public class DAOAbonado {
         String nif = null;
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
+        ResultSet result=null;
         try(PreparedStatement ps = connection.getStatement("SELECT * FROM ABONADO a WHERE a.NUMEROABONADO = ?");)
         {
             ps.setInt(1, numeroAbonado);
-            ResultSet result = ps.executeQuery();
-            if(result.next()){
+            result = ps.executeQuery();
+            if(result!=null && result.next()){
                 openidref = result.getString("OPENIDREF");
                 nif = result.getString("NIF");
             }
             
         }catch(SQLException ex){
             Logger.getLogger(DAOAbonado.class.getName()).log(Level.SEVERE,null,ex);
+        }finally{
+            try {
+                if(result!=null)
+                result.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOAbonado.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         connection.closeConnection();
         if(nif!=null)

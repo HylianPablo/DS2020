@@ -127,4 +127,28 @@ public class PedidoTest {
         assertEquals("999999999",ab.getTelefono());
         assertEquals("email@email.com",ab.getEmail());
     }
+    
+    @Test
+    public void getPedido(){
+        Pedido ped = Pedido.getPedido(1);
+        assertEquals(1,ped.getEstado());
+        assertEquals(1,ped.getNumeroAbonado());
+        assertEquals(1,ped.getNumeroFactura());
+        assertEquals(10.0,ped.getImporte());       
+    }
+    
+    @Test
+    public void testCambiarEstadoPendiente(){
+        Pedido ped = Pedido.getPedido(2);
+        assertEquals(2,ped.getEstado());
+        ped.cambiarEstadoPendiente();
+        assertEquals(1,ped.getEstado());
+    }
+    
+    @Test
+    public void testGetJson(){
+        Pedido ped = Pedido.getPedido(1);
+        String json = ped.getJson();
+        assertEquals("{\"estado\":\"1\",\"notaEntrega\":\"fragil\",\"importe\":\"10.0\",\"numeroFactura\":\"1\",\"numeroAbonado\":\"1\",\"codigo\":\"0\"}",json);
+    }
 }

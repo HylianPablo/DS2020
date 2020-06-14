@@ -60,15 +60,13 @@ public class DAOCompraTest {
         connection.openConnection();
         String completa = null;
         try(  
-            PreparedStatement ps = connection.getStatement("SELECT * FROM COMPRA c WHERE c.IDCOMPRA= 3");
+            PreparedStatement ps = connection.getStatement("SELECT * FROM COMPRA c WHERE c.IDCOMPRA= 3"); ResultSet result = ps.executeQuery();
             
         ){
-            ResultSet result = ps.executeQuery();
             if(result.next()){
                 completa=result.getString("RECIBIDACOMPLETA");
                 
             }
-            result.close();
         }catch(SQLException ex){
             Logger.getLogger(DAOCompra.class.getName()).log(Level.SEVERE,null,ex);
         }

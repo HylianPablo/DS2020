@@ -305,6 +305,7 @@ INSERT INTO DISPONIBILIDADEMPLEADO VALUES ('2020-06-06','2020-07-06','987654321'
 INSERT INTO DISPONIBILIDADEMPLEADO VALUES ('2020-06-06','2020-07-06','222222222',3);
 INSERT INTO DISPONIBILIDADEMPLEADO VALUES ('2020-06-06','2020-07-06','333333333',3);
 INSERT INTO ABONADO(openIDref,nif) VALUES ('referencia0','123456789');
+INSERT INTO ABONADO(openIDref,nif) VALUES ('referencia00','987654321');
 INSERT INTO FACTURA(FechaEmision,Importe,Estado,FechaPago,IdExtractoBancario) VALUES ('2020-06-06',20.00,1,'2020-07-06','extractobancario');
 INSERT INTO FACTURA(FechaEmision,Importe,Estado,FechaPago,IdExtractoBancario) VALUES ('2019-05-06',20.00,1,'2019-07-06','extractobancario');
 INSERT INTO FACTURA(FechaEmision,Importe,Estado,FechaPago,IdExtractoBancario) VALUES ('2020-05-06',20.00,2,'2020-07-06','extractobancario');
@@ -325,9 +326,11 @@ INSERT INTO LINEACOMPRA(Unidades,Recibida,FechaRecepcion,IdCompra,CodigoReferenc
 INSERT INTO PEDIDO(Estado,FechaRealizacion,NotaEntrega,Importe,FechaRecepcion,FechaEntrega,NumeroFactura,NumeroAbonado) VALUES (1,'2020-06-06','fragil',10.0,'2020-06-07','2020-06-07',1,1);
 INSERT INTO PEDIDO(Estado,FechaRealizacion,NotaEntrega,Importe,FechaRecepcion,FechaEntrega,NumeroFactura,NumeroAbonado) VALUES (2,'2020-06-06','fragil',10.0,'2020-06-07','2020-06-07',1,1);
 INSERT INTO PEDIDO(Estado,FechaRealizacion,NotaEntrega,Importe,FechaRecepcion,FechaEntrega,NumeroFactura,NumeroAbonado) VALUES (2,'2020-06-06','fragil',10.0,'2020-06-07','2020-06-07',2,1);
+INSERT INTO PEDIDO(Estado,FechaRealizacion,NotaEntrega,Importe,FechaRecepcion,FechaEntrega,NumeroFactura,NumeroAbonado) VALUES (1,'2020-06-06','fragil',10.0,'2020-06-07','2020-06-07',2,2);
 INSERT INTO LINEAPEDIDO(Unidades,Completada,CodigoReferencia,NumeroPedido,IdLineaCompra) VALUES (1,'1',1,1,1);
 INSERT INTO LINEAPEDIDO(Unidades,Completada,CodigoReferencia,NumeroPedido,IdLineaCompra) VALUES (2,'1',1,2,1);
 INSERT INTO LINEAPEDIDO(Unidades,Completada,CodigoReferencia,NumeroPedido,IdLineaCompra) VALUES (3,'1',1,3,1);
+INSERT INTO LINEAPEDIDO(Unidades,Completada,CodigoReferencia,NumeroPedido,IdLineaCompra) VALUES (3,'0',2,3,2);
 
 
 

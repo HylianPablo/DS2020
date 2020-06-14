@@ -2,7 +2,6 @@ package es.uva.inf.ds.vinoteca.domain.models;
 
 import es.uva.inf.ds.vinoteca.common.FacturaVencidaException;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOAbonado;
-import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOFactura;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOPedido;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOPersona;
@@ -333,7 +332,7 @@ public class Pedido {
      */
     public String getJson() {
         String newPedidoJSONString = "";
-        JsonObject abonadoJSON = Json.createObjectBuilder()
+        JsonObject pedidoJSON = Json.createObjectBuilder()
                 //.add("numero",Integer.toString(numero))
                 .add("estado",Integer.toString(estado))
                 .add("notaEntrega", notaEntrega)
@@ -347,7 +346,7 @@ public class Pedido {
                 JsonWriter writer = Json.createWriter(stringWriter);
                 ){
            
-            writer.writeObject(abonadoJSON);
+            writer.writeObject(pedidoJSON);
             newPedidoJSONString = stringWriter.toString();
         }catch(Exception ex){
             Logger.getLogger(DAOAbonado.class.getName()).log(Level.SEVERE,null,ex);

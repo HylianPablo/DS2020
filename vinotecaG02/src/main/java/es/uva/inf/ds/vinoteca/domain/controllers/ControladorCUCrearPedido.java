@@ -11,7 +11,6 @@ import es.uva.inf.ds.vinoteca.domain.models.Persona;
 import es.uva.inf.ds.vinoteca.domain.models.Referencia;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOLineaPedido;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOPedido;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.logging.Level;

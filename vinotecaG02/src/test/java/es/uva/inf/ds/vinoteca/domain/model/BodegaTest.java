@@ -59,7 +59,7 @@ public class BodegaTest {
 
     @Test
     public void setterCifBodega() {
-        bodega.setNombre("987654321");
+        bodega.setCIF("987654321");
         assertEquals("987654321", bodega.getCIF());
     }
 
@@ -72,8 +72,16 @@ public class BodegaTest {
 
     @Test
     public void setterDireccionBodega() {
-        bodega.setNombre("Otra avenida ficticia 666");
+        bodega.setDireccion("Otra avenida ficticia 666");
         assertEquals("Otra avenida ficticia 666", bodega.getDireccion());
+    }
+    
+    @Test
+    public void testGetBodega(){
+        Bodega b = Bodega.getBodega(1);
+        assertEquals("bodega", b.getNombre());
+        assertEquals("111111111", b.getCIF());
+        assertEquals("calle falsa 0", b.getDireccion());
     }
 
 }

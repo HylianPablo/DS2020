@@ -33,7 +33,6 @@ public class Empleado {
      * @param n Cadena de caracteres que representa el NIF del empleado. Se utiliza también a modo de nombre de usuario.
      * @param p Cadena de caracteres que representa la contraseña en el sistema del empleado.
      * @param ldt Fecha que representa el momento en que el empleado comenzó a trabajar en el sistema.
-     * @throws {@code IllegalArgumentException} en caso de que la longitud del NIF exceda los nueve caracteres.
      */
     public Empleado(String n, String p, LocalDateTime ldt){
         if(n.length()>9)
@@ -45,8 +44,7 @@ public class Empleado {
     
     /**
      * Modifica el NIF de un empleado.
-     * @param nif Cadena de caracteres que representa el nuevo NIF del empleado.
-     * @throws {@code IllegalArgumentException} en caso de que el nuevo NIF tenga más de nueve caracteres. 
+     * @param nif Cadena de caracteres que representa el nuevo NIF del empleado. 
      */
     public void setNif(String nif){
         if(nif.length()>9)
@@ -97,6 +95,7 @@ public class Empleado {
     /**
      * Comprueba si el empleado está activo en el sistema.
      * @return {@code True} en caso de que el empleado esté activo y {@code false} en caso contrario.
+     * @throws es.uva.inf.ds.vinoteca.common.NotActiveException
      */
     public boolean isActivo() throws NotActiveException{
         boolean b = DAOEmpleado.empleadoActivo(nif);
@@ -119,6 +118,7 @@ public class Empleado {
      * @param user CAdena de caracteres que representa el nombre de usuario del empleado que se desea buscar.
      * @param password Cadena de caracteres que representa la contraseña del empleado que se desea buscar.
      * @return Instancia del empleado que se ha buscado en caso de que exista o {@code null} en caso contrario.
+     * @throws es.uva.inf.ds.vinoteca.common.DNIPassNotValidException
      */
     public static Empleado getEmpleadoPorLoginYPassword(String user, String password) throws DNIPassNotValidException {
         Empleado empleadoLogin = null;

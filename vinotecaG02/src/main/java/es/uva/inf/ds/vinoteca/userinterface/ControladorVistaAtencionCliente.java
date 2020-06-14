@@ -72,6 +72,7 @@ public class ControladorVistaAtencionCliente {
         Referencia r = cuController.comprobarReferencia(idReferencia, cantidad);
         if(r == null){
             view.setMensajeError("La referencia no existe en la BD");
+            view.funcionBandera();
         }
         boolean b2 = cuController.comprobarDisponibilidad();
         if(!b2){

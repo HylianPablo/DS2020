@@ -273,20 +273,30 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_cantidadTextActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        if(!errorMsg.getText().equals("")){
+            setMensajeError("");
+        }
         int idAbonado = Integer.parseInt(abonadoText.getText());
         controller.procesaDatosIntroducirNumeroAbonado(idAbonado);
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void confirmarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarButtonActionPerformed
+        if(!errorMsg.getText().equals("")){
+            setMensajeError("");
+        }
         controller.procesaConfirmacion();
         confirmarButton.setEnabled(false);
         rechazarButton.setEnabled(false);
         introducirButton.setEnabled(true);
         cantidadText.setEnabled(true);
-        referenciaText.setEnabled(true);
+        referenciaText.setEnabled(true);   
+        abonadoText.setEnabled(false);
     }//GEN-LAST:event_confirmarButtonActionPerformed
 
     private void introducirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_introducirButtonActionPerformed
+        if(!errorMsg.getText().equals("")){
+            setMensajeError("");
+        }
         bandera = true;
         int idReferencia = Integer.parseInt(referenciaText.getText());
         int cantidad = Integer.parseInt(cantidadText.getText());
@@ -299,13 +309,16 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
             introducirButton.setEnabled(false);
             endButton.setEnabled(true);
             endButton1.setEnabled(true);
-        }       
+        }
     }//GEN-LAST:event_introducirButtonActionPerformed
 
     private void endButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endButtonActionPerformed
         controller.procesarTerminarProceso();
         endButton.setEnabled(false);
         endButton1.setEnabled(false);
+        cantidadText.setEnabled(false);
+        referenciaText.setEnabled(false);        
+        setMensajeError("El caso de uso ha finalizado");
     }//GEN-LAST:event_endButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -314,12 +327,19 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void rechazarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechazarButtonActionPerformed
+        if(!errorMsg.getText().equals("")){
+            setMensajeError("");
+        }
         confirmarButton.setEnabled(false);
+        rechazarButton.setEnabled(false);
         searchButton.setEnabled(true);
-        jTable1.setModel(new DefaultTableModel(null, new String[]{"nombre", "apellidos","telefono","email"}));
+        jTable1.setModel(new DefaultTableModel(null, new String[]{"nombre", "apellidos","telefono","email"}));      
     }//GEN-LAST:event_rechazarButtonActionPerformed
 
     private void endButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endButton1ActionPerformed
+        if(!errorMsg.getText().equals("")){
+            setMensajeError("");
+        }
         endButton1.setEnabled(false);
         endButton.setEnabled(false);
         introducirButton.setEnabled(true);

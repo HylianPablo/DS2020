@@ -242,9 +242,7 @@ public class VistaAlmacen extends javax.swing.JFrame {
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void finalizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarButtonActionPerformed
-        ArrayList <Integer> codigosCompras = new ArrayList<>();
-        ArrayList <Integer> codigosComprasNoMarcadas = new ArrayList<>();
-        
+        ArrayList <Integer> codigosCompras = new ArrayList<>();        
         for (int r = 0 ; r < lcs.size(); r++){
             boolean bandera = (boolean) model.getValueAt(r, 0);
             String codigoAux;
@@ -254,10 +252,6 @@ public class VistaAlmacen extends javax.swing.JFrame {
                 codigo = Integer.parseInt(codigoAux);
                 codigosCompras.add(codigo);
                 
-            }else{
-                codigoAux = (String) model.getValueAt(r, 2);
-                codigo = Integer.parseInt(codigoAux);
-                codigosComprasNoMarcadas.add(codigo);
             }
         }   
         try {
@@ -266,8 +260,9 @@ public class VistaAlmacen extends javax.swing.JFrame {
             Logger.getLogger(VistaAlmacen.class.getName()).log(Level.SEVERE, null, ex);
         }
         controller.procesaDatosFinalizar();
-        finalizarButton.setEnabled(false);
-        searchButton.setEnabled(false);
+        //finalizarButton.setEnabled(false);
+        //searchButton.setEnabled(false);
+        setMensajeError("El caso de uso ha finalizado");
     }//GEN-LAST:event_finalizarButtonActionPerformed
 
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed

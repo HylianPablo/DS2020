@@ -40,7 +40,6 @@ public class ControladorCURegistrarRecepcionCompra {
     private ArrayList<LineaPedido> lp;
     private int id;
     private boolean allRecvs;
-    //Referencia r;
         
     public static ControladorCURegistrarRecepcionCompra getController(){
         return new ControladorCURegistrarRecepcionCompra();

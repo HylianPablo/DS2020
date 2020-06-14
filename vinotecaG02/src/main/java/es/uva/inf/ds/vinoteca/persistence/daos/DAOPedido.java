@@ -309,12 +309,13 @@ public class DAOPedido {
             Logger.getLogger(VistaAlmacen.class.getName()).log(Level.SEVERE, null, ex);
         }
         connection.closeConnection();
-    }
+    }   
     
-
-       
-
-    public static void añadirPedido(String jsonNewPedido)  {
+    /**
+     * Añade un nuevo pedido a la base de datos.
+     * @param jsonNewPedido JSON en forma de cadena de caracteres que contiene los datos del pedido a introducir en la base de datos.
+     */
+    public static void añadirPedido(String jsonNewPedido) {
         JsonReaderFactory factory = Json.createReaderFactory(null);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         int numero = -1;

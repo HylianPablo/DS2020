@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.uva.inf.ds.vinoteca.userinterface;
 
 import es.uva.inf.ds.vinoteca.common.ReferenciaNoDisponibleException;
@@ -12,8 +7,10 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author pablo
+ * Vista del caso de uso "Crear pedido de abonado".
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class VistaAtencionCliente extends javax.swing.JFrame {
 

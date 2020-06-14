@@ -29,7 +29,7 @@ public class AbonadoTest {
     
     @BeforeEach
     public void setUp() {
-        ab = new Abonado(1,"referencia0","123456789");
+        ab = new Abonado(1,"referencia0","123456789","Pepe","Rodriguez Perez","Calle Falsa 123","999999999","email@email.com");
     }
     
     @AfterEach
@@ -40,13 +40,19 @@ public class AbonadoTest {
     public void constructorCorrecto(){
         assertSame(1,ab.getNumeroAbonado());
         assertEquals("referencia0",ab.getOpenIdRef());
-        assertEquals("123456789",ab.getNIF());
+        assertEquals("123456789",ab.getNif());
+        assertEquals("Pepe",ab.getNombre());
+        assertEquals("Rodriguez Perez",ab.getApellidos());
+        assertEquals("Calle Falsa 123",ab.getDireccion());
+        assertEquals("999999999",ab.getTelefono());
+        assertEquals("email@email.com",ab.getEmail());
+        
     }
     
     @Test
     public void constructorErroneo(){
         assertThrows(IllegalArgumentException.class, ()->{
-            Abonado ab1 = new Abonado(2,"referencia1","1234567890");
+            Abonado ab1 = new Abonado(2,"referencia1","1234567890","Pepe","Rodriguez Perez","Calle Falsa 123","999999999","email@email.com");
         });
     }
     
@@ -65,7 +71,7 @@ public class AbonadoTest {
     @Test
     public void setterNIF(){
         ab.setNIF("111111111");
-        assertEquals("111111111",ab.getNIF());
+        assertEquals("111111111",ab.getNif());
     }
     
     @Test

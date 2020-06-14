@@ -56,11 +56,20 @@ public class ControladorVistaAtencionCliente {
         }
     }
 
-    void procesaIntroducirReferencia(int idReferencia, int cantidad) throws ReferenciaNoDisponibleException {
+    /**
+     * Comprueba si la referencia está disponible y de ser así muestra sus datos.
+     * @param idReferencia Número entero que representa el identificador de la referencia que se quiere comprar.
+     * @param cantidad Número entero que representa la cantidad que se quiere comprar.
+     * @throws {@code ReferenciaNoDisponibleException} en caso de que la referencia no se encuentre disponible. 
+     */
+    public void procesaIntroducirReferencia(int idReferencia, int cantidad) throws ReferenciaNoDisponibleException {
         cuController.comprobarReferencia(idReferencia, cantidad);
     }
 
-    void procesarTerminarProceso() {
+    /**
+     * Termina el proceso del caso de uso.
+     */
+    public void procesarTerminarProceso() {
         cuController.registrarPedido();
     }
 }

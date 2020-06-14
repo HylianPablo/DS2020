@@ -76,6 +76,11 @@ public class Pedido {
         return numero;
     }
 
+    /**
+     * Obtiene una instancia del pedido correspondiente al identificador introducido por parámetro.
+     * @param codPedido Número entero que representa el identificador del pedido.
+     * @return Instancia del pedido buscado.
+     */
     public static Pedido getPedido(int codPedido){
         String pedidoJSONString = DAOPedido.consultaPedido(codPedido);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
@@ -299,15 +304,28 @@ public class Pedido {
         return DAOFactura.comprobarNoVencido(numeroFactura);
     }
 
+    /**
+     * Crea una nueva línea de pedido asociada al pedido.
+     * @param idReferencia Número entero que representa el identificador de la referencia de la línea de pedido a crear.
+     * @param cantidad Número entero que representa la cantidad de la línea de pedido.
+     * @return Instancia de la nueva línea de pedido.
+     */
     public LineaPedido crearLineaPedido(int idReferencia, int cantidad) {
         LineaPedido p = new LineaPedido(idReferencia, numero, cantidad);
         return p;
     }
 
+    /**
+     * Modifica el estado del pedido a pendiente.
+     */
     public void cambiarEstadoPendiente() {
         estado = 1;
     }
     
+    /**
+     * Obtiene los datos del pedido en formato JSON.
+     * @return JSON en forma de cadena de caracteres que representa los datos del pedido.
+     */
     public String getJson() {
         String newPedidoJSONString = "";
         JsonObject abonadoJSON = Json.createObjectBuilder()

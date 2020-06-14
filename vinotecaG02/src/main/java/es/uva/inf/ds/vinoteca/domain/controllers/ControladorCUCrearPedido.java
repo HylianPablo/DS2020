@@ -51,6 +51,10 @@ public class ControladorCUCrearPedido {
         }
     }
     
+    /**
+     * Obtiene los datos del abonado.
+     * @return Lista de cadenas de caracteres que contiene los datos del abonado.
+     */
     public ArrayList<String> getDatos(){
         ArrayList<String> datos = new ArrayList<>();       
         datos.add(b.getNombre());
@@ -80,6 +84,12 @@ public class ControladorCUCrearPedido {
         return bandera;
     }
 
+    /**
+     * Comprueba que la referencia es válida y de serlo inicia el proceso para crear un nuevo pedido.
+     * @param idReferencia Número entero que representa el identificador de la referencia.
+     * @param cantidad Número entero que representa la cantidad escogida.
+     * @throws {@code ReferenciaNoDisponibleException} en caso de que la referencia no se encuentre disponible. 
+     */
     public void comprobarReferencia(int idReferencia, int cantidad) throws ReferenciaNoDisponibleException {
         r = null;
         r = Referencia.getReferencia(idReferencia);
@@ -94,7 +104,10 @@ public class ControladorCUCrearPedido {
         newLineaPedido = newPedido.crearLineaPedido(idReferencia, cantidad);             
     }
 
-    public void registrarPedido() throws ParseException{
+    /**
+     * Registra un nuevo pedido en el sistema.
+     */
+    public void registrarPedido() {
         newPedido.cambiarEstadoPendiente();
         String jsonNewPedido = newPedido.getJson();
         DAOPedido.añadirPedido(jsonNewPedido);

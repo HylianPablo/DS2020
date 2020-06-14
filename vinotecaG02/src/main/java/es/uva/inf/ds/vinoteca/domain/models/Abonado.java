@@ -28,15 +28,19 @@ public class Abonado extends Persona{
     private int numeroAbonado;
     private String openidref;
     
+    
+    
     /**
      * Constructor de la clase.
      * @param numeroAbonado Número entero que representa el número de abonado en el sistema.
      * @param openidref Cadena de caracteres que representa el identificador de la referencia.
      * @param nif Cadena de caracteres que representa el NIF del abonado.
-     * @throws {@code IllegalArgumentException} en caso de que la longitud del NIF supere los nueve caracteres.
+     * @param nombre Cadena de caracteres que representa el nombre del abonado.
+     * @param apellidos Cadena de caracteres que representa los apellidos del abonado.
+     * @param direccion Cadena de caracteres que representa la direccion del abonado.
+     * @param telefono Cadena de caracteres que representa el teléfono del abonado.
+     * @param email Cadena de caractereres que representa el email del abonado.
      */
-    
-    
     public Abonado(int numeroAbonado, String openidref, String nif, String nombre, String apellidos, String direccion, String telefono, String email){
         super(nif, nombre, apellidos, direccion, telefono, email);
 
@@ -108,23 +112,6 @@ public class Abonado extends Persona{
         return openidref;
     }
     
-    public String getNombre(){
-        return super.getNombre();
-    }
-    
-    public String getApellidos(){
-        return super.getApellidos();
-    }
-    
-    public String getEmail(){
-        return super.getEmail();
-    }
-    
-    /*
-    public String getTelefono(){
-        return super.getTelefono();
-    }*/
-    
     /**
      * Modifica el identificador de la referencia del abonado.
      * @param s Cadena de caracteres que representa el nuevo identificador de la referencia del abonado.
@@ -133,13 +120,6 @@ public class Abonado extends Persona{
         openidref=s;
     }
     
-    /**
-     * Obtiene el NIF del abonado.
-     * @return Cadena de caracteres que representa el NIF del abonado.
-     */
-    public String getNIF(){
-        return super.getNif();
-    }
     
     /**
      * Modifica el NIF del abonado.

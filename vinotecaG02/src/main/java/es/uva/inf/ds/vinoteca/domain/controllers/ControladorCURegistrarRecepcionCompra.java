@@ -115,9 +115,9 @@ public class ControladorCURegistrarRecepcionCompra {
     }
     
     public void actualizarLineaCompra(int i) throws SQLException {
-        for (int p = 0; p < lc.size(); p++){
-            if(lc.get(p).getCodigoLinea()==i){
-                l = lc.get(p);
+        for (int x = 0; x < lc.size(); x++){
+            if(lc.get(x).getCodigoLinea()==i){
+                l = lc.get(x);
             }
         }
         l.marcarRecibido();
@@ -126,9 +126,11 @@ public class ControladorCURegistrarRecepcionCompra {
     }
     
     public void comprobarRecibidas(){
-        allRecvs = c.comprobarRecibidas();
-        c.marcarRecibidaCompleta();
-        DAOCompra.actualizarCompra(c.getIdCompra());
+        allRecvs = c.comprobarRecibidas(lc);
+        if(allRecvs){
+            c.marcarRecibidaCompleta();
+            DAOCompra.actualizarCompra(c.getIdCompra());
+        }
     }
     
     public boolean getAllRefs(){

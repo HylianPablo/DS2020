@@ -44,6 +44,7 @@ public class DAOAbonado {
             Logger.getLogger(DAOAbonado.class.getName()).log(Level.SEVERE,null,ex);
         }finally{
             try {
+                if(result!=null)
                 result.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DAOAbonado.class.getName()).log(Level.SEVERE, null, ex);

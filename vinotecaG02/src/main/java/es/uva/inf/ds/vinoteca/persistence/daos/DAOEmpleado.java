@@ -51,6 +51,7 @@ public class DAOEmpleado {
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }finally{
             try {
+                if(result!=null)
                 result.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE, null, ex);
@@ -91,6 +92,7 @@ public class DAOEmpleado {
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }finally{
             try {
+                if(result!=null)
                 result.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE, null, ex);
@@ -125,6 +127,7 @@ public class DAOEmpleado {
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }finally{
             try {
+                if(result!=null)
                 result.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE, null, ex);
@@ -162,6 +165,7 @@ public class DAOEmpleado {
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }finally{
             try {
+                if(result!=null)
                 result.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE, null, ex);
@@ -218,6 +222,7 @@ public class DAOEmpleado {
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }finally{
             try {
+                if(result!=null)
                 result.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE, null, ex);
@@ -250,6 +255,7 @@ public class DAOEmpleado {
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }finally{
             try {
+                if(result!=null)
                 result.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE, null, ex);

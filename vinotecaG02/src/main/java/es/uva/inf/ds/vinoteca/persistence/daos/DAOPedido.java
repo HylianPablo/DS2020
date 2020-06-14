@@ -88,6 +88,7 @@ public class DAOPedido {
             Logger.getLogger(DAOPedido.class.getName()).log(Level.SEVERE,null,ex);
         }finally{
             try {
+                if(rs!=null)
                 rs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DAOPedido.class.getName()).log(Level.SEVERE, null, ex);
@@ -158,6 +159,7 @@ public class DAOPedido {
             Logger.getLogger(DAOPedido.class.getName()).log(Level.SEVERE,null,ex);
         }finally{
             try {
+                if(rs!=null)
                 rs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DAOPedido.class.getName()).log(Level.SEVERE, null, ex);
@@ -271,6 +273,7 @@ public class DAOPedido {
             Logger.getLogger(DAOFactura.class.getName()).log(Level.SEVERE,null,ex);
         }finally{
             try {
+                if(rs!=null)
                 rs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DAOPedido.class.getName()).log(Level.SEVERE, null, ex);

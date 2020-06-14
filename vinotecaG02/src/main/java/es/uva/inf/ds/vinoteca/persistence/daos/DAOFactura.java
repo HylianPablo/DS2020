@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class DAOFactura {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date parsedDate = dateFormat.parse(fecha);
             timestamp = new java.sql.Timestamp(parsedDate.getTime());
-        } catch(Exception e) { //this generic but you can control another types of exception
+        } catch(ParseException e) { //this generic but you can control another types of exception
     // look the origin of excption 
         }
                 
@@ -86,6 +87,7 @@ public class DAOFactura {
             Logger.getLogger(DAOFactura.class.getName()).log(Level.SEVERE,null,ex);
         }finally{
             try {
+                if(result!=null)
                 result.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DAOFactura.class.getName()).log(Level.SEVERE, null, ex);
@@ -140,6 +142,7 @@ public class DAOFactura {
         }catch(SQLException ex){
             Logger.getLogger(DAOFactura.class.getName()).log(Level.SEVERE,null,ex);
         }finally{
+            if(result!=null)
             result.close();
         }
         connection.closeConnection();

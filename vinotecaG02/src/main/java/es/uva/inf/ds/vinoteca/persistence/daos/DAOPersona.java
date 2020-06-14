@@ -44,6 +44,7 @@ public class DAOPersona {
             Logger.getLogger(DAOAbonado.class.getName()).log(Level.SEVERE,null,ex);
         }finally{
             try {
+                if(result!=null)
                 result.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DAOPersona.class.getName()).log(Level.SEVERE, null, ex);

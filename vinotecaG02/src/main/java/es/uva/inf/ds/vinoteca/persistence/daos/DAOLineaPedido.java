@@ -69,6 +69,7 @@ public class DAOLineaPedido {
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }finally{
             try {
+                if(result!=null)
                 result.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DAOLineaPedido.class.getName()).log(Level.SEVERE, null, ex);
@@ -176,6 +177,7 @@ public class DAOLineaPedido {
             Logger.getLogger(VistaAlmacen.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             try {
+                if(rs!=null)
                 rs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DAOLineaPedido.class.getName()).log(Level.SEVERE, null, ex);

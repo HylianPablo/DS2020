@@ -56,6 +56,7 @@ public class DAOCompra {
             Logger.getLogger(DAOCompra.class.getName()).log(Level.SEVERE,null,ex);
         }finally{
             try {
+                if(result!=null)
                 result.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DAOCompra.class.getName()).log(Level.SEVERE, null, ex);

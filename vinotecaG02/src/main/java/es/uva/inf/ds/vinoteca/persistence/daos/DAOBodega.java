@@ -44,12 +44,13 @@ public class DAOBodega {
                 direccion = result.getString("direccion");
                 
             }
-            result.close();
+            
         }catch(SQLException ex){
             Logger.getLogger(DAOCompra.class.getName()).log(Level.SEVERE,null,ex);
         }finally{
             try {
-                result.close();
+                if(result!=null)
+                    result.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DAOBodega.class.getName()).log(Level.SEVERE, null, ex);
             }

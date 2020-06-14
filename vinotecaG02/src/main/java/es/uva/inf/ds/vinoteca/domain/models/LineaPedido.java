@@ -58,6 +58,14 @@ public class LineaPedido {
     }
     
     /**
+     * Obtiene el número de unidades de la línea de pedido.
+     * @return Número entero que representa las unidades de la línea de pedido.
+     */
+    public int getUnidades(){
+        return unidades;
+    }
+
+    /**
      * Obtiene el código del pedido asociado a la línea de pedido.
      * @return Número entero que representa el identificador del pedido asociado a la línea de pedido.
      */

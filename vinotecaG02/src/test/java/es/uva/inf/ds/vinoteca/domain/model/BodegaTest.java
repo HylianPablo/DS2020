@@ -42,7 +42,6 @@ public class BodegaTest {
         assertEquals("bodega1", bodega.getNombre());
         assertEquals("123456789", bodega.getCIF());
         assertEquals("Avenida ficticia 666", bodega.getDireccion());
-
     }
 
     @Test

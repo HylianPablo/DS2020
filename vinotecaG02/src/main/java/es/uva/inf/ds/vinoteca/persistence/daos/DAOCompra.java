@@ -37,22 +37,29 @@ public class DAOCompra {
         String imp = null;
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
+        ResultSet result = null;
         try(
             PreparedStatement ps = connection.getStatement("SELECT * FROM COMPRA c WHERE c.IDCOMPRA= ?");
             
         ){
             ps.setString(1, idd);
-            ResultSet result = ps.executeQuery();
-            if(result.next()){
+            result = ps.executeQuery();
+            if(result!=null && result.next()){
                 fechaInicio=result.getTimestamp("fechapago").toLocalDateTime();
                 completa=result.getString("RECIBIDACOMPLETA");
                 importe=result.getDouble("importe");
                 imp = Double.toString(importe);
                 
             }
-            result.close();
+            
         }catch(SQLException ex){
             Logger.getLogger(DAOCompra.class.getName()).log(Level.SEVERE,null,ex);
+        }finally{
+            try {
+                result.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOCompra.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         connection.closeConnection();
         if(fechaInicio!=null)

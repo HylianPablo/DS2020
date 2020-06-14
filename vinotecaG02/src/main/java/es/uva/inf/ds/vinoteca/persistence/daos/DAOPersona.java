@@ -28,11 +28,12 @@ public class DAOPersona {
         String email = null;
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
+        ResultSet result = null;
         try(PreparedStatement ps = connection.getStatement("SELECT * FROM PERSONA p WHERE p.NIF = ?");)
         {
             ps.setString(1, nif);
-            ResultSet result = ps.executeQuery();
-            if(result.next()){
+            result = ps.executeQuery();
+            if(result!=null && result.next()){
                 nombre = result.getString("NOMBRE");
                 apellidos = result.getString("APELLIDOS");
                 direccion = result.getString("DIRECCION");
@@ -41,6 +42,12 @@ public class DAOPersona {
             }        
         }catch(SQLException ex){
             Logger.getLogger(DAOAbonado.class.getName()).log(Level.SEVERE,null,ex);
+        }finally{
+            try {
+                result.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOPersona.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         connection.closeConnection();
         if(nombre!=null)

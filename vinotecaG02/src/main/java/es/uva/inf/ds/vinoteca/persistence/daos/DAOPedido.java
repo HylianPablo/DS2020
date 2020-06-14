@@ -57,10 +57,12 @@ public class DAOPedido {
         
         int counter=0;
         connection.openConnection();
+        ResultSet rs = null;
         try(PreparedStatement ps = connection.getStatement("SELECT * FROM PEDIDO p WHERE p.NUMEROFACTURA = ?");)
         {
             ps.setInt(1, numeroFactura);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
+            if(rs!=null){
             while(rs.next()){
                 counter++;
                 numero = rs.getInt("NUMERO");
@@ -81,8 +83,15 @@ public class DAOPedido {
                 numerosAbonado.add(numeroAbonado);
                 
             }
+            }
         }catch(SQLException ex){
             Logger.getLogger(DAOPedido.class.getName()).log(Level.SEVERE,null,ex);
+        }finally{
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOPedido.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         connection.closeConnection();
         if(counter!=0)
@@ -118,10 +127,12 @@ public class DAOPedido {
         
         int counter=0;
         connection.openConnection();
+        ResultSet rs = null;
         try(PreparedStatement ps = connection.getStatement("SELECT * FROM PEDIDO p WHERE p.NUMEROABONADO = ? AND p.FECHARECEPCION IS NOT NULL");)
         {
             ps.setInt(1, numeroAbonado);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
+            if(rs!=null){
             while(rs.next()){
                 counter++;
                 numero = rs.getInt("NUMERO");
@@ -142,8 +153,15 @@ public class DAOPedido {
                 numerosFactura.add(numeroFactura);
                 
             }
+            }
         }catch(SQLException ex){
             Logger.getLogger(DAOPedido.class.getName()).log(Level.SEVERE,null,ex);
+        }finally{
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOPedido.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         connection.closeConnection();
         if(counter!=0)
@@ -232,11 +250,12 @@ public class DAOPedido {
         DBConnection connection = DBConnection.getInstance();  
         int counter=0;
         connection.openConnection();
+        ResultSet rs = null;
         try(PreparedStatement ps = connection.getStatement("SELECT * FROM PEDIDO p WHERE p.NUMERO = ?");)
         {
             ps.setInt(1, codigoLineaPedido);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            rs = ps.executeQuery();
+            if(rs!=null && rs.next()){
                 counter++;
                 numero = rs.getInt("NUMERO");
                 estado = rs.getInt("ESTADO");
@@ -250,6 +269,12 @@ public class DAOPedido {
             }
         }catch(SQLException ex){
             Logger.getLogger(DAOFactura.class.getName()).log(Level.SEVERE,null,ex);
+        }finally{
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOPedido.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         connection.closeConnection();
         if(counter!=0)

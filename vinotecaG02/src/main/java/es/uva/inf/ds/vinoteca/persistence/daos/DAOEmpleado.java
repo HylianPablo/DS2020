@@ -34,20 +34,27 @@ public class DAOEmpleado {
         
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
+        ResultSet result=null;
         try(
             PreparedStatement ps = connection.getStatement("SELECT * FROM EMPLEADO e WHERE e.NIF= ? AND e.PASSWORD= ?");
             
         ){
             ps.setString(1, nif);
             ps.setString(2,password);
-            ResultSet result = ps.executeQuery();
-            if(result.next()){
+            result = ps.executeQuery();
+            if(result!=null && result.next()){
                 fechaInicio=result.getTimestamp("fechainicioenempresa").toLocalDateTime();
                 
             }
-            result.close();
+            
         }catch(SQLException ex){
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+        }finally{
+            try {
+                result.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         connection.closeConnection();
         ArrayList<String> rolesEmpresa = getRolesEmpresa(nif);
@@ -65,20 +72,29 @@ public class DAOEmpleado {
         ArrayList<String> rolesEmpresa = new ArrayList<>();
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
+        ResultSet result=null;
         try(
             PreparedStatement ps = connection.getStatement("SELECT * FROM ROLESENEMPRESA r WHERE r.empleado= ?"); 
         ){
             ps.setString(1, nif);
-            ResultSet result = ps.executeQuery();
-            while(result.next()){
-                comienzoEnRol=result.getTimestamp("ComienzoEnRol").toLocalDateTime();
-                rolesEmpresa.add(comienzoEnRol.toString());
-                rol=result.getInt("Rol");
-                rolesEmpresa.add(Integer.toString(rol));
+            result = ps.executeQuery();
+            if(result!=null){
+                while(result.next()){
+                    comienzoEnRol=result.getTimestamp("ComienzoEnRol").toLocalDateTime();
+                    rolesEmpresa.add(comienzoEnRol.toString());
+                    rol=result.getInt("Rol");
+                    rolesEmpresa.add(Integer.toString(rol));
+                }
             }
-            result.close();
+            
         }catch(SQLException ex){
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+        }finally{
+            try {
+                result.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         connection.closeConnection();
         return rolesEmpresa;
@@ -90,20 +106,29 @@ public class DAOEmpleado {
         ArrayList<String> vinculaciones = new ArrayList<>();
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
+        ResultSet result=null;
         try(
             PreparedStatement ps = connection.getStatement("SELECT * FROM VINCULACIONCONLAEMPRESA v WHERE v.empleado= ?"); 
         ){
             ps.setString(1, nif);
-            ResultSet result = ps.executeQuery();
-            while(result.next()){
-                inicio=result.getTimestamp("inicio").toLocalDateTime();
-                vinculaciones.add(inicio.toString());
-                vinculo=result.getInt("Vinculo");
-                vinculaciones.add(Integer.toString(vinculo));
+            result = ps.executeQuery();
+            if(result!=null){
+                while(result.next()){
+                    inicio=result.getTimestamp("inicio").toLocalDateTime();
+                    vinculaciones.add(inicio.toString());
+                    vinculo=result.getInt("Vinculo");
+                    vinculaciones.add(Integer.toString(vinculo));
+                }
             }
-            result.close();
+            
         }catch(SQLException ex){
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+        }finally{
+            try {
+                result.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         connection.closeConnection();
         return vinculaciones;
@@ -116,22 +141,31 @@ public class DAOEmpleado {
         ArrayList<String> disponibilidades = new ArrayList<>();
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
+        ResultSet result = null;
         try(
             PreparedStatement ps = connection.getStatement("SELECT * FROM DISPONIBILIDADEMPLEADO d WHERE d.empleado= ?"); 
         ){
             ps.setString(1, nif);
-            ResultSet result = ps.executeQuery();
-            while(result.next()){
-                comienzo=result.getTimestamp("Comienzo").toLocalDateTime();
-                disponibilidades.add(comienzo.toString());
-                finalPrevisto=result.getTimestamp("FinalPrevisto").toLocalDateTime();
-                disponibilidades.add(finalPrevisto.toString());
-                disponibilidad=result.getInt("Disponibilidad");
-                disponibilidades.add(Integer.toString(disponibilidad));
+            result = ps.executeQuery();
+            if(result!=null){
+                while(result.next()){
+                    comienzo=result.getTimestamp("Comienzo").toLocalDateTime();
+                    disponibilidades.add(comienzo.toString());
+                    finalPrevisto=result.getTimestamp("FinalPrevisto").toLocalDateTime();
+                    disponibilidades.add(finalPrevisto.toString());
+                    disponibilidad=result.getInt("Disponibilidad");
+                    disponibilidades.add(Integer.toString(disponibilidad));
+                }
             }
-            result.close();
+            
         }catch(SQLException ex){
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+        }finally{
+            try {
+                result.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         connection.closeConnection();
         return disponibilidades;
@@ -169,18 +203,25 @@ public class DAOEmpleado {
         int d=0;
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
+        ResultSet result = null;
         try(
             PreparedStatement ps = connection.getStatement("SELECT * FROM DISPONIBILIDADEMPLEADO d WHERE d.empleado= ? ORDER BY d.comienzo DESC");
             
         ){
             ps.setString(1, nif);
-            ResultSet result = ps.executeQuery();
-            if(result.next()){
+            result = ps.executeQuery();
+            if(result!=null && result.next()){
                 d=result.getInt("disponibilidad");
             }
-            result.close();
+            
         }catch(SQLException ex){
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+        }finally{
+            try {
+                result.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         connection.closeConnection();
         return(d==3);
@@ -195,17 +236,24 @@ public class DAOEmpleado {
         int r=0;
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
+        ResultSet result=null;
         try(
             PreparedStatement ps = connection.getStatement("SELECT * FROM ROLESENEMPRESA r WHERE r.empleado= ? ORDER BY r.ComienzoEnRol DESC");          
         ){
             ps.setString(1, nif);
-            ResultSet result = ps.executeQuery();
-            if(result.next()){
+            result = ps.executeQuery();
+            if(result!=null && result.next()){
                 r=result.getInt("rol");
             }
-            result.close();
+            
         }catch(SQLException ex){
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+        }finally{
+            try {
+                result.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         connection.closeConnection();
         return r;

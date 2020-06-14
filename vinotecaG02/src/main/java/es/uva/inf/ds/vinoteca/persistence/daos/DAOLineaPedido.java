@@ -1,6 +1,5 @@
 package es.uva.inf.ds.vinoteca.persistence.daos;
 
-import es.uva.inf.ds.vinoteca.common.NullCompraException;
 import es.uva.inf.ds.vinoteca.domain.models.Empleado;
 import es.uva.inf.ds.vinoteca.persistence.dbaccess.DBConnection;
 import es.uva.inf.ds.vinoteca.userinterface.VistaAlmacen;
@@ -45,11 +44,13 @@ public class DAOLineaPedido {
         ArrayList<Boolean> completadas = new ArrayList<>();
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
+        ResultSet result = null;
         try(
             PreparedStatement ps = connection.getStatement("SELECT * FROM LINEAPEDIDO lp WHERE lp.IdLineaCompra= ? ");   
         ){
             ps.setInt(1, id);
-            ResultSet result = ps.executeQuery();
+            result = ps.executeQuery();
+            if(result!=null){
             while(result.next()){
                 counter ++;
                 numeroUnidades = result.getInt("unidades");
@@ -62,9 +63,16 @@ public class DAOLineaPedido {
                 unidades.add(numeroUnidades);
                 completadas.add(completada);
             }
-            result.close();
+            }
+            
         }catch(SQLException ex){
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+        }finally{
+            try {
+                result.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOLineaPedido.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         connection.closeConnection();
         if(counter!=0){
@@ -157,14 +165,21 @@ public class DAOLineaPedido {
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
         int codigo = 0;
+        ResultSet rs = null;
         try (PreparedStatement ps = connection.getStatement("SELECT MAX(p.NUMERO) FROM PEDIDO p ")) {
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            rs = ps.executeQuery();
+            if(rs!=null && rs.next()){
                 codigo = rs.getInt(1);
             }
         }
         catch (SQLException ex) {
             Logger.getLogger(VistaAlmacen.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOLineaPedido.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         connection.closeConnection();
         return codigo;

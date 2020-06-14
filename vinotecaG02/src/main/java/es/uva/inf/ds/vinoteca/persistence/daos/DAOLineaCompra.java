@@ -44,11 +44,12 @@ public class DAOLineaCompra {
         ArrayList<LocalDateTime> fechasRecepcion = new ArrayList<>();
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
+        ResultSet result = null;
         try(
             PreparedStatement ps = connection.getStatement("SELECT * FROM LINEACOMPRA lc WHERE lc.IdCompra= ? ");   
         ){
             ps.setInt(1, id);
-            ResultSet result = ps.executeQuery();
+            result = ps.executeQuery();
             while(result.next()){
                 rec = false;
                 counter ++;
@@ -66,9 +67,14 @@ public class DAOLineaCompra {
                 recibidas.add(rec);
                 fechasRecepcion.add(fechaRecepcion);
             }
-            result.close();
         }catch(SQLException ex){
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+        }finally{
+            try {
+                result.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOLineaCompra.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         connection.closeConnection();
         if(counter!=0){

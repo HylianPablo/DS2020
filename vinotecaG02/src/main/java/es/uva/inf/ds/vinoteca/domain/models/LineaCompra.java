@@ -36,6 +36,7 @@ public class LineaCompra {
      * @param c Número entero que representa el código de la referencia asociada.
      * @param r Valor booleano que indica si la línea de compra ha sido recibida o no.
      * @param cL Número entero que representa el código de la línea compra.
+     * @param idCompra
      */
     public LineaCompra(int u, LocalDateTime fr, int c, boolean r, int cL, int idCompra){
         unidades = u;
@@ -98,6 +99,7 @@ public class LineaCompra {
     /**
      * Obtiene la referencia asociada a la línea de compra.
      * @return Instancia de la referencia asociada a la línea de compra.
+     * @throws es.uva.inf.ds.vinoteca.common.ReferenciaNoValidaException
      */
     public Referencia getReferencia() throws ReferenciaNoValidaException{
         return Referencia.getReferencia(codigo);

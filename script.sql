@@ -331,6 +331,7 @@ INSERT INTO LINEAPEDIDO(Unidades,Completada,CodigoReferencia,NumeroPedido,IdLine
 INSERT INTO LINEAPEDIDO(Unidades,Completada,CodigoReferencia,NumeroPedido,IdLineaCompra) VALUES (2,'1',1,2,1);
 INSERT INTO LINEAPEDIDO(Unidades,Completada,CodigoReferencia,NumeroPedido,IdLineaCompra) VALUES (3,'1',1,3,1);
 INSERT INTO LINEAPEDIDO(Unidades,Completada,CodigoReferencia,NumeroPedido,IdLineaCompra) VALUES (3,'0',2,3,2);
+INSERT INTO LINEAPEDIDO(Unidades,Completada,CodigoReferencia,NumeroPedido,IdLineaCompra) VALUES (3,'0',2,3,1);
 
 
 

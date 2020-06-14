@@ -91,7 +91,7 @@ public class LineaPedido {
             for(int i=0;i<array.size();i++){
                 JsonObject obj = (JsonObject) array.get(i);
                 unidades = Integer.parseInt(obj.getString("unidades"));
-                completada = Boolean.parseBoolean("completada");
+                completada = Boolean.parseBoolean(obj.getString("completada"));
                 codigo = Integer.parseInt(obj.getString("numeros"));
                 LineaPedido lp = new LineaPedido(completada, unidades, codigo);
                 lp.marcarCompleto();

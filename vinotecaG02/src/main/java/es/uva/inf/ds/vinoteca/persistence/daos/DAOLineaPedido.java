@@ -51,10 +51,11 @@ public class DAOLineaPedido {
             ps.setInt(1, id);
             ResultSet result = ps.executeQuery();
             while(result.next()){
+                completada = false;
                 counter ++;
                 numeroUnidades = result.getInt("unidades");
                 comp = result.getString("completada");
-                numeroPedido = result.getInt("numeropedido");
+                numeroPedido = result.getInt("numeropedido");           
                 if(comp.equals("1")){
                     completada = true;
                 }
@@ -79,7 +80,7 @@ public class DAOLineaPedido {
         JsonArrayBuilder array = Json.createArrayBuilder();
         for(int i=0;i<unidades.size();i++){
             array.add(Json.createObjectBuilder().add("unidades",Integer.toString(unidades.get(i)))
-            .add("recibidas", Boolean.toString(completadas.get(i)))
+            .add("completada", Boolean.toString(completadas.get(i)))
             .add("numeros",Integer.toString(numerosPedido.get(i)))
             .build());
         }

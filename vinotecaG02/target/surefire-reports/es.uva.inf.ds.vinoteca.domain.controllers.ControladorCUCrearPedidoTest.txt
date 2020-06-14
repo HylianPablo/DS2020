@@ -1,0 +1,11 @@
+-------------------------------------------------------------------------------
+Test set: es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUCrearPedidoTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.146 s <<< FAILURE! - in es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUCrearPedidoTest
+testComprobarReferencia  Time elapsed: 0.009 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <es.uva.inf.ds.vinoteca.common.ReferenciaNoValidaException> but was: <java.lang.NullPointerException>
+	at es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUCrearPedidoTest.testComprobarReferencia(ControladorCUCrearPedidoTest.java:76)
+Caused by: java.lang.NullPointerException
+	at es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUCrearPedidoTest.lambda$testComprobarReferencia$0(ControladorCUCrearPedidoTest.java:77)
+	at es.uva.inf.ds.vinoteca.domain.controllers.ControladorCUCrearPedidoTest.testComprobarReferencia(ControladorCUCrearPedidoTest.java:76)
+

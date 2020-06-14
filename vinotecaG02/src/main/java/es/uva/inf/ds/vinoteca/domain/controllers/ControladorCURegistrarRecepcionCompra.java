@@ -47,6 +47,10 @@ public class ControladorCURegistrarRecepcionCompra {
     }
     
     public Compra comprobarCompraNoCompletada(int idCompra) throws ReferenciaNoValidaException, CompletadaException {
+        ArrayList<LineaPedido> lpedidos = LineaPedido.getLineasPedido(1);
+        for (int i = 0; i < lpedidos.size(); i++){
+            System.out.println(lpedidos.get(i).checkCompleto());
+        }
         refs = new ArrayList<>();
         bandera = false;
         c = null;

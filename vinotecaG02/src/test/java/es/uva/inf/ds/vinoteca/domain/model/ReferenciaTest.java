@@ -1,5 +1,9 @@
 package es.uva.inf.ds.vinoteca.domain.model;
 
+import es.uva.inf.ds.vinoteca.common.NullCompraException;
+import es.uva.inf.ds.vinoteca.common.ReferenciaNoDisponibleException;
+import es.uva.inf.ds.vinoteca.common.ReferenciaNoValidaException;
+import es.uva.inf.ds.vinoteca.domain.models.Compra;
 import es.uva.inf.ds.vinoteca.domain.models.Referencia;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
@@ -42,5 +46,21 @@ public class ReferenciaTest {
         assertEquals(2.0,referencia.getPrecio());
         assertEquals(false,referencia.comprobarPorCajas());
     }
-
+    
+    @Test
+    public void getReferencia() throws ReferenciaNoValidaException, ReferenciaNoDisponibleException {
+        Referencia r = Referencia.getReferencia(1);
+        assertEquals(true,r.comprobarPorCajas());
+        assertEquals(33,r.getContenido());
+        assertEquals(10.0, r.getPrecio());
+        assertEquals(true,r.comprobarDisponible());
+    }
+    
+    @Test
+    public void testComprobarDisponible() throws ReferenciaNoValidaException{
+        Referencia r = Referencia.getReferencia(2);
+        assertThrows(ReferenciaNoDisponibleException.class, ()->{
+            r.comprobarDisponible();
+        });
+    }
 }

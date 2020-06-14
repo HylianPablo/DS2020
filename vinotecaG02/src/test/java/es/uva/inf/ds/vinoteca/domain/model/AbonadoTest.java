@@ -3,6 +3,8 @@ package es.uva.inf.ds.vinoteca.domain.model;
 
 import es.uva.inf.ds.vinoteca.common.AbonadoNotExistsException;
 import es.uva.inf.ds.vinoteca.domain.models.Abonado;
+import es.uva.inf.ds.vinoteca.domain.models.Pedido;
+import java.util.ArrayList;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -91,5 +93,12 @@ public class AbonadoTest {
         assertEquals("Calle Falsa 123",abon.getDireccion());
         assertEquals("999999999",abon.getTelefono());
         assertEquals("email@email.com",abon.getEmail());
+    }
+    
+    @Test
+    public void testGetPedidos() throws AbonadoNotExistsException{
+        Abonado abon = Abonado.getAbonado(1);
+        ArrayList<Pedido> pedidos = abon.getPedidos();
+        assertEquals(3,pedidos.size());
     }
 }

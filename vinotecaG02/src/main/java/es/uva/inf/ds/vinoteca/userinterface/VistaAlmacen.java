@@ -248,6 +248,7 @@ public class VistaAlmacen extends javax.swing.JFrame {
             String codigoAux;
             int codigo;
             if(bandera){
+                //System.out.println("");
                 codigoAux = (String) model.getValueAt(r, 2);
                 codigo = Integer.parseInt(codigoAux);
                 codigosCompras.add(codigo);

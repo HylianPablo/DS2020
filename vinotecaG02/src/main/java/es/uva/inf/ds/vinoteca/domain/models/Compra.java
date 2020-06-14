@@ -145,16 +145,17 @@ public class Compra {
     
     /**
      * Comprueba que todas las líneas de compra asociadas a la compra se han recibido.
+     * @param array
      * @return {@code True} en caso de que todas las líneas de compra se hayan recibido y {@code false} en caso contrario.
      */
-    public boolean comprobarRecibidas() {
+    public boolean comprobarRecibidas(ArrayList<LineaCompra> array) {
         boolean recibida = true;
         boolean bandera = true;
-        for (int i = 0; i < lineasCompra.size(); i++){
-            recibida = lineasCompra.get(i).comprobarRecibida();
+        for (int i = 0; i < array.size(); i++){
+            recibida = array.get(i).comprobarRecibida();
             if (recibida != true){
                 bandera = false;
-                lineasCompraNoRecibidas.add(lineasCompra.get(i));
+                lineasCompraNoRecibidas.add(array.get(i));
             }
         }
         return bandera;

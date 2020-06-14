@@ -16,9 +16,9 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author pablo
  */
-public class DAOFacturaTest {
+public class DAOLineaCompraTest {
     
-    public DAOFacturaTest() {
+    public DAOLineaCompraTest() {
     }
     
     @BeforeAll
@@ -36,27 +36,16 @@ public class DAOFacturaTest {
     @AfterEach
     public void tearDown() {
     }
-    
-    @Test
-    public void consultaFacturasExistentes(){
-        assertEquals("{\"facturas\":[{\"numeroFactura\":\"2\",\"fechaEmision\":\"2019-05-06T00:00\",\"importe\":\"20.0\",\"estado\":\"1\",\"fechaPago\":\"2019-07-06T00:00\",\"idExtractoBancario\":\"extractobancario\"}]}",
-                DAOFactura.consultaFacturasAntesDeFecha("2020-01-01"));
-    }
-    
-    @Test
-    public void consultaFacturasInexistentes(){
-        assertEquals("",DAOFactura.consultaFacturasAntesDeFecha("1000-01-01"));
-    }
-    
-    @Test
-    public void facturaNoVencida(){
-        assertTrue(DAOFactura.comprobarNoVencido(1));
-    }
-    
-    @Test
-    public void facturaVencida(){
-        assertFalse(DAOFactura.comprobarNoVencido(3));
-    }
 
-   
+    @Test
+    public void accesoCorrecto(){
+        assertEquals("{\"lineasCompra\":[{\"unidades\":\"1\",\"fechaRecepcion\":\"2020-06-07T00:00\",\"codigos\":\"1\",\"recibidas\":\"true\",\"ids\":\"1\"},"+
+        "{\"unidades\":\"1\",\"fechaRecepcion\":\"2020-05-07T00:00\",\"codigos\":\"1\",\"recibidas\":\"true\",\"ids\":\"4\"},"+
+        "{\"unidades\":\"1\",\"fechaRecepcion\":\"2020-03-07T00:00\",\"codigos\":\"1\",\"recibidas\":\"true\",\"ids\":\"5\"}]}",DAOLineaCompra.consultaLineaCompra(1));
+    }
+    
+    @Test
+    public void accesoErroneo(){
+        assertEquals("",DAOLineaCompra.consultaLineaCompra(-1));
+    }
 }

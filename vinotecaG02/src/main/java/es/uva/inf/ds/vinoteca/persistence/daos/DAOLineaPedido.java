@@ -70,6 +70,7 @@ public class DAOLineaPedido {
         if(counter!=0){
             lineaPedidoJSONString = obtainLineaPedidoJSONString(unidades, completadas, numerosPedido);
         }
+        System.out.println(lineaPedidoJSONString);
         return lineaPedidoJSONString;
     }
    

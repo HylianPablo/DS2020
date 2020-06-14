@@ -14,11 +14,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
- * @author pablo
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
-public class DAOFacturaTest {
+public class DAOBodegaTest {
     
-    public DAOFacturaTest() {
+    public DAOBodegaTest() {
     }
     
     @BeforeAll
@@ -36,27 +38,14 @@ public class DAOFacturaTest {
     @AfterEach
     public void tearDown() {
     }
-    
-    @Test
-    public void consultaFacturasExistentes(){
-        assertEquals("{\"facturas\":[{\"numeroFactura\":\"2\",\"fechaEmision\":\"2019-05-06T00:00\",\"importe\":\"20.0\",\"estado\":\"1\",\"fechaPago\":\"2019-07-06T00:00\",\"idExtractoBancario\":\"extractobancario\"}]}",
-                DAOFactura.consultaFacturasAntesDeFecha("2020-01-01"));
-    }
-    
-    @Test
-    public void consultaFacturasInexistentes(){
-        assertEquals("",DAOFactura.consultaFacturasAntesDeFecha("1000-01-01"));
-    }
-    
-    @Test
-    public void facturaNoVencida(){
-        assertTrue(DAOFactura.comprobarNoVencido(1));
-    }
-    
-    @Test
-    public void facturaVencida(){
-        assertFalse(DAOFactura.comprobarNoVencido(3));
-    }
 
-   
+    @Test
+    public void JSONCorrecto(){
+        assertEquals("{\"cif\":\"111111111\",\"nombre\":\"bodega\",\"direccion\":\"calle falsa 0\"}", DAOBodega.consultaBodega(1));
+    }
+    
+    @Test
+    public void JSONErroneo(){
+        assertEquals("",DAOBodega.consultaBodega(-1));
+    }
 }

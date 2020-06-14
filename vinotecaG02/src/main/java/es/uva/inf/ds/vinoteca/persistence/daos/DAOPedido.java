@@ -5,13 +5,19 @@ import es.uva.inf.ds.vinoteca.persistence.dbaccess.DBConnection;
 import es.uva.inf.ds.vinoteca.userinterface.VistaAlmacen;
 import java.io.StringReader;
 import java.io.StringWriter;
+import static java.lang.String.valueOf;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.sql.Types;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -304,29 +310,24 @@ public class DAOPedido {
         }
         connection.closeConnection();
     }
-        
+    
 
-    public static void añadirPedido(String jsonNewPedido) {
+       
+
+    public static void añadirPedido(String jsonNewPedido)  {
         JsonReaderFactory factory = Json.createReaderFactory(null);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         int numero = -1;
         int estado = -1;
-        LocalDateTime fechaRealizacion = null;
         String notaEntrega = null;
         double importe = -1;
-        LocalDateTime fechaRecepcion = null;
-        LocalDateTime fechaEntrega = null;
         int numeroFactura = -1;
         int numeroAbonado = -1;
         int codigo = -1;
         try(JsonReader reader = factory.createReader(new StringReader(jsonNewPedido));){
             JsonObject jsonobject = reader.readObject();
-            numero = Integer.parseInt(jsonobject.getString("numero"));
             estado = Integer.parseInt(jsonobject.getString("estado"));
-            notaEntrega = jsonobject.getString("notaEntrega");
-            fechaRealizacion = LocalDateTime.parse(jsonobject.getString("fechaRealizacion"),formatter);
-            fechaRecepcion = LocalDateTime.parse(jsonobject.getString("fechaRecepcion"),formatter);
-            fechaEntrega = LocalDateTime.parse(jsonobject.getString("fechaEntrega"),formatter);
+            notaEntrega = jsonobject.getString("notaEntrega");         
             numeroFactura = Integer.parseInt(jsonobject.getString("numeroFactura"));
             numeroAbonado = Integer.parseInt(jsonobject.getString("numeroAbonado"));
             codigo = Integer.parseInt(jsonobject.getString("codigo"));
@@ -334,21 +335,20 @@ public class DAOPedido {
         }catch(Exception ex){
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE,null,ex);
         }
-        Timestamp fechaRealizacionT = Timestamp.valueOf(fechaRealizacion);
-        Timestamp fechaRecepcionT = Timestamp.valueOf(fechaRecepcion);
-        Timestamp fechaEntregaT = Timestamp.valueOf(fechaEntrega);
+        LocalDateTime now = LocalDateTime.now();
+        Timestamp fechaRealizacionT = Timestamp.valueOf(now);
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
-        try (PreparedStatement ps = connection.getStatement("INSERT INTO PEDIDO" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
-            ps.setInt(1, numero);
-            ps.setInt(2, estado);
-            ps.setTimestamp(3, fechaRealizacionT);
-            ps.setString(4, notaEntrega);
-            ps.setDouble(5, importe);
-            ps.setTimestamp(6, fechaRecepcionT);
-            ps.setTimestamp(7, fechaEntregaT);
-            ps.setInt(8, numeroFactura);
-            ps.setInt(9, numeroAbonado);
+        try (PreparedStatement ps = connection.getStatement("INSERT INTO PEDIDO (ESTADO,FECHAREALIZACION,NOTAENTREGA,IMPORTE,FECHARECEPCION,FECHAENTREGA,NUMEROFACTURA,NUMEROABONADO)" 
+                + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)")) {
+            ps.setInt(1, estado);
+            ps.setTimestamp(2, fechaRealizacionT);
+            ps.setString(3, notaEntrega);
+            ps.setDouble(4, importe);
+            ps.setNull(5, Types.TIMESTAMP);
+            ps.setNull(6, Types.TIMESTAMP);
+            ps.setNull(7, Types.INTEGER);
+            ps.setInt(8, numeroAbonado);
             ps.executeUpdate();
         }
         catch (SQLException ex) {

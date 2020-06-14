@@ -119,9 +119,9 @@ public class DAOLineaPedido {
     public static void añadirLineaPedido(String jsonNewLinea) {
         
         JsonReaderFactory factory = Json.createReaderFactory(null);
-        int codigoReferencia = -1;
-        int codigoPedido = -1;
-        int unidadesLinea = -1;
+        int codigoReferencia = 1;
+        int codigoPedido = 1;
+        int unidadesLinea = 1;
         String Completada = "0";
         int IdLineaCompra = 1;
         try(JsonReader reader = factory.createReader(new StringReader(jsonNewLinea));){
@@ -132,9 +132,11 @@ public class DAOLineaPedido {
         }catch(Exception ex){
             Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE,null,ex);
         }
+        codigoPedido = getLastCodigo();
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
-        try (PreparedStatement ps = connection.getStatement("INSET INTO LINEAPEDIDO" + "VALUES (?, ?, ?, ?, ?)   ")) {
+        try (PreparedStatement ps = connection.getStatement("INSERT INTO LINEAPEDIDO (UNIDADES,COMPLETADA,CODIGOREFERENCIA,NUMEROPEDIDO,IDLINEACOMPRA)"
+                + "VALUES (?,?,?,?,?)")) {
             ps.setInt(3, codigoReferencia);
             ps.setInt(4, codigoPedido);
             ps.setString(2, Completada);
@@ -146,5 +148,22 @@ public class DAOLineaPedido {
             Logger.getLogger(VistaAlmacen.class.getName()).log(Level.SEVERE, null, ex);
         }
         connection.closeConnection();
+    }
+    
+    private static int getLastCodigo() {
+        DBConnection connection = DBConnection.getInstance();
+        connection.openConnection();
+        int codigo = 0;
+        try (PreparedStatement ps = connection.getStatement("SELECT MAX(p.NUMERO) FROM PEDIDO p ")) {
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                codigo = rs.getInt(1);
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(VistaAlmacen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connection.closeConnection();
+        return codigo;
     }
 }

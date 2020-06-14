@@ -305,19 +305,16 @@ public class Pedido {
     }
 
     public void cambiarEstadoPendiente() {
-        estado = 0;
+        estado = 1;
     }
     
     public String getJson() {
         String newPedidoJSONString = "";
         JsonObject abonadoJSON = Json.createObjectBuilder()
-                .add("numero",Integer.toString(numero))
+                //.add("numero",Integer.toString(numero))
                 .add("estado",Integer.toString(estado))
-                .add("fechaRealizacion",fechaRealizacion.toString())
                 .add("notaEntrega", notaEntrega)
                 .add("importe",Double.toString(importe))
-                .add("fechaRecepcion",fechaRecepcion.toString())
-                .add("fechaEntrega",fechaEntrega.toString())
                 .add("numeroFactura",Integer.toString(numeroFactura))
                 .add("numeroAbonado",Integer.toString(numeroAbonado))
                 .add("codigo",Integer.toString(codigo))

@@ -10,6 +10,7 @@ import es.uva.inf.ds.vinoteca.domain.models.Persona;
 import es.uva.inf.ds.vinoteca.domain.models.Referencia;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOLineaPedido;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOPedido;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -67,7 +68,7 @@ public class ControladorCUCrearPedido {
         ArrayList<Pedido> pedidos = b.getPedidos();
         boolean bandera = true;
         for(int i=0;i<pedidos.size();i++){
-            if(pedidos.get(i).comprobarNoVencido()){
+            if(!pedidos.get(i).comprobarNoVencido()){
                 bandera=false;
                 throw new FacturaVencidaException("Existen facturas vencidas.");
             }
@@ -90,15 +91,14 @@ public class ControladorCUCrearPedido {
         if(!disponible){
             throw new ReferenciaNoDisponibleException("La referencia no esta disponible");
         }
-        newLineaPedido = newPedido.crearLineaPedido(idReferencia, cantidad);
-        String jsonNewLinea = newLineaPedido.getJson();
-        DAOLineaPedido.añadirLineaPedido(jsonNewLinea);
-        //falta crear pedido bien
+        newLineaPedido = newPedido.crearLineaPedido(idReferencia, cantidad);             
     }
 
-    public void registrarPedido() {
+    public void registrarPedido() throws ParseException{
         newPedido.cambiarEstadoPendiente();
         String jsonNewPedido = newPedido.getJson();
         DAOPedido.añadirPedido(jsonNewPedido);
+        String jsonNewLinea = newLineaPedido.getJson();
+        DAOLineaPedido.añadirLineaPedido(jsonNewLinea);
     }
 }

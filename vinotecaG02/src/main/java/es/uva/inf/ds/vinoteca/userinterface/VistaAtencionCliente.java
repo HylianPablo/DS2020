@@ -29,6 +29,11 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
      */
     public VistaAtencionCliente() {
         initComponents();
+        confirmarButton.setEnabled(false);
+        introducirButton.setEnabled(false);
+        endButton.setEnabled(false);
+        cantidadText.setEnabled(false);
+        referenciaText.setEnabled(false);
         setResizable(false);
         errorMsg.setText("");
         controller = new ControladorVistaAtencionCliente(this);
@@ -51,6 +56,8 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
         model.setValueAt(datos.get(1), 0, 1);
         model.setValueAt(datos.get(2), 0, 2);
         model.setValueAt(datos.get(3), 0, 3);
+        confirmarButton.setEnabled(true);
+        searchButton.setEnabled(false);
     }
 
 
@@ -74,6 +81,7 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
         endButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -136,6 +144,13 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -162,10 +177,12 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
                             .addComponent(cantidadText, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(referenciaText, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(introducirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(introducirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(148, 148, 148)
+                .addGap(23, 23, 23)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(92, 92, 92)
                 .addComponent(errorMsg)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(endButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -199,9 +216,11 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
                         .addGap(50, 50, 50)
                         .addComponent(introducirButton)))
                 .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(endButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(errorMsg))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(endButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(errorMsg))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
@@ -233,6 +252,10 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
 
     private void confirmarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarButtonActionPerformed
         controller.procesaConfirmacion();
+        confirmarButton.setEnabled(false);
+        introducirButton.setEnabled(true);
+        cantidadText.setEnabled(true);
+        referenciaText.setEnabled(true);
     }//GEN-LAST:event_confirmarButtonActionPerformed
 
     private void introducirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_introducirButtonActionPerformed
@@ -243,11 +266,19 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
         } catch (ReferenciaNoDisponibleException ex) {
             Logger.getLogger(VistaAtencionCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
+        introducirButton.setEnabled(false);
+        endButton.setEnabled(true);
     }//GEN-LAST:event_introducirButtonActionPerformed
 
     private void endButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endButtonActionPerformed
         controller.procesarTerminarProceso();
+        endButton.setEnabled(false);
     }//GEN-LAST:event_endButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -257,6 +288,7 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
     private javax.swing.JButton endButton;
     private javax.swing.JLabel errorMsg;
     private javax.swing.JButton introducirButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

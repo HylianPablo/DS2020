@@ -47,6 +47,16 @@ public class DAOFacturaTest {
     public void consultaFacturasInexistentes(){
         assertEquals("",DAOFactura.consultaFacturasAntesDeFecha("1000-01-01"));
     }
+    
+    @Test
+    public void facturaNoVencida(){
+        assertTrue(DAOFactura.comprobarNoVencido(1));
+    }
+    
+    @Test
+    public void facturaVencida(){
+        assertFalse(DAOFactura.comprobarNoVencido(3));
+    }
 
    
 }

@@ -121,7 +121,6 @@ public class DAOLineaPedido {
      * @param jsonNewLinea JSON en forma de cadena de caracteres que contiene los datos de la línea de pedido a insertar en la base de datos.
      */
     public static void añadirLineaPedido(String jsonNewLinea) {
-        
         JsonReaderFactory factory = Json.createReaderFactory(null);
         int codigoReferencia = 1;
         int codigoPedido = 1;

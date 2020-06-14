@@ -36,37 +36,54 @@ import javax.json.JsonWriter;
  */
 public class ControladorCURegistrarRecepcionCompra {
     
-    Compra c ;
-    Bodega b ;
-    Pedido p ;
-    LineaCompra l;
-    Referencia r;
-    ArrayList<LineaCompra> lc;
-    ArrayList<LineaCompra> lcnr;
-    ArrayList<Referencia> refs;
-    ArrayList<LineaPedido> lp;
-    int id;
-    boolean allRecvs;
+    private Compra c ;
+    private Bodega b ;
+    private Pedido p ;
+    private LineaCompra l;
+    private Referencia r;
+    private boolean bandera;
+    private ArrayList<LineaCompra> lc;
+    private ArrayList<LineaCompra> lcnr;
+    private ArrayList<Referencia> refs;
+    private ArrayList<LineaPedido> lp;
+    private int id;
+    private boolean allRecvs;
     //Referencia r;
         
     public static ControladorCURegistrarRecepcionCompra getController(){
         return new ControladorCURegistrarRecepcionCompra();
     }
     
-    public void comprobarCompraNoCompletada(int idCompra) throws ReferenciaNoValidaException{
+    public Compra comprobarCompraNoCompletada(int idCompra) throws ReferenciaNoValidaException, CompletadaException {
         refs = new ArrayList<>();
+        bandera = false;
+        c = null;
         try{
             c = Compra.getCompra(idCompra);
-        }catch(NullCompraException | CompletadaException ex){
+        }catch(NullCompraException ex){
             Logger.getLogger(ControladorCURegistrarRecepcionCompra.class.getName()).log(Level.SEVERE,null,ex);
         }
-        b = c.getBodega();
-        String nombre = b.getNombre();
-        lc = c.getLineasCompra();
-        for (int i = 0; i < lc.size(); i++){
-            r = lc.get(i).getReferencia();
-            refs.add(r);
+        if(c!=null){
+            try{
+                c.compruebaCompletada();
+            }catch(CompletadaException ex){
+                bandera = true;
+                Logger.getLogger(ControladorCURegistrarRecepcionCompra.class.getName()).log(Level.SEVERE,null,ex);
+            }
+            
+            b = c.getBodega();
+            String nombre = b.getNombre();
+            lc = c.getLineasCompra();
+            for (int i = 0; i < lc.size(); i++){
+                r = lc.get(i).getReferencia();
+                refs.add(r);
+            }
         }
+        return c;
+    }
+    
+    public boolean comprobarCompraCompletada(){
+        return bandera;
     }
     
     public ArrayList<Integer> getCodigosLineasCompra(){
@@ -107,28 +124,6 @@ public class ControladorCURegistrarRecepcionCompra {
         lp = l.actualizaLineasPedido();
         DAOLineaPedido.actualizarLineasDePedido(l.getCodigoLinea());
     }
-    
-    /*
-    private String pasarLineasPedidoAJsonString(ArrayList<LineaPedido> lp){
-        String estadoLineaPedidoJSONString = "";
-        JsonArrayBuilder array = Json.createArrayBuilder();
-        for(int i=0;i<lp.size();i++){
-            array.add(Json.createObjectBuilder().add("estado",Boolean.toString(lp.get(i).checkCompleto()))
-            .build());
-        }
-        try(
-                StringWriter stringWriter = new StringWriter();
-                JsonWriter writer = Json.createWriter(stringWriter);
-                ){   
-            
-            JsonObject jsonObj = Json.createObjectBuilder().add("lineasPedido",array).build();
-            writer.writeObject(jsonObj);
-            estadoLineaPedidoJSONString = stringWriter.toString();
-        }catch(Exception ex){
-            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE,null,ex);
-        }
-        return estadoLineaPedidoJSONString;
-    }*/
     
     public void comprobarRecibidas(){
         allRecvs = c.comprobarRecibidas();

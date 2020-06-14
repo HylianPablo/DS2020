@@ -28,18 +28,21 @@ public class Compra {
     private LocalDateTime fechaCompraCompleta, fechaPago;
     private int idCompra;
     private double importe;
+    private String completada;
     
     /**
-     * Constructor de la clase. Sólo se utilizan los atributos referentes al caso de uso.
+     * Constructor de la clase.Sólo se utilizan los atributos referentes al caso de uso.
      * @param id Número entero que representa el identificador de la compra.
      * @param i Número real que representa el importe de la compra.
      * @param fp {@code LocalDateTime} que representa la fecha de pago de la compra.
+     * @param c Representa si la compra esta completada
      */
-    public Compra(int id, double i, LocalDateTime fp){
+    public Compra(int id, double i, LocalDateTime fp, String c){
         lineasCompra = new ArrayList<>();
         importe = i;
         bodega = null;
         recibidaCompleta = false;
+        completada = c;
         fechaCompraCompleta = null;
         idCompra = id;
         fechaPago = fp;
@@ -91,13 +94,11 @@ public class Compra {
         }catch(Exception ex){
             throw new NullCompraException("La compra no se encuentra en el sistema");            
         }
-        if(completaJson.equals("1")){
-            throw new CompletadaException("La compra ya esta completada");
-        }
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
         LocalDateTime fechaPago = LocalDateTime.parse(fechaJson,formatter);
         double importe = Double.parseDouble(importeJson);
-        Compra compra = new Compra(id, importe, fechaPago);
+        Compra compra = new Compra(id, importe, fechaPago, completaJson);
         return compra;
     }
     
@@ -157,5 +158,11 @@ public class Compra {
             }
         }
         return bandera;
+    }
+
+    public void compruebaCompletada() throws CompletadaException {
+        if(completada.equals("1")){
+            throw new CompletadaException("La compra ya esta completada");
+        }
     }
 }

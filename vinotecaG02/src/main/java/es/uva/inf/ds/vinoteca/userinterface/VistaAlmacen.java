@@ -1,5 +1,6 @@
 package es.uva.inf.ds.vinoteca.userinterface;
 
+import es.uva.inf.ds.vinoteca.common.CompletadaException;
 import es.uva.inf.ds.vinoteca.common.ReferenciaNoValidaException;
 import es.uva.inf.ds.vinoteca.domain.models.Bodega;
 import es.uva.inf.ds.vinoteca.domain.models.LineaCompra;
@@ -44,8 +45,13 @@ public class VistaAlmacen extends javax.swing.JFrame {
     
     public void setMensajeError(String message){
         errorMsg.setText(message);
+        searchButton.setEnabled(false);
+        finalizarButton.setEnabled(false); 
+        searchBar.setEnabled(false);
     }
+    
 
+    
     public void actualizarVista(String nombreB, ArrayList<Integer> codigosLineaCompra, ArrayList<Integer> unidadesLineaCompra,
             ArrayList<Integer> codigosReferencia) {
         //String [] col = {"selected", "nombreBodega", "idLineaCompra", "idReferencia", "unidades"};
@@ -85,7 +91,7 @@ public class VistaAlmacen extends javax.swing.JFrame {
         searchButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
         errorMsg = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        finalizarButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         table2 = new javax.swing.JTable();
 
@@ -132,10 +138,10 @@ public class VistaAlmacen extends javax.swing.JFrame {
 
         errorMsg.setText("Mensaje de error");
 
-        jButton1.setText("Finalizar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        finalizarButton.setText("Finalizar");
+        finalizarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                finalizarButtonActionPerformed(evt);
             }
         });
 
@@ -169,20 +175,20 @@ public class VistaAlmacen extends javax.swing.JFrame {
                 .addGap(25, 25, 25))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(finalizarButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(errorMsg)
-                .addGap(94, 94, 94)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane2)
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,11 +201,11 @@ public class VistaAlmacen extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(exitButton)
-                    .addComponent(errorMsg)
-                    .addComponent(jButton1)))
+                    .addComponent(finalizarButton)
+                    .addComponent(errorMsg)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -225,9 +231,9 @@ public class VistaAlmacen extends javax.swing.JFrame {
         int idCompra = Integer.parseInt(searchBar.getText());
         try {
             controller.procesaDatosIntroducirIdCompra(idCompra);
-        } catch (ReferenciaNoValidaException ex) {
+        } catch (ReferenciaNoValidaException | CompletadaException ex) {
             Logger.getLogger(VistaAlmacen.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
@@ -235,7 +241,7 @@ public class VistaAlmacen extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_exitButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void finalizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarButtonActionPerformed
         ArrayList <Integer> codigosCompras = new ArrayList<>();
         ArrayList <Integer> codigosComprasNoMarcadas = new ArrayList<>();
         
@@ -260,9 +266,9 @@ public class VistaAlmacen extends javax.swing.JFrame {
             Logger.getLogger(VistaAlmacen.class.getName()).log(Level.SEVERE, null, ex);
         }
         controller.procesaDatosFinalizar();
-        jButton1.setEnabled(false);
+        finalizarButton.setEnabled(false);
         searchButton.setEnabled(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_finalizarButtonActionPerformed
 
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
         // TODO add your handling code here:
@@ -272,7 +278,7 @@ public class VistaAlmacen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel errorMsg;
     private javax.swing.JButton exitButton;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton finalizarButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

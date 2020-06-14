@@ -28,7 +28,7 @@ public class Bodega {
      * @throws {@code IllegalArgumentException} en caso de que la longitud del CIF exceda los nueve caracteres.
      */
     public Bodega(String n, String c, String d){
-        if(cif.length()>9)
+        if(c.length()>9)
             throw new IllegalArgumentException("La longitud del CIF no debe exceder los nueve caracteres.");
         nombre = n;
         cif = c;
@@ -79,8 +79,7 @@ public class Bodega {
         }catch(Exception ex){
             Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
         }
-        Bodega bodega = new Bodega(nombreJson, cifJson, direccionJson);
-        
+        Bodega bodega = new Bodega(nombreJson, cifJson, direccionJson);  
         return bodega;
     } 
 }

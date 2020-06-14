@@ -1,16 +1,23 @@
-
 package es.uva.inf.ds.vinoteca.domain.models;
 
+import es.uva.inf.ds.vinoteca.common.FacturaVencidaException;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOAbonado;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOEmpleado;
+import es.uva.inf.ds.vinoteca.persistence.daos.DAOFactura;
+import es.uva.inf.ds.vinoteca.persistence.daos.DAOPedido;
+import es.uva.inf.ds.vinoteca.persistence.daos.DAOPersona;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonReaderFactory;
+import javax.json.JsonWriter;
 
 /**
  * Modelo de los pedidos que procesa el sistema.
@@ -19,7 +26,8 @@ import javax.json.JsonReaderFactory;
  * @author ivagonz
  */
 public class Pedido {
-    private int numero,estado, numeroFactura, numeroAbonado;
+
+    private int numero, numeroFactura, numeroAbonado, estado, codigo;
     private LocalDateTime fechaRealizacion, fechaRecepcion, fechaEntrega;
     private String notaEntrega;
     private double importe;
@@ -49,12 +57,62 @@ public class Pedido {
         this.numeroAbonado=numeroAbonado;
     }
     
+    public Pedido(int estado, LocalDateTime fechaRealizacion, String notaEntrega, double importe,
+                    LocalDateTime fechaRecepcion, LocalDateTime fechaEntrega, int numeroFactura, int numeroAbonado){
+        this.estado=estado;
+        this.fechaRealizacion=fechaRealizacion;
+        this.notaEntrega=notaEntrega;
+        this.importe=importe;
+        this.fechaRecepcion=fechaRecepcion;
+        this.fechaEntrega=fechaEntrega;
+        this.numeroFactura=numeroFactura;
+        this.numeroAbonado=numeroAbonado;
+    }
+    
     /**
      * Devuelve el número que identifica el pedido.
      * @return Número entero que identifica el pedido.
      */
     public int getNumeroPedido(){
         return numero;
+    }
+
+    /**
+     * Obtiene una instancia del pedido correspondiente al identificador introducido por parámetro.
+     * @param codPedido Número entero que representa el identificador del pedido.
+     * @return Instancia del pedido buscado.
+     */
+    public static Pedido getPedido(int codPedido){
+        String pedidoJSONString = DAOPedido.consultaPedido(codPedido);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm",Locale.US);
+        int numeroJ;
+        int estadoJ;
+        int numeroFactura;
+        int numeroAbonadoJ;
+        LocalDateTime fechaRealizacionJ;
+        String notaEntregaJ;
+        double importeJ;
+        LocalDateTime fechaRecepcionJ;
+        LocalDateTime fechaEntregaJ;
+        Pedido p = null;
+        
+        JsonReaderFactory factory = Json.createReaderFactory(null);
+        try(JsonReader reader = factory.createReader(new StringReader(pedidoJSONString));){
+            JsonObject obj = reader.readObject();
+            numeroJ = Integer.parseInt(obj.getString("numero"));
+            estadoJ = Integer.parseInt(obj.getString("estado"));
+            fechaRealizacionJ = LocalDateTime.parse(obj.getString("fechaRealizacion"),formatter);
+            notaEntregaJ = obj.getString("notaEntrega");
+            importeJ = Double.parseDouble(obj.getString("importe"));
+            fechaRecepcionJ = LocalDateTime.parse(obj.getString("fechaRecepcion"),formatter);
+            fechaEntregaJ = LocalDateTime.parse(obj.getString("fechaEntrega"),formatter);
+            numeroFactura = Integer.parseInt(obj.getString("numeroFactura"));
+            numeroAbonadoJ = Integer.parseInt(obj.getString("numeroAbonado"));
+            p = new Pedido(numeroJ,estadoJ,fechaRealizacionJ,notaEntregaJ,importeJ,fechaRecepcionJ,fechaEntregaJ,numeroFactura,numeroAbonadoJ); 
+        }catch(Exception ex){
+            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE,null,ex);
+        }
+        return p;
     }
     
     /**
@@ -200,17 +258,100 @@ public class Pedido {
     public Abonado getAbonado(){
         Abonado ab = null;
         String abonadoJSONString = DAOAbonado.consultaAbonado(numeroAbonado);
-        String openidref;
-        String nif;
+        String openidref=null;
+        String nif=null;
+        String nifJson=null; 
+        String nombreJson=null;
+        String direccionJson=null;
+        String apellidosJson=null;
+        String telefonoJson=null;
+        String emailJson=null;
         JsonReaderFactory factory = Json.createReaderFactory(null);
         try(JsonReader reader = factory.createReader(new StringReader(abonadoJSONString));){
             JsonObject jsonobject = reader.readObject();
             openidref = jsonobject.getString("openIdRef");
             nif = jsonobject.getString("nif");
-            ab = new Abonado(numeroAbonado,openidref,nif);
         }catch(Exception ex){
-            Logger.getLogger(DAOEmpleado.class.getName()).log(Level.SEVERE,null,ex);
+            Logger.getLogger(DAOAbonado.class.getName()).log(Level.SEVERE,null,ex);
         }
-        return ab;
+                String personaJSONString = DAOPersona.consultaPersona(nif);
+        factory = Json.createReaderFactory(null);
+        try(JsonReader reader = factory.createReader(new StringReader(personaJSONString));){
+            JsonObject jsonobject = reader.readObject();
+            nombreJson = jsonobject.getString("nombre");
+            direccionJson = jsonobject.getString("direccion");
+            apellidosJson = jsonobject.getString("apellidos");
+            telefonoJson = jsonobject.getString("telefono");
+            emailJson = jsonobject.getString("email");
+        }catch(Exception ex){
+            Logger.getLogger(DAOPersona.class.getName()).log(Level.SEVERE,null,ex);            
+        }
+        Abonado abonado = new Abonado(numeroAbonado, openidref, nif, nombreJson, apellidosJson, direccionJson, telefonoJson, emailJson);
+        return abonado;
+    }
+
+    /**
+     * Actualiza el estado del pedido a completado.
+     */
+    public void actualizarEstadoACompletado() {
+        estado = 2;
+    }
+    
+    /**
+     * Comprueba si un pedido ha vencido.
+     * @return {@code True} en caso de que el pedido haya vencido y {@code false} en caso contrario.
+     * @throws es.uva.inf.ds.vinoteca.common.FacturaVencidaException
+     */
+    public boolean comprobarNoVencido() throws FacturaVencidaException{
+        if(!DAOFactura.comprobarNoVencido(numeroFactura)){
+            throw new FacturaVencidaException("Existen facturas vencidas.");
+        }      
+        return DAOFactura.comprobarNoVencido(numeroFactura);
+    }
+
+    /**
+     * Crea una nueva línea de pedido asociada al pedido.
+     * @param idReferencia Número entero que representa el identificador de la referencia de la línea de pedido a crear.
+     * @param cantidad Número entero que representa la cantidad de la línea de pedido.
+     * @return Instancia de la nueva línea de pedido.
+     */
+    public LineaPedido crearLineaPedido(int idReferencia, int cantidad) {
+        LineaPedido p = new LineaPedido(idReferencia, numero, cantidad);
+        return p;
+    }
+
+    /**
+     * Modifica el estado del pedido a pendiente.
+     */
+    public void cambiarEstadoPendiente() {
+        estado = 1;
+    }
+    
+    /**
+     * Obtiene los datos del pedido en formato JSON.
+     * @return JSON en forma de cadena de caracteres que representa los datos del pedido.
+     */
+    public String getJson() {
+        String newPedidoJSONString = "";
+        JsonObject abonadoJSON = Json.createObjectBuilder()
+                //.add("numero",Integer.toString(numero))
+                .add("estado",Integer.toString(estado))
+                .add("notaEntrega", notaEntrega)
+                .add("importe",Double.toString(importe))
+                .add("numeroFactura",Integer.toString(numeroFactura))
+                .add("numeroAbonado",Integer.toString(numeroAbonado))
+                .add("codigo",Integer.toString(codigo))
+                .build();
+        try(
+                StringWriter stringWriter = new StringWriter();
+                JsonWriter writer = Json.createWriter(stringWriter);
+                ){
+           
+            writer.writeObject(abonadoJSON);
+            newPedidoJSONString = stringWriter.toString();
+        }catch(Exception ex){
+            Logger.getLogger(DAOAbonado.class.getName()).log(Level.SEVERE,null,ex);
+        }
+        return newPedidoJSONString;
     }
 }

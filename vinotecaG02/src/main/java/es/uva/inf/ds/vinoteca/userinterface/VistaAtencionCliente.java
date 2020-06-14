@@ -1,23 +1,70 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.uva.inf.ds.vinoteca.userinterface;
 
+import es.uva.inf.ds.vinoteca.common.ReferenciaNoDisponibleException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
- *
- * @author pablo
+ * Vista del caso de uso "Crear pedido de abonado".
+ * @author pamarti
+ * @author alerome
+ * @author ivagonz
  */
 public class VistaAtencionCliente extends javax.swing.JFrame {
 
     /**
      * Creates new form VistaAtencionCliente
      */
+    
+    private final ControladorVistaAtencionCliente controller;
+    private DefaultTableModel model;
+    private boolean bandera;
+    
+    /**
+     * Constructor de la interfaz.
+     */
     public VistaAtencionCliente() {
         initComponents();
+        confirmarButton.setEnabled(false);
+        introducirButton.setEnabled(false);
+        rechazarButton.setEnabled(false);
+        endButton.setEnabled(false);
+        cantidadText.setEnabled(false);
+        endButton1.setEnabled(false);
+        referenciaText.setEnabled(false);
+        setResizable(false);
+        errorMsg.setText("");
+        controller = new ControladorVistaAtencionCliente(this);
         setLocationRelativeTo(null);
     }
+    
+    /**
+     * Modifica el mensaje de error de la interfaz.
+     * @param m Cadena de caracteres que representa el mensaje de error que se muestra en la interfaz.
+     */
+    public void setMensajeError(String m){
+        errorMsg.setText(m);
+    }
+    
+    public void actualizarVista(ArrayList<String> datos){
+        String [][] data = new String [1][datos.size()];
+        model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(1);
+        model.setValueAt(datos.get(0), 0, 0);
+        model.setValueAt(datos.get(1), 0, 1);
+        model.setValueAt(datos.get(2), 0, 2);
+        model.setValueAt(datos.get(3), 0, 3);
+        rechazarButton.setEnabled(true);
+        confirmarButton.setEnabled(true);
+        searchButton.setEnabled(false);
+    }
+    
+    public void funcionBandera(){
+        bandera = false;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,14 +80,27 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
         searchButton = new javax.swing.JButton();
         cantidadText = new javax.swing.JTextField();
         referenciaText = new javax.swing.JTextField();
+        introducirButton = new javax.swing.JButton();
+        errorMsg = new javax.swing.JLabel();
+        confirmarButton = new javax.swing.JButton();
         endButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        rechazarButton = new javax.swing.JButton();
+        endButton1 = new javax.swing.JButton();
+        buscarAbonadoBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         abonadoText.setText("Introducir número de abonado");
 
         searchButton.setText("Buscar");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
 
         cantidadText.setText("Cantidad");
         cantidadText.addActionListener(new java.awt.event.ActionListener() {
@@ -51,30 +111,116 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
 
         referenciaText.setText("Referencia");
 
-        endButton.setText("Finalizar");
+        introducirButton.setText("Introducir");
+        introducirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                introducirButtonActionPerformed(evt);
+            }
+        });
 
-        jLabel1.setText("Mensaje de error");
+        errorMsg.setText("Mensaje de error");
+
+        confirmarButton.setText("Confirmar");
+        confirmarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmarButtonActionPerformed(evt);
+            }
+        });
+
+        endButton.setText("Finalizar");
+        endButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                endButtonActionPerformed(evt);
+            }
+        });
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "nombre", "apellidos", "telefono", "email"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        rechazarButton.setText("Rechazar");
+        rechazarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rechazarButtonActionPerformed(evt);
+            }
+        });
+
+        endButton1.setText("NoFinalizar");
+        endButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                endButton1ActionPerformed(evt);
+            }
+        });
+
+        buscarAbonadoBtn.setText("Buscar abonado");
+        buscarAbonadoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarAbonadoBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(referenciaText)
-                            .addComponent(cantidadText)
-                            .addComponent(abonadoText, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(abonadoText, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(confirmarButton, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                                    .addComponent(rechazarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(53, 53, 53))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(buscarAbonadoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(endButton, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
-                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(20, 20, 20))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cantidadText, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(referenciaText, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(introducirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(69, 69, 69)
+                        .addComponent(errorMsg)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(endButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(endButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,16 +228,38 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(abonadoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchButton))
-                .addGap(58, 58, 58)
-                .addComponent(cantidadText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(referenciaText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(endButton)
-                    .addComponent(jLabel1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(searchButton)
+                    .addComponent(buscarAbonadoBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(rechazarButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(confirmarButton)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(cantidadText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(73, 73, 73)
+                                .addComponent(referenciaText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(introducirButton)))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(errorMsg)
+                            .addComponent(endButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(endButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -105,10 +273,7 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -118,13 +283,98 @@ public class VistaAtencionCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cantidadTextActionPerformed
 
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        if(!errorMsg.getText().equals("")){
+            setMensajeError("");
+        }
+        int idAbonado = Integer.parseInt(abonadoText.getText());
+        controller.procesaDatosIntroducirNumeroAbonado(idAbonado);
+    }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void confirmarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarButtonActionPerformed
+        if(!errorMsg.getText().equals("")){
+            setMensajeError("");
+        }
+        controller.procesaConfirmacion();
+        confirmarButton.setEnabled(false);
+        rechazarButton.setEnabled(false);
+        introducirButton.setEnabled(true);
+        cantidadText.setEnabled(true);
+        referenciaText.setEnabled(true);   
+        abonadoText.setEnabled(false);
+    }//GEN-LAST:event_confirmarButtonActionPerformed
+
+    private void introducirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_introducirButtonActionPerformed
+        if(!errorMsg.getText().equals("")){
+            setMensajeError("");
+        }
+        bandera = true;
+        int idReferencia = Integer.parseInt(referenciaText.getText());
+        int cantidad = Integer.parseInt(cantidadText.getText());
+        try {
+            controller.procesaIntroducirReferencia(idReferencia, cantidad);
+        } catch (ReferenciaNoDisponibleException ex) {
+            Logger.getLogger(VistaAtencionCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(bandera){
+            introducirButton.setEnabled(false);
+            endButton.setEnabled(true);
+            endButton1.setEnabled(true);
+        }
+    }//GEN-LAST:event_introducirButtonActionPerformed
+
+    private void endButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endButtonActionPerformed
+        controller.procesarTerminarProceso();
+        endButton.setEnabled(false);
+        endButton1.setEnabled(false);
+        cantidadText.setEnabled(false);
+        referenciaText.setEnabled(false);        
+        setMensajeError("El caso de uso ha finalizado");
+    }//GEN-LAST:event_endButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void rechazarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechazarButtonActionPerformed
+        if(!errorMsg.getText().equals("")){
+            setMensajeError("");
+        }
+        confirmarButton.setEnabled(false);
+        rechazarButton.setEnabled(false);
+        searchButton.setEnabled(true);
+        jTable1.setModel(new DefaultTableModel(null, new String[]{"nombre", "apellidos","telefono","email"}));      
+    }//GEN-LAST:event_rechazarButtonActionPerformed
+
+    private void endButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endButton1ActionPerformed
+        if(!errorMsg.getText().equals("")){
+            setMensajeError("");
+        }
+        endButton1.setEnabled(false);
+        endButton.setEnabled(false);
+        introducirButton.setEnabled(true);
+    }//GEN-LAST:event_endButton1ActionPerformed
+
+    private void buscarAbonadoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarAbonadoBtnActionPerformed
+        errorMsg.setText("Caso de uso no requerido en la práctica.");
+    }//GEN-LAST:event_buscarAbonadoBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField abonadoText;
+    private javax.swing.JButton buscarAbonadoBtn;
     private javax.swing.JTextField cantidadText;
+    private javax.swing.JButton confirmarButton;
     private javax.swing.JButton endButton;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton endButton1;
+    private javax.swing.JLabel errorMsg;
+    private javax.swing.JButton introducirButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JButton rechazarButton;
     private javax.swing.JTextField referenciaText;
     private javax.swing.JButton searchButton;
     // End of variables declaration//GEN-END:variables

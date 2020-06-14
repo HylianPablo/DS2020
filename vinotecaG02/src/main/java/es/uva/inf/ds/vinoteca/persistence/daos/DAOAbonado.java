@@ -32,7 +32,7 @@ public class DAOAbonado {
         connection.openConnection();
         try(PreparedStatement ps = connection.getStatement("SELECT * FROM ABONADO a WHERE a.NUMEROABONADO = ?");)
         {
-            ps.setString(1, Integer.toString(numeroAbonado));
+            ps.setInt(1, numeroAbonado);
             ResultSet result = ps.executeQuery();
             if(result.next()){
                 openidref = result.getString("OPENIDREF");

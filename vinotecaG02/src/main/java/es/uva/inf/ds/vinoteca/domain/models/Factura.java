@@ -46,6 +46,10 @@ public class Factura {
         this.fechaPago=fechaPago;
         this.idExtractoBancario=idExtractoBancario;
     }
+
+    Factura(int unidades, LocalDateTime fechaRecepcion) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     /**
      * Obtiene el número de la factura.
@@ -185,7 +189,11 @@ public class Factura {
     }
     
     
-    
+    /**
+     * Obtiene las facturas emitidas treinta días antes de la fecha introducida.
+     * @param fecha Cadena de caracteres que representa la fecha utilizada como límite.
+     * @return Lista de facturas que cumplen el plazo inferior a treinta días antes de la fecha.
+     */
     public static ArrayList<Factura> consultaFacturasAntesDeFecha(String fecha){
         ArrayList<Factura> facturas = new ArrayList<>();
         int numeroFactura;

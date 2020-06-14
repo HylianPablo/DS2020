@@ -117,9 +117,14 @@ public class PedidoTest {
     
     @Test
     public void getAbonado(){
-        Abonado a = new Abonado(1,"referencia0","123456789");
-        assertSame(a.getNumeroAbonado(),p.getAbonado().getNumeroAbonado());
-        assertEquals(a.getOpenIdRef(),p.getAbonado().getOpenIdRef());
-        assertEquals(a.getNIF(),p.getAbonado().getNIF());
+        Abonado ab = new Abonado(1,"referencia0","123456789","Pepe","Rodriguez Perez","Calle Falsa 123","999999999","email@email.com");
+        assertSame(ab.getNumeroAbonado(),p.getAbonado().getNumeroAbonado());
+        assertEquals(ab.getOpenIdRef(),p.getAbonado().getOpenIdRef());
+        assertEquals(ab.getNif(),p.getAbonado().getNif());
+        assertEquals("Pepe",ab.getNombre());
+        assertEquals("Rodriguez Perez",ab.getApellidos());
+        assertEquals("Calle Falsa 123",ab.getDireccion());
+        assertEquals("999999999",ab.getTelefono());
+        assertEquals("email@email.com",ab.getEmail());
     }
 }

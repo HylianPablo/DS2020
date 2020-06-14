@@ -333,7 +333,7 @@ public class Pedido {
      */
     public String getJson() {
         String newPedidoJSONString = "";
-        JsonObject abonadoJSON = Json.createObjectBuilder()
+        JsonObject pedidoJSON = Json.createObjectBuilder()
                 //.add("numero",Integer.toString(numero))
                 .add("estado",Integer.toString(estado))
                 .add("notaEntrega", notaEntrega)
@@ -347,7 +347,7 @@ public class Pedido {
                 JsonWriter writer = Json.createWriter(stringWriter);
                 ){
            
-            writer.writeObject(abonadoJSON);
+            writer.writeObject(pedidoJSON);
             newPedidoJSONString = stringWriter.toString();
         }catch(Exception ex){
             Logger.getLogger(DAOAbonado.class.getName()).log(Level.SEVERE,null,ex);

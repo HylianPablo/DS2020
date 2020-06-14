@@ -21,13 +21,14 @@ import javax.json.JsonReaderFactory;
  */
 public class Compra {
     
-    private Bodega bodega;
+    private final Bodega bodega;
     private ArrayList<LineaCompra> lineasCompra;
-    private ArrayList<LineaCompra> lineasCompraNoRecibidas;
-    private boolean recibidaCompleta;
-    private LocalDateTime fechaCompraCompleta, fechaPago;
-    private int idCompra;
-    private double importe;
+    private final ArrayList<LineaCompra> lineasCompraNoRecibidas;
+    private final boolean recibidaCompleta;
+    private LocalDateTime fechaCompraCompleta;
+    private final LocalDateTime fechaPago;
+    private final int idCompra;
+    private final double importe;
     private String completada;
     
     /**
@@ -77,8 +78,8 @@ public class Compra {
      * Obtiene una instancia de compra a partir de su identificador.
      * @param id Número entero que representa el identificador de la compra.
      * @return Instancia de la compra buscada.
-     * @throws {@code NullCompraException} en caso de que la compra buscada no exista.
-     * @throws {@code CompletadaException} en caso de que la compra buscada no haya sido completada.
+     * @throws es.uva.inf.ds.vinoteca.common.NullCompraException
+     * @throws es.uva.inf.ds.vinoteca.common.CompletadaException
      */
     public static Compra getCompra(int id) throws NullCompraException, CompletadaException  {
         String compraJSONString = DAOCompra.consultaCompra(id);
@@ -114,7 +115,8 @@ public class Compra {
      * Marca al compra tanto como recibida como completa.
      */
     public void marcarRecibidaCompleta(){
-        recibidaCompleta = true;
+        //recibidaCompleta = true;
+        completada = "1";
         fechaCompraCompleta = LocalDateTime.now();
     }
     
@@ -131,8 +133,8 @@ public class Compra {
      * Comprueba que la compra se ha completado.
      * @return {@code True} en caso de que la compra esté completa y {@code false} en caso contrario.
      */
-    public boolean compruebaCompletado(){
-        return recibidaCompleta;
+    public String compruebaCompletado(){
+        return completada;
     }
     
     /**
@@ -149,7 +151,7 @@ public class Compra {
      * @return {@code True} en caso de que todas las líneas de compra se hayan recibido y {@code false} en caso contrario.
      */
     public boolean comprobarRecibidas(ArrayList<LineaCompra> array) {
-        boolean recibida = true;
+        boolean recibida;
         boolean bandera = true;
         for (int i = 0; i < array.size(); i++){
             recibida = array.get(i).comprobarRecibida();

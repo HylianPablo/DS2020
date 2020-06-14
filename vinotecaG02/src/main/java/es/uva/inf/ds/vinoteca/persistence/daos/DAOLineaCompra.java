@@ -45,12 +45,12 @@ public class DAOLineaCompra {
         DBConnection connection = DBConnection.getInstance();
         connection.openConnection();
         try(
-            PreparedStatement ps = connection.getStatement("SELECT * FROM LINEACOMPRA lc, COMPRA c WHERE c.IdCompra= ? "
-                    + "AND c.IdCompra = lc.IdCompra");   
+            PreparedStatement ps = connection.getStatement("SELECT * FROM LINEACOMPRA lc WHERE lc.IdCompra= ? ");   
         ){
             ps.setInt(1, id);
             ResultSet result = ps.executeQuery();
             while(result.next()){
+                rec = false;
                 counter ++;
                 numeroUnidades = result.getInt("unidades");
                 idL = result.getInt("id");

@@ -6,12 +6,10 @@
 package es.uva.inf.ds.vinoteca.domain.controllers;
 
 import es.uva.inf.ds.vinoteca.common.CompletadaException;
-import es.uva.inf.ds.vinoteca.common.DNIPassNotValidException;
 import es.uva.inf.ds.vinoteca.common.NullCompraException;
 import es.uva.inf.ds.vinoteca.common.ReferenciaNoValidaException;
 import es.uva.inf.ds.vinoteca.domain.models.Bodega;
 import es.uva.inf.ds.vinoteca.domain.models.Compra;
-import es.uva.inf.ds.vinoteca.domain.models.Empleado;
 import es.uva.inf.ds.vinoteca.domain.models.Referencia;
 import es.uva.inf.ds.vinoteca.domain.models.LineaCompra;
 import es.uva.inf.ds.vinoteca.domain.models.LineaPedido;
@@ -19,16 +17,10 @@ import es.uva.inf.ds.vinoteca.domain.models.Pedido;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOCompra;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOLineaPedido;
 import es.uva.inf.ds.vinoteca.persistence.daos.DAOPedido;
-import es.uva.inf.ds.vinoteca.userinterface.ControladorVistaAlmacen;
-import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
-import javax.json.JsonWriter;
 
 /**
  *
@@ -148,14 +140,15 @@ public class ControladorCURegistrarRecepcionCompra {
   
        
     public void actualizarPedidos(){
-        boolean bandera = true;
+        boolean temporaBool = true;
         for(int i = 0; i < lp.size(); i++){
             boolean completo = lp.get(i).checkCompleto();
-            if(!completo){
-                bandera = false;
+            if(completo){
+            } else {
+                temporaBool = false;
             }
         }
-        if(bandera){
+        if(temporaBool){
             p = Pedido.getPedido(lp.get(0).getCodigoPedido());
             p.actualizarEstadoACompletado();
             DAOPedido.actualizaPedido(lp.get(0).getCodigoPedido());

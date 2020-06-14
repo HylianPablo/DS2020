@@ -1,6 +1,7 @@
 
 package es.uva.inf.ds.vinoteca.domain.model;
 
+import es.uva.inf.ds.vinoteca.common.AbonadoNotExistsException;
 import es.uva.inf.ds.vinoteca.domain.models.Abonado;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
@@ -79,5 +80,16 @@ public class AbonadoTest {
         assertThrows(IllegalArgumentException.class, ()->{
             ab.setNIF("1234567890");
         });
+    }
+    
+    @Test
+    public void testGetAbonado() throws AbonadoNotExistsException{
+        Abonado abon = Abonado.getAbonado(1);
+        assertEquals("123456789",abon.getNif());
+        assertEquals("Pepe",abon.getNombre());
+        assertEquals("Rodriguez Perez",abon.getApellidos());
+        assertEquals("Calle Falsa 123",abon.getDireccion());
+        assertEquals("999999999",abon.getTelefono());
+        assertEquals("email@email.com",abon.getEmail());
     }
 }

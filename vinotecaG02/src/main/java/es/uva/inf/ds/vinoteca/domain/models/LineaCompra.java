@@ -133,7 +133,7 @@ public class LineaCompra {
             for(int i=0;i<array.size();i++){
                 JsonObject obj = (JsonObject) array.get(i);
                 unidades = Integer.parseInt(obj.getString("unidades"));
-                rec = Boolean.parseBoolean("recibidas");
+                rec = Boolean.parseBoolean(obj.getString("recibidas"));
                 fechaRecepcion = LocalDateTime.parse(obj.getString("fechaRecepcion"),formatter);
                 codigo = Integer.parseInt(obj.getString("codigos"));
                 codigoL = Integer.parseInt(obj.getString("ids"));

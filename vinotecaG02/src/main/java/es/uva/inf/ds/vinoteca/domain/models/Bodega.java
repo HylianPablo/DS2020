@@ -28,8 +28,6 @@ public class Bodega {
      * @param c Cadena de caracteres que representa el CIF de la bodega. No podrá
      *          ser superior a nueve caracteres.
      * @param d Cadena de caracteres que representa la direccion de la bodega.
-     * @throws {@code IllegalArgumentException} en caso de que la longitud del CIF
-     *                exceda los nueve caracteres.
      */
     public Bodega(String n, String c, String d) {
         if (c.length() > 9)
@@ -64,6 +62,10 @@ public class Bodega {
      */
     public String getCIF() {
         return cif;
+    }
+    
+    public void setCIF(String c) {
+        cif = c;
     }
 
     /**

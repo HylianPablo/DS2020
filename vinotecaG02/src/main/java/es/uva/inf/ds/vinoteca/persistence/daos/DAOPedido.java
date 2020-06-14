@@ -124,7 +124,7 @@ public class DAOPedido {
         
         int counter=0;
         connection.openConnection();
-        try(PreparedStatement ps = connection.getStatement("SELECT * FROM PEDIDO p WHERE p.NUMEROABONADO = ?");)
+        try(PreparedStatement ps = connection.getStatement("SELECT * FROM PEDIDO p WHERE p.NUMEROABONADO = ? AND p.FECHARECEPCION IS NOT NULL");)
         {
             ps.setInt(1, numeroAbonado);
             ResultSet rs = ps.executeQuery();
